@@ -1,3 +1,5 @@
+<img src="Assets/TrollApps-modified" alt="Logo" width="70" height="70">
+
 # TrollApps
 App Store, but for TrollStore
 
