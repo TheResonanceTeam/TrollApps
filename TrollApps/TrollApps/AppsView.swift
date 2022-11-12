@@ -16,14 +16,14 @@ struct AppsView: View {
             List(fetch.jsonstuff) { json in
                 Label {
                     HStack {
-                        Text("\(json.title)")
+                        Text(json.title)
                         Spacer()
                         Button("GET") {
-                            openURL(URL(string: "\(json.link)")!)
+                            openURL(URL(string: json.link)!)
                         }.buttonStyle(appstorestyle())
                     }
                 } icon: {
-                    AsyncImage(url: URL(string: "\(json.urlimg)")) { image in
+                    AsyncImage(url: URL(string: json.urlimg)) { image in
                         image.resizable()
                     } placeholder: {
                         Color.black
