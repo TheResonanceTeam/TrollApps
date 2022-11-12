@@ -9,11 +9,10 @@ import SwiftUI
 
 struct AppsView: View {
     @Environment(\.openURL) var openURL
-    @ObservedObject var fetch = fetchtd()
-    
+   
     var body: some View {
         NavigationView {
-            List(fetch.jsonstuff) { json in
+            List(FetchApps()) { json in
                 Label {
                     HStack {
                         Text(json.title)
