@@ -99,5 +99,6 @@ struct OtherView: View {
             }
             .navigationTitle("Credit")
         }
+        .navigationViewStyle(.stack)
     }
 }
