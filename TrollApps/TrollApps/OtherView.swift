@@ -97,7 +97,7 @@ struct OtherView: View {
                     }.foregroundColor(Color.red)
                 }
             }
-            .navigationTitle("Credit")
+            .navigationTitle("Credits")
         }
         .navigationViewStyle(.stack)
     }
