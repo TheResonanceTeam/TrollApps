@@ -18,7 +18,7 @@ struct ContentView: View {
             OtherView()
                 .tabItem {
                     Image(systemName: "person")
-                    Text("Credit")
+                    Text("Credits")
                 }
         }
     }
