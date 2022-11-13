@@ -17,8 +17,8 @@ struct ContentView: View {
                 }
             OtherView()
                 .tabItem {
-                    Image(systemName: "person")
-                    Text("Credits")
+                    Image(systemName: "gearshape")
+                    Text("Settings")
                 }
         }
     }
