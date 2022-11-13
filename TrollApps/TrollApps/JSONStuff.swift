@@ -21,7 +21,7 @@ func FetchApps() -> [stuff] {
     do {
         return try JSONDecoder().decode([stuff].self, from: try! Data(contentsOf: URL(string: "https://haxi0-dev.com/api/trollapps-0.1.json")!))
     } catch {
-        print("oopsie")
+        print(error)
         return []
     }
 }
