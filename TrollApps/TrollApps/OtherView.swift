@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OtherView: View {
     @Environment(\.openURL) var openURL
-    
     var body: some View {
         NavigationView {
             List {
@@ -31,12 +30,12 @@ struct OtherView: View {
                     }
                     Label {
                         HStack {
-                            Button("iOScreator - JSON Fetching") {
-                                openURL(URL(string: "https://www.ioscreator.com/tutorials/swiftui-json-list-tutorial")!)
+                            Button("AppInstaller iOS - JSON Fetching") {
+                                openURL(URL(string: "https://twitter.com/AppInstalleriOS")!)
                             }
                         }
                     } icon: {
-                        AsyncImage(url: URL(string: "https://cdn.discordapp.com/attachments/969879614379921418/1040887934640979988/iOScreator.png")) { image in
+                        AsyncImage(url: URL(string: "https://appinstallerios.com/Img/AppInstalleriOSIcon.png")) { image in
                             image.resizable()
                         } placeholder: {
                             Color.black
@@ -74,10 +73,12 @@ struct OtherView: View {
                         .frame(width: 30, height: 30)
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                     }
-
+                    
                 }
-            }.navigationTitle("Other")
+            }
+            .navigationTitle("Credits")
         }
+        .navigationViewStyle(.stack)
     }
 }
 

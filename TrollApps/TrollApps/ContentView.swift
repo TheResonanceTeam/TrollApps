@@ -9,12 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("FirstStart") var alertShouldBeShown = true
-    
     var body: some View {
         TabView {
             AppsView()
                 .tabItem {
-                    Image(systemName: "iphone.and.arrow.forward")
+                    Image(systemName: "apps.iphone")
                     Text("Apps")
                 }
                 .alert(isPresented: $alertShouldBeShown, content: {
@@ -29,8 +28,8 @@ struct ContentView: View {
                 })
             OtherView()
                 .tabItem {
-                    Image(systemName: "ellipsis")
-                    Text("Other")
+                    Image(systemName: "person")
+                    Text("Credits")
                 }
         }
     }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AppsView: View {
     @Environment(\.openURL) var openURL
-   
     var body: some View {
         NavigationView {
             List(FetchApps()) { json in
@@ -19,7 +18,8 @@ struct AppsView: View {
                         Spacer()
                         Button("GET") {
                             openURL(URL(string: json.link)!)
-                        }.buttonStyle(appstorestyle())
+                        }
+                        .buttonStyle(appstorestyle())
                     }
                 } icon: {
                     AsyncImage(url: URL(string: json.urlimg)) { image in
@@ -30,8 +30,10 @@ struct AppsView: View {
                     .frame(width: 30, height: 30)
                     .clipShape(RoundedRectangle(cornerRadius: 7))
                 }
-            }.navigationTitle("Apps")
+            }
+            .navigationTitle("Apps")
         }
+        .navigationViewStyle(.stack)
     }
 }
 
