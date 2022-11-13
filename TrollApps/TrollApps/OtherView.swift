@@ -24,7 +24,7 @@ struct OtherView: View {
                 Section(header: Text("Thanks to..."), footer: Text("Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!")) {
                     Label {
                         HStack {
-                            Button("@AppInstalleriOS - REALLY helped the project") {
+                            Button("@AppInstalleriOS") {
                                 openURL(URL(string: "https://twitter.com/AppInstalleriOS")!)
                             }
                         }
@@ -97,7 +97,7 @@ struct OtherView: View {
                     }.foregroundColor(Color.red)
                 }
             }
-            .navigationTitle("Credits")
+            .navigationTitle("Settings")
         }
         .navigationViewStyle(.stack)
     }
