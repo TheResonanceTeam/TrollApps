@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import SDWebImage
 
 struct OtherView: View {
     @Environment(\.openURL) var openURL
@@ -97,7 +96,8 @@ struct OtherView: View {
                         openURL(URL(string: "https://github.com/haxi0/TrollApps/issues/new")!)
                     }.foregroundColor(Color.red)
                 }
-            }.navigationTitle("Other")
+            }
+            .navigationTitle("Credit")
         }
     }
 }
