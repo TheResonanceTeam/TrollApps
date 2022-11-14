@@ -18,11 +18,14 @@ struct stuff: Codable, Identifiable {
     var completed: Bool
 }
 
-func FetchApps() -> [stuff] {
+let decoder = JSONDecoder()
+func FetchApps() async -> [stuff]? {
     do {
-        return try JSONDecoder().decode([stuff].self, from: try! Data(contentsOf: URL(string: "https://haxi0-dev.com/api/trollapps-0.2.json")!))
+		let url = URL(string: "https://haxi0-dev.com/api/trollapps-0.2.json")!
+		let data = try await URLSession.shared.data(from: url).0
+		return try decoder.decode([stuff].self, from: data)
     } catch {
-        print("oopsie")
-        return []
+        print("oopsie: \(error)")
+        return nil
     }
 }

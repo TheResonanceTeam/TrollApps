@@ -10,25 +10,33 @@ import SDWebImageSwiftUI
 
 struct AppsView: View {
     @Environment(\.openURL) var openURL
+	@Environment(\.scenePhase) var scenePhase
     @State private var isshowingdesc = false
-    
+	@State private var apps: [stuff] = []
+	@State private var installedAppsBundleIDs = [String]()
+	@ViewBuilder
+	func appButton(json: stuff)->some View{
+		if isAppInstalled(json.bundleid){
+			Button("OPEN") {
+				OpenApp(json.bundleid)
+			}
+		}else{
+			Button("GET") {
+				openURL(URL(string: json.link)!)
+			}
+		}
+	}
     var body: some View {
         NavigationView {
-            Form {
-                ForEach(FetchApps()) { json in
+			let form = Form {
+				ForEach(apps) { json in
                     Section(header: Text(json.title)) {
                         Label {
                             HStack {
                                 Text(json.title)
                                 Spacer()
-                                Button(IsAppInstalled(json.bundleid) ? "OPEN" : "GET") {
-                                    if IsAppInstalled(json.bundleid) {
-                                        OpenApp(json.bundleid)
-                                    } else {
-                                        openURL(URL(string: json.link)!)
-                                    }
-                                }
-                                .buttonStyle(appstorestyle())
+								appButton(json: json)
+									.buttonStyle(appstorestyle())
                             }
                         } icon: {
                             WebImage(url: URL(string: json.urlimg))
@@ -53,14 +61,56 @@ struct AppsView: View {
             .environment(\.defaultMinListRowHeight, 50)
             .navigationTitle("Apps")
             .toolbar {
-                Button {
-                    withAnimation {
-                        isshowingdesc.toggle()
-                    }
-                } label: {
-                    Image(systemName: "info.circle")
+				ToolbarItem(placement: .navigationBarLeading){
+					Button {
+						withAnimation {
+							isshowingdesc.toggle()
+						}
+					} label: {
+						Image(systemName: "info.circle")
+					}
                 }
             }
+			//					from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
+			.onChange(of: scenePhase) { newPhase in
+				if newPhase == .active {
+					print("Active, will refresh")
+					Task(operation: refresh)
+				}
+			}
+			if #available(iOS 15.0, *) {
+				form
+					.refreshable {
+						Task{await refresh()}
+					}
+			} else {
+				form
+					.toolbar{
+						ToolbarItem(placement: .navigationBarTrailing){
+							AsyncButton(action: refresh){
+								Image(systemName: "arrow.clockwise")
+							}
+						}
+					}
+			}
         }
     }
+	@Sendable
+	func refresh()async{
+		let currentInstalledAppsBundleIDs = GetApps()
+		DispatchQueue.main.async {
+			withAnimation{
+				self.installedAppsBundleIDs=currentInstalledAppsBundleIDs
+			}
+		}
+		guard let updatedApps = await FetchApps() else {return}
+		DispatchQueue.main.async {
+			withAnimation{
+				self.apps=updatedApps
+			}
+		}
+	}
+	func isAppInstalled(_ BundleID: String) -> Bool {
+		installedAppsBundleIDs.contains(BundleID)
+	}
 }

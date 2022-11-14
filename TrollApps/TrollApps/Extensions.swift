@@ -41,10 +41,6 @@ public struct somebuttonstyle: ButtonStyle {
     }
 }
 
-func IsAppInstalled(_ BundleID: String) -> Bool {
-    return GetApps().contains(BundleID)
-}
-
 func GetApps() -> [String] {
     var apps: [String] = []
     for app in LSApplicationWorkspace().allInstalledApplications() as! [LSApplicationProxy] {
