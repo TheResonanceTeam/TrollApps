@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0299094129225B3B006D62D9 /* TrollAppsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299094029225B3B006D62D9 /* TrollAppsUITests.swift */; };
+		0299094329225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */; };
 		6D78B4672920ED7500EFB2FD /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78B4662920ED7500EFB2FD /* SDWebImageSwiftUI */; };
 		6D8817C6291ECB97007139C6 /* TrollAppsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */; };
 		6D8817C8291ECB97007139C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817C7291ECB97007139C6 /* ContentView.swift */; };
@@ -18,7 +20,20 @@
 		6D8817DA291EE5C9007139C6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817D9291EE5C9007139C6 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0299094429225B3B006D62D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D8817BA291ECB97007139C6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D8817C1291ECB97007139C6;
+			remoteInfo = TrollApps;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrollAppsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0299094029225B3B006D62D9 /* TrollAppsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsUITests.swift; sourceTree = "<group>"; };
+		0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6D78B4882921088000EFB2FD /* TrollApps-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrollApps-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D8817C2291ECB97007139C6 /* TrollApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrollApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsApp.swift; sourceTree = "<group>"; };
@@ -32,6 +47,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0299093B29225B3B006D62D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D8817BF291ECB97007139C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -43,10 +65,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0299093F29225B3B006D62D9 /* TrollAppsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0299094029225B3B006D62D9 /* TrollAppsUITests.swift */,
+				0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */,
+			);
+			path = TrollAppsUITests;
+			sourceTree = "<group>";
+		};
 		6D8817B9291ECB97007139C6 = {
 			isa = PBXGroup;
 			children = (
 				6D8817C4291ECB97007139C6 /* TrollApps */,
+				0299093F29225B3B006D62D9 /* TrollAppsUITests */,
 				6D8817C3291ECB97007139C6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				6D8817C2291ECB97007139C6 /* TrollApps.app */,
+				0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +119,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0299093D29225B3B006D62D9 /* TrollAppsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0299094629225B3B006D62D9 /* Build configuration list for PBXNativeTarget "TrollAppsUITests" */;
+			buildPhases = (
+				0299093A29225B3B006D62D9 /* Sources */,
+				0299093B29225B3B006D62D9 /* Frameworks */,
+				0299093C29225B3B006D62D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0299094529225B3B006D62D9 /* PBXTargetDependency */,
+			);
+			name = TrollAppsUITests;
+			productName = TrollAppsUITests;
+			productReference = 0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		6D8817C1291ECB97007139C6 /* TrollApps */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D8817D0291ECB9B007139C6 /* Build configuration list for PBXNativeTarget "TrollApps" */;
@@ -116,6 +167,10 @@
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					0299093D29225B3B006D62D9 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 6D8817C1291ECB97007139C6;
+					};
 					6D8817C1291ECB97007139C6 = {
 						CreatedOnToolsVersion = 14.1;
 						LastSwiftMigration = 1410;
@@ -139,11 +194,19 @@
 			projectRoot = "";
 			targets = (
 				6D8817C1291ECB97007139C6 /* TrollApps */,
+				0299093D29225B3B006D62D9 /* TrollAppsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0299093C29225B3B006D62D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D8817C0291ECB97007139C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +219,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0299093A29225B3B006D62D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0299094329225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift in Sources */,
+				0299094129225B3B006D62D9 /* TrollAppsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6D8817BE291ECB97007139C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -171,7 +243,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0299094529225B3B006D62D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D8817C1291ECB97007139C6 /* TrollApps */;
+			targetProxy = 0299094429225B3B006D62D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		0299094729225B3B006D62D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4S29G62RQZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreas16700.TrollAppsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TrollApps;
+			};
+			name = Debug;
+		};
+		0299094829225B3B006D62D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4S29G62RQZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andreas16700.TrollAppsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TrollApps;
+			};
+			name = Release;
+		};
 		6D8817CE291ECB9B007139C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -295,7 +411,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TrollApps/Preview Content\"";
-				DEVELOPMENT_TEAM = A999YUQPG2;
+				DEVELOPMENT_TEAM = 4S29G62RQZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -332,7 +448,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TrollApps/Preview Content\"";
-				DEVELOPMENT_TEAM = A999YUQPG2;
+				DEVELOPMENT_TEAM = 4S29G62RQZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -362,6 +478,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0299094629225B3B006D62D9 /* Build configuration list for PBXNativeTarget "TrollAppsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0299094729225B3B006D62D9 /* Debug */,
+				0299094829225B3B006D62D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6D8817BD291ECB97007139C6 /* Build configuration list for PBXProject "TrollApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
