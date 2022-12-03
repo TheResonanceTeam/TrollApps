@@ -39,4 +39,4 @@ zip -vr TrollApps.ipa Payload
 rm -rf TrollApps.app
 rm -rf DerivedDataApp
 rm -rf Payload
-zip -vr share.zip TrollApps.ipa
+Cp TrollApps.ipa TrollApps.tipa
