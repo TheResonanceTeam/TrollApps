@@ -14,6 +14,9 @@ struct FeaturedView: View {
     @State private var isshowingdesc = false
     @State private var apps: [stuff] = []
     @State private var installedAppsBundleIDs = [String]()
+    @State private var InstallingIPA = false
+    @State private var DownloadingIPA = true
+    @State private var InstallingIPAInfo: stuff? = nil
     @ViewBuilder
     func appButton(json: stuff)->some View {
         if isAppInstalled(json.bundleid) {
@@ -22,39 +25,112 @@ struct FeaturedView: View {
             }
         } else {
             Button("GET") {
-                openURL(URL(string: json.url)!)
+                DispatchQueue.global(qos: .utility).async {
+                    InstallingIPA = true
+                    InstallingIPAInfo = json
+                    DownloadingIPA = true
+                    DownloadIPA(json.url.replacingOccurrences(of: "apple-magnifier://install?url=", with: ""))
+                    DownloadingIPA = false
+                    InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                    InstallingIPA = false
+                    InstallingIPAInfo = nil
+                    Task{await refresh()}
+                }
             }
         }
     }
     var body: some View {
-        if isshowingdesc {
-            Section {
+        if InstallingIPA {
+            HStack {
+                Text("\(DownloadingIPA ? "Download" : "Install")ing \(InstallingIPAInfo!.title)")
+                WebImage(url: URL(string: InstallingIPAInfo!.urlimg))
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+            }
+        } else {
+            if isshowingdesc {
+                Section {
+                    NavigationView {
+                        let form = Form {
+                            ForEach(apps) { json in
+                                Section {
+                                    Label {
+                                        HStack {
+                                            Text(json.title)
+                                            Spacer()
+                                            appButton(json: json)
+                                                .buttonStyle(appstorestyle())
+                                        }
+                                    } icon: {
+                                        WebImage(url: URL(string: json.urlimg))
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                                    }
+                                    VStack {
+                                        Text(json.description)
+                                            .opacity(0.3)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                        Button("Copy \(json.title) .IPA Link") {
+                                            UIPasteboard.general.string = json.url
+                                        }
+                                        .buttonStyle(somebuttonstyle())
+                                    }
+                                }
+                            }
+                        }
+                            .environment(\.defaultMinListRowHeight, 50)
+                            .navigationTitle("Featured")
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading){
+                                    Button {
+                                        isshowingdesc.toggle()
+                                    } label: {
+                                        Image(systemName: "info.circle")
+                                    }
+                                }
+                            }
+                        //                    from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
+                            .onChange(of: scenePhase) { newPhase in
+                                if newPhase == .active {
+                                    print("Active, will refresh")
+                                    Task(operation: refresh)
+                                }
+                            }
+                        if #available(iOS 15.0, *) {
+                            form
+                                .refreshable {
+                                    Task{await refresh()}
+                                }
+                        } else {
+                            form
+                                .toolbar{
+                                    ToolbarItem(placement: .navigationBarTrailing){
+                                        AsyncButton(action: refresh){
+                                            Image(systemName: "arrow.clockwise")
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }
+            } else {
                 NavigationView {
                     let form = Form {
                         ForEach(apps) { json in
-                            Section {
-                                Label {
-                                    HStack {
-                                        Text(json.title)
-                                        Spacer()
-                                        appButton(json: json)
-                                            .buttonStyle(appstorestyle())
-                                    }
-                                } icon: {
-                                    WebImage(url: URL(string: json.urlimg))
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                            Label {
+                                HStack {
+                                    Text(json.title)
+                                    Spacer()
+                                    appButton(json: json)
+                                        .buttonStyle(appstorestyle())
                                 }
-                                VStack {
-                                    Text(json.description)
-                                        .opacity(0.3)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                    Button("Copy \(json.title) .IPA Link") {
-                                        UIPasteboard.general.string = json.url
-                                    }
-                                    .buttonStyle(somebuttonstyle())
-                                }
+                            } icon: {
+                                WebImage(url: URL(string: json.urlimg))
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .clipShape(RoundedRectangle(cornerRadius: 7))
                             }
                         }
                     }
@@ -91,59 +167,6 @@ struct FeaturedView: View {
                                 }
                             }
                     }
-                }
-            }
-        } else {
-            NavigationView {
-                let form = Form {
-                    ForEach(apps) { json in
-                        Label {
-                            HStack {
-                                Text(json.title)
-                                Spacer()
-                                appButton(json: json)
-                                    .buttonStyle(appstorestyle())
-                            }
-                        } icon: {
-                            WebImage(url: URL(string: json.urlimg))
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .clipShape(RoundedRectangle(cornerRadius: 7))
-                        }
-                    }
-                }
-                    .environment(\.defaultMinListRowHeight, 50)
-                    .navigationTitle("Featured")
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading){
-                            Button {
-                                isshowingdesc.toggle()
-                            } label: {
-                                Image(systemName: "info.circle")
-                            }
-                        }
-                    }
-                //                    from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
-                    .onChange(of: scenePhase) { newPhase in
-                        if newPhase == .active {
-                            print("Active, will refresh")
-                            Task(operation: refresh)
-                        }
-                    }
-                if #available(iOS 15.0, *) {
-                    form
-                        .refreshable {
-                            Task{await refresh()}
-                        }
-                } else {
-                    form
-                        .toolbar{
-                            ToolbarItem(placement: .navigationBarTrailing){
-                                AsyncButton(action: refresh){
-                                    Image(systemName: "arrow.clockwise")
-                                }
-                            }
-                        }
                 }
             }
         }

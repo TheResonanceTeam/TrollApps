@@ -9,6 +9,29 @@ import SwiftUI
 import CoreServices
 import Foundation
 
+func InstallIPA(_ IPAPath: String) {
+    spawnRoot("\(SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore").bundleURL.path)/trollstorehelper", ["install", IPAPath])
+    if FileManager.default.fileExists(atPath: IPAPath) {
+        do {
+            try FileManager.default.removeItem(atPath: IPAPath)
+        } catch {
+            print(error)
+        }
+    }
+}
+
+func DownloadIPA(_ IPA: String) {
+    do {
+        let IPAPath = "/var/mobile/TrollApps-Tmp-IPA.ipa"
+        if FileManager.default.fileExists(atPath: IPAPath) {
+            try FileManager.default.removeItem(atPath: IPAPath)
+        }
+        FileManager.default.createFile(atPath: IPAPath, contents: try Data(contentsOf: URL(string: IPA)!))
+    } catch {
+        print(error)
+    }
+}
+
 public struct appstorestyle: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

@@ -35,43 +35,65 @@ func FetchRepo(_ RepoURL: String) -> Repo? {
 
 struct RepoAppsView: View {
     @AppStorage("repos") var Repos: [String] = ["https://raw.githubusercontent.com/haxi0/TrollApps-Static-API/main/ExampleRepo.json"]
+    @State var InstallingIPA = false
+    @State var DownloadingIPA = true
+    @State var InstallingIPAInfo: RepoApp? = nil
     @Environment(\.openURL) var openURL
     var body: some View {
-        NavigationView {
-            Form {
-                ForEach(Repos, id: \.self) { repo in
-                    Section(header: Text(FetchRepo(repo)!.name)) {
-                        ForEach(FetchRepo(repo)!.apps) { app in
-                            Section {
-                                Label {
-                                    HStack {
-                                        Text(app.title)
-                                        Spacer()
-                                        Button(IsAppInstalled(app.bundleid) ? "OPEN" : "GET") {
-                                            if IsAppInstalled(app.bundleid) {
-                                                OpenApp(app.bundleid)
-                                            } else {
-                                                openURL(URL(string: "apple-magnifier://install?url=\(app.url)")!)
+        if InstallingIPA {
+            HStack {
+                Text("\(DownloadingIPA ? "Download" : "Install")ing \(InstallingIPAInfo!.title)")
+                WebImage(url: URL(string: InstallingIPAInfo!.urlimg))
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+            }
+        } else {
+            NavigationView {
+                Form {
+                    ForEach(Repos, id: \.self) { repo in
+                        Section(header: Text(FetchRepo(repo)!.name)) {
+                            ForEach(FetchRepo(repo)!.apps) { app in
+                                Section {
+                                    Label {
+                                        HStack {
+                                            Text(app.title)
+                                            Spacer()
+                                            Button(IsAppInstalled(app.bundleid) ? "OPEN" : "GET") {
+                                                if IsAppInstalled(app.bundleid) {
+                                                    OpenApp(app.bundleid)
+                                                } else {
+                                                    DispatchQueue.global(qos: .utility).async {
+                                                        InstallingIPA = true
+                                                        InstallingIPAInfo = app
+                                                        DownloadingIPA = true
+                                                        DownloadIPA(app.url)
+                                                        DownloadingIPA = false
+                                                        InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                                                        InstallingIPA = false
+                                                        InstallingIPAInfo = nil
+                                                    }
+                                                }
                                             }
+                                            .buttonStyle(appstorestyle())
                                         }
-                                        .buttonStyle(appstorestyle())
+                                    } icon: {
+                                        WebImage(url: URL(string: app.urlimg))
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .clipShape(RoundedRectangle(cornerRadius: 7))
                                     }
-                                } icon: {
-                                    WebImage(url: URL(string: app.urlimg))
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
                                 }
                             }
                         }
                     }
+                    NavigationLink(destination: SourcesView(), label: {
+                        Text("Manage Sources")
+                    })
                 }
-                NavigationLink(destination: SourcesView(), label: {
-                    Text("Manage Sources")
-                })
+                .environment(\.defaultMinListRowHeight, 50)
+                .navigationTitle("Sources & Apps")
             }
-            .environment(\.defaultMinListRowHeight, 50)
-            .navigationTitle("Sources & Apps")
         }
     }
 }
