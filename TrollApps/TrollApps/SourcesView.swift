@@ -25,8 +25,14 @@ struct RepoApp: Decodable, Identifiable {
 }
 
 func FetchRepo(_ RepoURL: String) -> Repo? {
+    guard let url = URL(string: RepoURL) else {
+        print("Invalid URL")
+        return nil
+    }
+    
     do {
-        return try decoder.decode(Repo.self, from: try! Data(contentsOf: URL(string: RepoURL)!))
+        let data = try Data(contentsOf: url)
+        return try decoder.decode(Repo.self, from: data)
     } catch {
         print("oopsie: \(error)")
         return nil
@@ -52,40 +58,47 @@ struct RepoAppsView: View {
             NavigationView {
                 Form {
                     ForEach(Repos, id: \.self) { repo in
-                        Section(header: Text(FetchRepo(repo)!.name)) {
-                            ForEach(FetchRepo(repo)!.apps) { app in
-                                Section {
-                                    Label {
-                                        HStack {
-                                            Text(app.title)
-                                            Spacer()
-                                            Button(IsAppInstalled(app.bundleid) ? "OPEN" : "GET") {
-                                                if IsAppInstalled(app.bundleid) {
-                                                    OpenApp(app.bundleid)
-                                                } else {
-                                                    DispatchQueue.global(qos: .utility).async {
-                                                        InstallingIPA = true
-                                                        InstallingIPAInfo = app
-                                                        DownloadingIPA = true
-                                                        DownloadIPA(app.url)
-                                                        DownloadingIPA = false
-                                                        InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                                                        InstallingIPA = false
-                                                        InstallingIPAInfo = nil
+                        if let repoData = FetchRepo(repo) {
+                            Section(header: Text(repoData.name)) {
+                                ForEach(repoData.apps) { app in
+                                    Section {
+                                        Label {
+                                            HStack {
+                                                Text(app.title)
+                                                Spacer()
+                                                Button(IsAppInstalled(app.bundleid) ? "OPEN" : "GET") {
+                                                    if IsAppInstalled(app.bundleid) {
+                                                        OpenApp(app.bundleid)
+                                                    } else {
+                                                        DispatchQueue.global(qos: .utility).async {
+                                                            InstallingIPA = true
+                                                            InstallingIPAInfo = app
+                                                            DownloadingIPA = true
+                                                            DownloadIPA(app.url)
+                                                            DownloadingIPA = false
+                                                            InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                                                            InstallingIPA = false
+                                                            InstallingIPAInfo = nil
+                                                        }
                                                     }
                                                 }
+                                                .buttonStyle(appstorestyle())
                                             }
-                                            .buttonStyle(appstorestyle())
+                                        } icon: {
+                                            WebImage(url: URL(string: app.urlimg))
+                                                .resizable()
+                                                .frame(width: 30, height: 30)
+                                                .clipShape(RoundedRectangle(cornerRadius: 7))
                                         }
-                                    } icon: {
-                                        WebImage(url: URL(string: app.urlimg))
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .clipShape(RoundedRectangle(cornerRadius: 7))
                                     }
                                 }
                             }
+                        } else {
+                            Section(header: Text("Failed to load data for this repo.")) {
+                                Text("Please check your internet connection and try again later. (You may need to force-quit and relaunch TrollApps.)")
+                            }
                         }
+                        
                     }
                     NavigationLink(destination: SourcesView(), label: {
                         Text("Manage Sources")
@@ -115,14 +128,19 @@ struct SourcesView: View {
                 }.disabled(self.RepoURL.isEmpty)
             }
             ForEach(Repos, id: \.self) { repo in
-                Label {
-                    Text(FetchRepo(repo)!.name)
-                } icon: {
-                    WebImage(url: URL(string: FetchRepo(repo)!.icon))
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                if let repoData = FetchRepo(repo) {
+                    Label {
+                        Text(repoData.name)
+                    } icon: {
+                        WebImage(url: URL(string: FetchRepo(repo)!.icon))
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
+                } else {
+                    Text("Failed to load data for this repo")
                 }
+                
             }
             .onDelete { IndexSet in
                 Repos.remove(atOffsets: IndexSet)

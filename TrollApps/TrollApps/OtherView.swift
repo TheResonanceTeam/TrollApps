@@ -119,6 +119,18 @@ struct OtherView: View {
                             .frame(width: 30, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 7))
                     }
+                    Label {
+                        HStack {
+                            Button("BonnieDev") {
+                                openURL(URL(string: "https://www.github.com/Bonnie39")!)
+                            }
+                        }
+                    } icon: {
+                        Image("BonnieDevIcon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
                 }
                 
                 Section(header: Text("Other projects used and their licenses")) {
