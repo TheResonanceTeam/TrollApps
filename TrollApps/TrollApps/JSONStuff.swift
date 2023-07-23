@@ -20,7 +20,7 @@ struct stuff: Codable, Identifiable {
 let decoder = JSONDecoder()
 func FetchApps() async -> [stuff]? {
     do {
-        let url = URL(string: "https://raw.githubusercontent.com/haxi0/TrollApps-Static-API/main/trollapps-0.3.1.json?token=")!
+        let url = URL(string: "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/trollapps.featured.json")!
         let data = try await URLSession.shared.data(from: url).0
         return try decoder.decode([stuff].self, from: data)
     } catch {

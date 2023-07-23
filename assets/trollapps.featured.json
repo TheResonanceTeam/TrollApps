@@ -2,7 +2,7 @@
     {
       "id": 1,
       "title": "Apps Manager",
-      "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1040717535785533563/AppsManager.png",
+      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/AppManagerIcon.jpg",
       "description": "Backup AppData: Backup entire application data, include all saved files, settings, data stored in keychain. Restore AppData: Restore application data. Wipe AppData: Wipe application data, include all files, settings. Quick open application container, document container, or app groups. Import/Export backup. You can use it to transfer application data from your device to other devices.",
       "url": "apple-magnifier://install?url=https://tigisoftware.com/download/AppsManager_1.7.0.ipa",
       "bundleid": "com.tigisoftware.ADManager",
@@ -11,7 +11,7 @@
     {
       "id": 2,
       "title": "Filza",
-      "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1040718689001017405/Filza.png",
+      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/FilzaIcon.jpg",
       "description": "Explore files and folders with list view or grid view. View/edit files with powerful viewers, includes: media player, plist editor, hex editor, text editor. Filza can also view office files: word, excel, powerpoint. Sharing files between computer and your device with Air Browser. Terminal, allow execute shell scripts and console app. Manage iPhone music library easily, import/export/rename/delete. Installer, can view details, install or extract IPA package and DEB package. Manage applications, list all installed applications, uninstall or install apps. Music library: Manage music library, import/export/rename/delete just same as normal files. Create DEB file, Manage file associations and viewers and etc.",
       "url": "apple-magnifier://install?url=https://tigisoftware.com/download/Filza_NoURLScheme_3.9.8.ipa",
       "bundleid": "com.tigisoftware.Filza",
@@ -29,7 +29,7 @@
     {
       "id": 4,
       "title": "AppStore++",
-      "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1040724357409931364/AppStore.png",
+      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/AppStorePlusIcon.jpg",
       "description": "AppStore++ tweak for TrollStore. Allows you to downgrade installed apps.",
       "url": "apple-magnifier://install?url=https://github.com/CokePokes/AppStorePlus-TrollStore/releases/download/v1.2-1/AppStore++_TrollStore_v1.0.3-2.ipa",
       "bundleid": "com.cokepokes.AppStorePlus",
