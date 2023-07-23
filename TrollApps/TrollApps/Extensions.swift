@@ -10,25 +10,44 @@ import CoreServices
 import Foundation
 
 func InstallIPA(_ IPAPath: String) {
-    spawnRoot("\(SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore").bundleURL.path)/trollstorehelper", ["install", IPAPath])
+    if let trollStoreApp = SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore") {
+        let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
+        spawnRoot(trollstoreHelperPath, ["install", IPAPath])
+    } else {
+        print("Error: TrollStore app not found.")
+    }
+    
     if FileManager.default.fileExists(atPath: IPAPath) {
         do {
             try FileManager.default.removeItem(atPath: IPAPath)
         } catch {
-            print(error)
+            print("Error removing .ipa file: \(error)")
         }
     }
 }
 
-func DownloadIPA(_ IPA: String) {
-    do {
-        let IPAPath = "/var/mobile/TrollApps-Tmp-IPA.ipa"
-        if FileManager.default.fileExists(atPath: IPAPath) {
+func DownloadIPA(_ IPA: String) -> Bool {
+    guard let url = URL(string: IPA) else {
+        print("Invalid URL")
+        return false
+    }
+
+    let IPAPath = "/var/mobile/TrollApps-Tmp-IPA.ipa"
+    if FileManager.default.fileExists(atPath: IPAPath) {
+        do {
             try FileManager.default.removeItem(atPath: IPAPath)
+        } catch {
+            print("Error removing existing .ipa file: \(error)")
+            return false
         }
-        FileManager.default.createFile(atPath: IPAPath, contents: try Data(contentsOf: URL(string: IPA)!))
+    }
+
+    do {
+        try Data(contentsOf: url).write(to: URL(fileURLWithPath: IPAPath))
+        return true
     } catch {
-        print(error)
+        print("Error downloading .ipa file: \(error)")
+        return false
     }
 }
 

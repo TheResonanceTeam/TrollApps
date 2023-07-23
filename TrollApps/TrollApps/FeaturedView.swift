@@ -17,6 +17,7 @@ struct FeaturedView: View {
     @State private var InstallingIPA = false
     @State private var DownloadingIPA = true
     @State private var InstallingIPAInfo: stuff? = nil
+    @State private var downloadError: Bool = false
     @ViewBuilder
     func appButton(json: stuff)->some View {
         if isAppInstalled(json.bundleid) {
@@ -29,16 +30,23 @@ struct FeaturedView: View {
                     InstallingIPA = true
                     InstallingIPAInfo = json
                     DownloadingIPA = true
-                    DownloadIPA(json.url.replacingOccurrences(of: "apple-magnifier://install?url=", with: ""))
-                    DownloadingIPA = false
-                    InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                    InstallingIPA = false
-                    InstallingIPAInfo = nil
-                    Task{await refresh()}
+                    if DownloadIPA(json.url.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")) {
+                        DownloadingIPA = false
+                        InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                        InstallingIPA = false
+                        InstallingIPAInfo = nil
+                        Task { await refresh() }
+                    } else {
+                        DownloadingIPA = false
+                        InstallingIPA = false
+                        InstallingIPAInfo = nil
+                        downloadError = true
+                    }
                 }
             }
         }
     }
+    
     var body: some View {
         if InstallingIPA {
             HStack {
@@ -53,6 +61,13 @@ struct FeaturedView: View {
                 Section {
                     NavigationView {
                         let form = Form {
+                            //  show error at top of screen
+                            if downloadError {
+                                Section {
+                                    Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
+                                        .foregroundColor(.red)
+                                }
+                            }
                             ForEach(apps) { json in
                                 Section {
                                     Label {
@@ -79,6 +94,13 @@ struct FeaturedView: View {
                                     }
                                 }
                             }
+                            //  show error at bottom of screen
+                            /*if downloadError {
+                                Section {
+                                    Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
+                                        .foregroundColor(.red)
+                                }
+                            }*/
                         }
                             .environment(\.defaultMinListRowHeight, 50)
                             .navigationTitle("Featured")
@@ -118,22 +140,31 @@ struct FeaturedView: View {
             } else {
                 NavigationView {
                     let form = Form {
-                        ForEach(apps) { json in
-                            Label {
-                                HStack {
-                                    Text(json.title)
-                                    Spacer()
-                                    appButton(json: json)
-                                        .buttonStyle(appstorestyle())
+                        Section {
+                            ForEach(apps) { json in
+                                Label {
+                                    HStack {
+                                        Text(json.title)
+                                        Spacer()
+                                        appButton(json: json)
+                                            .buttonStyle(appstorestyle())
+                                    }
+                                } icon: {
+                                    WebImage(url: URL(string: json.urlimg))
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .clipShape(RoundedRectangle(cornerRadius: 7))
                                 }
-                            } icon: {
-                                WebImage(url: URL(string: json.urlimg))
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                            }
+                        }
+                        if downloadError {
+                            Section {
+                                Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
+                                    .foregroundColor(.red)
                             }
                         }
                     }
+                    
                         .environment(\.defaultMinListRowHeight, 50)
                         .navigationTitle("Featured")
                         .toolbar {
@@ -145,7 +176,7 @@ struct FeaturedView: View {
                                 }
                             }
                         }
-                    //                    from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
+                    //  from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
                         .onChange(of: scenePhase) { newPhase in
                             if newPhase == .active {
                                 print("Active, will refresh")
@@ -171,6 +202,7 @@ struct FeaturedView: View {
             }
         }
     }
+    
     @Sendable
     func refresh()async{
         let currentInstalledAppsBundleIDs = GetApps()
