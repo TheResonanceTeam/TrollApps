@@ -2,7 +2,7 @@
     {
       "id": 1,
       "title": "Misaka",
-      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/misakajpg",
+      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/misaka.jpg",
       "description": "v3.2.5\nJailbreak alternative and tweak manager for non-jailbroken devices supporting KFD and MDC.",
       "url": "apple-magnifier://install?url=https://github.com/straight-tamago/misaka/releases/download/3.2.5/misaka-v3.2.5.ipa",
       "bundleid": "com.straight-tamago.misakaRS",
