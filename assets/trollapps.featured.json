@@ -1,83 +1,38 @@
 [
     {
       "id": 1,
-      "title": "Apps Manager",
-      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/AppManagerIcon.jpg",
-      "description": "Backup AppData: Backup entire application data, include all saved files, settings, data stored in keychain. Restore AppData: Restore application data. Wipe AppData: Wipe application data, include all files, settings. Quick open application container, document container, or app groups. Import/Export backup. You can use it to transfer application data from your device to other devices.",
-      "url": "apple-magnifier://install?url=https://tigisoftware.com/download/AppsManager_1.7.0.ipa",
-      "bundleid": "com.tigisoftware.ADManager",
+      "title": "Misaka",
+      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/misakajpg",
+      "description": "v3.2.5\nJailbreak alternative and tweak manager for non-jailbroken devices supporting KFD and MDC.",
+      "url": "apple-magnifier://install?url=https://github.com/straight-tamago/misaka/releases/download/3.2.5/misaka-v3.2.5.ipa",
+      "bundleid": "com.straight-tamago.misakaRS",
       "completed": false
     },
     {
       "id": 2,
       "title": "Filza",
       "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/FilzaIcon.jpg",
-      "description": "Explore files and folders with list view or grid view. View/edit files with powerful viewers, includes: media player, plist editor, hex editor, text editor. Filza can also view office files: word, excel, powerpoint. Sharing files between computer and your device with Air Browser. Terminal, allow execute shell scripts and console app. Manage iPhone music library easily, import/export/rename/delete. Installer, can view details, install or extract IPA package and DEB package. Manage applications, list all installed applications, uninstall or install apps. Music library: Manage music library, import/export/rename/delete just same as normal files. Create DEB file, Manage file associations and viewers and etc.",
-      "url": "apple-magnifier://install?url=https://tigisoftware.com/download/Filza_NoURLScheme_3.9.8.ipa",
+      "description": "v4.0.0\nFilesystem browser for iOS devices.",
+      "url": "apple-magnifier://install?url=https://tigisoftware.com/download/Filza_NoURLScheme_4.0.0.ipa",
       "bundleid": "com.tigisoftware.Filza",
       "completed": false
     },
     {
-      "id": 3,
-      "title": "Santander",
-      "urlimg": "https://raw.githubusercontent.com/SerenaKit/Santander/main/Santander/Assets.xcassets/AppIcon.appiconset/1024.png",
-      "description": "A new, enhanced File Manager for iOS devices. Santander aims to enhance the experience of a file manager on an iOS device, using modern and familiar UI alongside new APIs. The project is still in beta, and there still quite a lot of bugs to fix & enhancements to make.",
-      "url": "apple-magnifier://install?url=https://cdn.discordapp.com/attachments/969879614379921418/1040724749917093981/Santander.ipa",
-      "bundleid": "com.serena.santander",
-      "completed": false
+        "id": 3,
+        "title": "ScreenshotX",
+        "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1044548694273445888/IMG_0792.png",
+        "description": "Paste your screenshot on that and it will generate to beautiful pics.",
+        "url": "apple-magnifier://install?url=https://github.com/ConnorDoesDev/TrollApps/releases/download/TrollStore/ScreenshotX1.0.ipa",
+        "bundleid": "com.junesiphone.screenshotx",
+        "completed": false
     },
     {
       "id": 4,
-      "title": "AppStore++",
-      "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/AppStorePlusIcon.jpg",
-      "description": "AppStore++ tweak for TrollStore. Allows you to downgrade installed apps.",
-      "url": "apple-magnifier://install?url=https://github.com/CokePokes/AppStorePlus-TrollStore/releases/download/v1.2-1/AppStore++_TrollStore_v1.0.3-2.ipa",
+      "title": "Cowabunga",
+      "urlimg": "https://user-images.githubusercontent.com/52459150/215552092-9dc1e029-da35-43da-867f-17279e3dc180.png",
+      "description": "v10.3.2\nMDC tool to tweak iOS in many ways including custom themes, hiding the dock, and more!.",
+      "url": "apple-magnifier://install?url=https://github.com/leminlimez/Cowabunga/releases/download/v10.3.2/Cowabunga.ipa",
       "bundleid": "com.cokepokes.AppStorePlus",
-      "completed": false
-    },
-    {
-      "id": 5,
-      "title": "Cardio",
-      "urlimg": "https://images-ext-2.discordapp.net/external/gDDGCuSANDADwSi0MhklzJdJqYj-t0sKWiMNXeuh7fQ/https/user-images.githubusercontent.com/29115431/193304861-3eb9f323-8d9e-46d9-a539-26565a655832.png",
-      "description": "App for changing apple pay images using CoreTrust bug that affects iOS 14.0 - 15.4.1 (15.5b4) using TrollStore.",
-      "url": "apple-magnifier://install?url=https://github.com/cisc0disco/Cardio/releases/download/1.1/Cardio.ipa",
-      "bundleid": "com.cisc0freak.cardio",
-      "completed": false
-    },
-    {
-      "id": 6,
-      "title": "TrollTools",
-      "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1040894605249490954/TrollUtils.png",
-      "description": "TrollTools - Revolutionizing iOS 15 customisation.",
-      "url": "apple-magnifier://install?url=https://github.com/sourcelocation/TrollTools/releases/download/2.1.2/TrollTools-2.1.2.tipa",
-      "bundleid": "net.sourceloc.TrollTools",
-      "completed": false
-    },
-    {
-      "id": 7,
-      "title": "Jitterbug",
-      "urlimg": "https://media.discordapp.net/attachments/969879614379921418/1041003072631099493/icon_256pt2x.png",
-      "description": "This app uses libimobiledevice and WiFi pairing to use one iOS device to launch apps with the debugger on another iOS device. This tethered launch allows JIT to work on the second iOS device. It can also create a VPN tunnel to allow a device to debug itself.",
-      "url": "apple-magnifier://install?url=https://github.com/osy/Jitterbug/releases/latest/download/Jitterbug.ipa",
-      "bundleid": "com.osy86.Jitterbug",
-      "completed": false
-    },
-    {
-      "id": 8,
-      "title": "TrollNonce",
-      "urlimg": "https://media.discordapp.net/attachments/969879614379921418/1040895655389970432/TrollNonce.png",
-      "description": "Nonce Setter for 15.0 - 15.1.1 (A10-A15) and 15.2-15.5b4 (A12+, not all device / version combinations supported atm), only works when installed through TrollStore 1.0.9 or newer.",
-      "url": "apple-magnifier://install?url=https://github.com/opa334/TrollNonce/releases/latest/download/TrollNonce.tipa",
-      "bundleid": "com.opa334.trollnonce",
-      "completed": false
-    },
-    {
-      "id": 9,
-      "title": "ScreenshotX",
-      "urlimg": "https://cdn.discordapp.com/attachments/969879614379921418/1044548694273445888/IMG_0792.png",
-      "description": "Paste your screenshot on that and it will generate to beautiful pics.",
-      "url": "apple-magnifier://install?url=https://github.com/ConnorDoesDev/TrollApps/releases/download/TrollStore/ScreenshotX1.0.ipa",
-      "bundleid": "com.junesiphone.screenshotx",
       "completed": false
     }
   ]
