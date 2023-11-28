@@ -32,7 +32,7 @@
       "urlimg": "https://user-images.githubusercontent.com/52459150/215552092-9dc1e029-da35-43da-867f-17279e3dc180.png",
       "description": "v10.3.2\nMDC tool to tweak iOS in many ways including custom themes, hiding the dock, and more!",
       "url": "apple-magnifier://install?url=https://github.com/leminlimez/Cowabunga/releases/download/v10.3.2/Cowabunga.ipa",
-      "bundleid": "com.cokepokes.AppStorePlus",
+      "bundleid": "com.leemin.Cowabunga",
       "completed": false
     },
     {
@@ -41,7 +41,7 @@
       "urlimg": "https://raw.githubusercontent.com/Bonnie39/TrollApps/main/assets/featured-icons/wdbfontoverwrite.jpg",
       "description": "v1.10.8\nOverwrite system fonts with your own custom ones!",
       "url": "apple-magnifier://install?url=https://github.com/ginsudev/WDBFontOverwrite/releases/download/v1.10.8/WDBFontOverwrite.ipa",
-      "bundleid": "com.cokepokes.AppStorePlus",
+      "bundleid": "com.ginsudev.WDBFontOverwrite",
       "completed": false
     },
     {
@@ -50,7 +50,7 @@
       "urlimg": "https://raw.githubusercontent.com/zzanehip/The-OldOS-Project/master/OldOS/OldOS/Assets.xcassets/AppIcon.appiconset/1024.png",
       "description": "v1.0:18\nExperience iOS 4 once again on the latest iPhone.",
       "url": "apple-magnifier://install?url=https://github.com/zzanehip/The-OldOS-Project/releases/download/1.0_18/OldOS.ipa",
-      "bundleid": "com.cokepokes.AppStorePlus",
+      "bundleid": "com.zurac.OldOS",
       "completed": false
     }
   ]
