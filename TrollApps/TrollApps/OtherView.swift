@@ -131,6 +131,18 @@ struct OtherView: View {
                             .frame(width: 30, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 7))
                     }
+                    Label {
+                        HStack {
+                            Button("Cleover") {
+                                openURL(URL(string: "https://www.github.com/Cleover")!)
+                            }
+                        }
+                    } icon: {
+                        Image("CleoverIcon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
                 }
                 
                 Section(header: Text("Other projects used and their licenses")) {

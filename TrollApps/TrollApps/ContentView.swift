@@ -17,7 +17,7 @@ struct ContentView: View {
                 }
             RepoAppsView()
                 .tabItem {
-                    Label("Sources & Apps", systemImage: "globe.americas.fill")
+                    Label("Sources", systemImage: "globe.americas.fill")
                 }
             OtherView()
                 .tabItem {

@@ -11,36 +11,66 @@ import SDWebImageSwiftUI
 struct FeaturedView: View {
     @Environment(\.openURL) var openURL
     @Environment(\.scenePhase) var scenePhase
-    @State private var isshowingdesc = false
+    @State private var isDetailViewPresented = false
     @State private var apps: [stuff] = []
     @State private var installedAppsBundleIDs = [String]()
     @State private var InstallingIPA = false
     @State private var DownloadingIPA = true
     @State private var InstallingIPAInfo: stuff? = nil
     @State private var downloadError: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertToPresent: Alert?
+    
     @ViewBuilder
     func appButton(json: stuff)->some View {
-        if isAppInstalled(json.bundleid) {
+        if isAppInstalled(json.bundleIdentifier) {
             Button("OPEN") {
-                OpenApp(json.bundleid)
+                OpenApp(json.bundleIdentifier)
             }
         } else {
-            Button("GET") {
-                DispatchQueue.global(qos: .utility).async {
-                    InstallingIPA = true
-                    InstallingIPAInfo = json
-                    DownloadingIPA = true
-                    if DownloadIPA(json.url.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")) {
-                        DownloadingIPA = false
-                        InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                        InstallingIPA = false
-                        InstallingIPAInfo = nil
-                        Task { await refresh() }
-                    } else {
-                        DownloadingIPA = false
-                        InstallingIPA = false
-                        InstallingIPAInfo = nil
-                        downloadError = true
+            DynamicButton(initialText: "GET") { updater in
+                if(InstallingIPA == false) {
+                    DispatchQueue.global(qos: .utility).async {
+                        InstallingIPA = true
+                        InstallingIPAInfo = json
+                        DownloadingIPA = true
+                        updater("Loading...")
+                        if DownloadIPA(json.downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")) {
+                            DownloadingIPA = false
+                            InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                            InstallingIPA = false
+                            InstallingIPAInfo = nil
+                            Task { await refresh() }
+                        } else {
+                            DownloadingIPA = false
+                            InstallingIPA = false
+                            InstallingIPAInfo = nil
+                            downloadError = true
+                            updater("GET")
+                            
+
+                            let alert = Alert(
+                                title: Text("Failed to install app"),
+                                message: Text("This could be due to missing permissions."),
+                                dismissButton: .default(Text("Ok"))
+                            )
+
+                            DispatchQueue.main.async {
+                                showAlert = true
+                                alertToPresent = alert
+                            }
+                        }
+                    }
+                } else {
+                    let alert = Alert(
+                        title: Text("Unable to start installation"),
+                        message: Text("Please wait for your other installation to finish."),
+                        dismissButton: .default(Text("Ok"))
+                    )
+
+                    DispatchQueue.main.async {
+                        showAlert = true
+                        alertToPresent = alert
                     }
                 }
             }
@@ -48,170 +78,68 @@ struct FeaturedView: View {
     }
     
     var body: some View {
-        if InstallingIPA {
-            HStack {
-                Text("\(DownloadingIPA ? "Download" : "Install")ing \(InstallingIPAInfo!.title)")
-                WebImage(url: URL(string: InstallingIPAInfo!.urlimg))
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .clipShape(RoundedRectangle(cornerRadius: 7))
-            }
-        } else {
-            if isshowingdesc {
+        NavigationView {
+            let form = Form {
                 Section {
-                    NavigationView {
-                        let form = Form {
-                            //  show error at top of screen
-                            if downloadError {
-                                Section {
-                                    Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
-                                        .foregroundColor(.red)
+                    ForEach(apps) { json in
+                        NavigationLink(destination: AppDetailsView(appDetails: json)) {
+                            Label {
+                                HStack {
+                                    Text(json.name)
+                                    Spacer()
+                                    appButton(json: json)
+                                        .buttonStyle(AppStoreStyle())
                                 }
-                            }
-                            ForEach(apps) { json in
-                                Section {
-                                    Label {
-                                        HStack {
-                                            Text(json.title)
-                                            Spacer()
-                                            appButton(json: json)
-                                                .buttonStyle(appstorestyle())
-                                        }
-                                    } icon: {
-                                        WebImage(url: URL(string: json.urlimg))
-                                            .resizable()
-                                            .frame(width: 30, height: 30)
-                                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                                    }
-                                    VStack {
-                                        Text(json.description)
-                                            .opacity(0.3)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                        Button("Copy \(json.title) .IPA Link") {
-                                            UIPasteboard.general.string = json.url
-                                        }
-                                        .buttonStyle(somebuttonstyle())
-                                    }
-                                }
-                            }
-                            //  show error at bottom of screen
-                            /*if downloadError {
-                                Section {
-                                    Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
-                                        .foregroundColor(.red)
-                                }
-                            }*/
-                        }
-                            .environment(\.defaultMinListRowHeight, 50)
-                            .navigationTitle("Featured")
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarLeading){
-                                    Button {
-                                        isshowingdesc.toggle()
-                                    } label: {
-                                        Image(systemName: "info.circle")
-                                    }
-                                }
-                            }
-                        //                    from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
-                            .onChange(of: scenePhase) { newPhase in
-                                if newPhase == .active {
-                                    print("Active, will refresh")
-                                    Task(operation: refresh)
-                                }
-                            }
-                        if #available(iOS 15.0, *) {
-                            form
-                                .refreshable {
-                                    Task{await refresh()}
-                                }
-                        } else {
-                            form
-                                .toolbar{
-                                    ToolbarItem(placement: .navigationBarTrailing){
-                                        AsyncButton(action: refresh){
-                                            Image(systemName: "arrow.clockwise")
-                                        }
-                                    }
-                                }
-                        }
-                    }
-                }
-            } else {
-                NavigationView {
-                    let form = Form {
-                        Section {
-                            ForEach(apps) { json in
-                                Label {
-                                    HStack {
-                                        Text(json.title)
-                                        Spacer()
-                                        appButton(json: json)
-                                            .buttonStyle(appstorestyle())
-                                    }
-                                } icon: {
-                                    WebImage(url: URL(string: json.urlimg))
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
-                                }
+                            } icon: {
+                                WebImage(url: URL(string: json.iconURL))
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .clipShape(RoundedRectangle(cornerRadius: 7))
                             }
                         }
-                        if downloadError {
-                            Section {
-                                Text("App download failed. Please check your internet and try again later. (You may need to force-quit and relaunch TrollApps.)")
-                                    .foregroundColor(.red)
-                            }
-                        }
-                    }
-                    
-                        .environment(\.defaultMinListRowHeight, 50)
-                        .navigationTitle("Featured")
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading){
-                                Button {
-                                    isshowingdesc.toggle()
-                                } label: {
-                                    Image(systemName: "info.circle")
-                                }
-                            }
-                        }
-                    //  from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
-                        .onChange(of: scenePhase) { newPhase in
-                            if newPhase == .active {
-                                print("Active, will refresh")
-                                Task(operation: refresh)
-                            }
-                        }
-                    if #available(iOS 15.0, *) {
-                        form
-                            .refreshable {
-                                Task{await refresh()}
-                            }
-                    } else {
-                        form
-                            .toolbar{
-                                ToolbarItem(placement: .navigationBarTrailing){
-                                    AsyncButton(action: refresh){
-                                        Image(systemName: "arrow.clockwise")
-                                    }
-                                }
-                            }
                     }
                 }
             }
+                .onAppear { Task { await refresh() } }
+                .environment(\.defaultMinListRowHeight, 50)
+                .navigationTitle("Featured")
+            //  from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
+                .onChange(of: scenePhase) { newPhase in
+                    if newPhase == .active {
+                        print("Active, will refresh")
+                        Task(operation: refresh)
+                    }
+                }
+            if #available(iOS 15.0, *) {
+                form
+                    .refreshable {
+                        Task{await refresh()}
+                    }
+            } else {
+                form
+                    .toolbar{
+                        ToolbarItem(placement: .navigationBarTrailing){
+                            AsyncButton(action: refresh){
+                                Image(systemName: "arrow.clockwise")
+                            }
+                        }
+                    }
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            alertToPresent ?? Alert(title: Text("Default Title"), message: Text("Default Message"))
         }
     }
     
     @Sendable
-    func refresh()async{
+    func refresh() async {
         let currentInstalledAppsBundleIDs = GetApps()
         DispatchQueue.main.async {
             withAnimation{
                 self.installedAppsBundleIDs=currentInstalledAppsBundleIDs
             }
         }
-        guard let updatedApps = await FetchApps() else {return}
+        guard let updatedApps = await FetchFeaturedApps() else { return }
         DispatchQueue.main.async {
             withAnimation{
                 self.apps=updatedApps

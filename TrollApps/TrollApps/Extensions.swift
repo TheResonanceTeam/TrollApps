@@ -26,6 +26,32 @@ func InstallIPA(_ IPAPath: String) {
     }
 }
 
+func mergeApps(appList: [stuff]) -> [stuff] {
+    // Create a dictionary to store unique apps based on bundleIdentifier
+    var uniqueAppsDictionary = [String: stuff]()
+    
+    // Iterate through the input appList
+    for app in appList {
+        // Check if the app's bundleIdentifier is not already in the dictionary
+        if uniqueAppsDictionary[app.bundleIdentifier] == nil {
+            // If not, add the app to the dictionary using bundleIdentifier as the key
+            uniqueAppsDictionary[app.bundleIdentifier] = app
+        }
+    }
+    
+    // Convert the dictionary values back to an array of Apps
+    let uniqueApps = Array(uniqueAppsDictionary.values)
+    
+    return uniqueApps
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+
 func DownloadIPA(_ IPA: String) -> Bool {
     guard let url = URL(string: IPA) else {
         print("Invalid URL")
@@ -51,7 +77,8 @@ func DownloadIPA(_ IPA: String) -> Bool {
     }
 }
 
-public struct appstorestyle: ButtonStyle {
+
+public struct AppStoreStyle: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(Font.body.weight(.semibold))
@@ -88,6 +115,7 @@ func GetApps() -> [String] {
     for app in LSApplicationWorkspace().allInstalledApplications() as! [LSApplicationProxy] {
         apps.append((NSDictionary(contentsOfFile: "\(app.bundleURL.path)/Info.plist")?.value(forKey: "CFBundleIdentifier") ?? "Unknown") as! String)
     }
+    
     return apps
 }
 
