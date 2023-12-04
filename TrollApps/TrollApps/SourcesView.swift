@@ -8,78 +8,31 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct Repo: Decodable, Identifiable {
-    let id = UUID()
-    var name: String?
-    var icon: String?
-    var featuredApps: [String]?
-    var apps: [stuff]
-}
+struct SourcesView: View {
+    @State private var results: [RepoMemory] = []
+    @EnvironmentObject var repoManager: RepositoryManager
 
-func fetchRepo(_ repoURL: String, completion: @escaping (Repo?) -> Void) {
-    guard let url = URL(string: repoURL) else {
-        print("Invalid URL")
-        completion(nil)
-        return
-    }
-
-    URLSession.shared.dataTask(with: url) { data, response, error in
-        if let error = error {
-            print("Oopsie: \(error)")
-            completion(nil)
-            return
-        }
-
-        guard let data = data else {
-            print("No data received")
-            completion(nil)
-            return
-        }
-
-        do {
-            let decodedRepo = try decoder.decode(Repo.self, from: data)
-            completion(decodedRepo)
-        } catch {
-            print("Oopsie: \(error)")
-            completion(nil)
-        }
-    }.resume()
-}
-
-func FetchRepo(_ RepoURL: String) -> Repo? {
-    var result: Repo?
-    let semaphore = DispatchSemaphore(value: 0)
-
-    fetchRepo(RepoURL) { repo in
-        result = repo
-        semaphore.signal()
-    }
-
-    semaphore.wait()
-    return result
-}
-
-struct RepoAppsView: View {
-    @AppStorage("repos") var Repos: [String] = ["https://raw.githubusercontent.com/Cleover/TrollStore-IPAs/main/apps.json"]
-
-    @Environment(\.openURL) var openURL
     var body: some View {
         NavigationView {
             List {
-                ForEach(Repos, id: \.self) { repo in
-                    if let repoData = FetchRepo(repo) {
-                        NavigationLink(destination: SourceView(repo: repoData), label: {
-                            Text(repoData.name ?? "Unnamed Repo")
+                ForEach(results.reversed().indices, id: \.self) { index in
+                    switch results[index].data {
+                    case .success(let repo):
+                        NavigationLink(destination: SourceView(repo: repo), label: {
+                            Text(repo.name ?? "Unnamed Repo")
                         })
-                    } else {
+                    case .failure(let error):
                         Section(header: Text("Failed to load data for this repo.")) {
                             Text("Please check your internet connection and try again later. (You may need to force-quit and relaunch TrollApps.)")
                         }
                     }
-                    
                 }
-                .onDelete { IndexSet in
-                    Repos.remove(atOffsets: IndexSet)
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        repoManager.removeRepo(repoMemory: results[index])
+                    }
+                    
+                    results = repoManager.ReposData
                 }
             }
             .toolbar {
@@ -91,19 +44,30 @@ struct RepoAppsView: View {
             .navigationTitle("Sources")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing){
-                    NavigationLink(destination: SourcesView(), label: {
+                    NavigationLink(destination: AddSourceView(onDismiss: {
+                        results = repoManager.ReposData
+                    }), label: {
                         Image(systemName: "plus")
                     })
                 }
             }
+        }.onAppear {
+            if !repoManager.hasFetchedRepos {
+                repoManager.fetchRepos()
+            }
+            
+            results = repoManager.ReposData
         }
     }
 }
 
-struct SourcesView: View {
-    @AppStorage("repos") var Repos: [String] = ["https://raw.githubusercontent.com/Cleover/TrollStore-IPAs/main/apps.json"]
+struct AddSourceView: View {
+    @EnvironmentObject var repoManager: RepositoryManager
     @State var RepoURL = ""
     @Environment(\.presentationMode) var presentationMode
+
+    // Closure to be executed on dismiss
+    var onDismiss: () -> Void
 
     var body: some View {
         Form {
@@ -111,22 +75,14 @@ struct SourcesView: View {
                 TextField("Source URL", text: $RepoURL)
                     .keyboardType(.URL)
                 Button("Add Source") {
-                    if !Repos.contains(RepoURL) {
-                        Repos.append(RepoURL)
+                    repoManager.addRepo(RepoURL) {
                         RepoURL = ""
+                        presentationMode.wrappedValue.dismiss()
+                        onDismiss()
                     }
-                    presentationMode.wrappedValue.dismiss()
-
-                    
                 }.disabled(self.RepoURL.isEmpty)
             }
         }
         .navigationBarTitle("", displayMode: .inline)
-    }
-}
-
-struct SourcesView_Previews: PreviewProvider {
-    static var previews: some View {
-        SourcesView()
     }
 }

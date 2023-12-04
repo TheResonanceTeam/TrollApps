@@ -15,7 +15,7 @@ struct ContentView: View {
                     Image(systemName: "star.fill")
                     Text("Featured")
                 }
-            RepoAppsView()
+            SourcesView()
                 .tabItem {
                     Label("Sources", systemImage: "globe.americas.fill")
                 }

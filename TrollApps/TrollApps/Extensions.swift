@@ -26,31 +26,65 @@ func InstallIPA(_ IPAPath: String) {
     }
 }
 
-func mergeApps(appList: [stuff]) -> [stuff] {
-    // Create a dictionary to store unique apps based on bundleIdentifier
-    var uniqueAppsDictionary = [String: stuff]()
-    
-    // Iterate through the input appList
+struct CollapsibleText: View {
+    var text: String
+    @Binding var isExpanded: Bool
+    let maxLines: Int
+
+    var body: some View {
+        Text(text)
+            .lineLimit(isExpanded ? nil : maxLines)
+    }
+}
+
+// TODO: Fix up this function for better handeling
+func mergeApps(appList: [Application]) -> [Application] {
+    var uniqueAppsSet = Set<String>()
+    var uniqueApps = [Application]()
+
     for app in appList {
-        // Check if the app's bundleIdentifier is not already in the dictionary
-        if uniqueAppsDictionary[app.bundleIdentifier] == nil {
-            // If not, add the app to the dictionary using bundleIdentifier as the key
-            uniqueAppsDictionary[app.bundleIdentifier] = app
+        if uniqueAppsSet.insert(app.bundleIdentifier).inserted {
+            
+            var builtApp = app
+            
+            if (app.downloadURL != nil) {
+                let builtVersion = Version(
+                    version: app.version ?? "0.0.0",
+                    date: app.versionDate ?? "",
+                    localizedDescription: app.localizedDescription,
+                    downloadURL: app.downloadURL ?? "",
+                    size: app.size
+                )
+                
+                if builtApp.versions == nil {
+                    builtApp.versions = [builtVersion]
+                } else {
+                    builtApp.versions?.append(builtVersion)
+                }
+            }
+
+            uniqueApps.append(builtApp)
+        } else {
+            if let existingAppIndex = uniqueApps.firstIndex(where: { $0.bundleIdentifier == app.bundleIdentifier }) {                
+                let builtVersion = Version(
+                    version: app.version ?? "0.0.0",
+                    date: app.versionDate ?? "",
+                    localizedDescription: app.localizedDescription,
+                    downloadURL: app.downloadURL ?? "",
+                    size: app.size
+                )
+                
+                if uniqueApps[existingAppIndex].versions == nil {
+                    uniqueApps[existingAppIndex].versions = [builtVersion]
+                } else {
+                    uniqueApps[existingAppIndex].versions?.append(builtVersion)
+                }
+            }
         }
     }
-    
-    // Convert the dictionary values back to an array of Apps
-    let uniqueApps = Array(uniqueAppsDictionary.values)
-    
+
     return uniqueApps
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
 
 func DownloadIPA(_ IPA: String) -> Bool {
     guard let url = URL(string: IPA) else {
@@ -93,6 +127,23 @@ public struct AppStoreStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.2 : 1.0)
     }
 }
+
+public struct AppStoreIconStyle: ButtonStyle {
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(Font.body.weight(.semibold))
+            .foregroundColor(Color.accentColor)
+            .padding(.vertical, 12)
+            .frame(width: 29, height: 29, alignment: .center)
+            .background(
+                RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+                    .fill(Color.gray)
+                    .opacity(0.2)
+            )
+            .opacity(configuration.isPressed ? 0.2 : 1.0)
+    }
+}
+
 
 public struct somebuttonstyle: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
@@ -156,7 +207,7 @@ extension UIApplication {
             currentUIAlertController?.dismiss(animated: animated)
         }
     }
-    func alert(title: String = "Aler", body: String, animated: Bool = true, withButton: Bool = true) {
+    func alert(title: String = "Alert", body: String, animated: Bool = true, withButton: Bool = true) {
         DispatchQueue.main.async {
             currentUIAlertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
             if withButton { currentUIAlertController?.addAction(.init(title: "OK", style: .cancel)) }

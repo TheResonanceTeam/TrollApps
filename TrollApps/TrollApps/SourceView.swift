@@ -1,4 +1,3 @@
-//
 //  SourceView.swift
 //  TrollApps
 //
@@ -9,65 +8,30 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct SourceView: View {
-    var repo: Repo
-    @State var InstallingIPA = false
-    @State var DownloadingIPA = true
-    @State var InstallingIPAInfo: stuff? = nil
-    
     @State private var searchText = ""
-    
-    @Environment(\.openURL) var openURL
-    
+    var repo: Repo
+
     var body: some View {
-        if InstallingIPA {
-            HStack {
-                Text("\(DownloadingIPA ? "Download" : "Install")ing \(InstallingIPAInfo!.name)")
-                WebImage(url: URL(string: InstallingIPAInfo!.iconURL))
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .clipShape(RoundedRectangle(cornerRadius: 7))
-            }
-        } else {
-            TextField("Search", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
-            Form {
-                Section() {
-                    ForEach(filteredApps) { app in
-                        NavigationLink(destination: AppDetailsView(appDetails: app)) {
-                            Section {
-                                Label {
-                                    HStack {
-                                        Text(app.name)
-//                                        Spacer()
-//                                        Button(IsAppInstalled(app.bundleIdentifier) ? "OPEN" : "GET") {
-//                                            if IsAppInstalled(app.bundleIdentifier) {
-//                                                OpenApp(app.bundleIdentifier)
-//                                            } else {
-//                                                // MISSING GET CODE
-//                                            }
-//                                        }
-//                                        .buttonStyle(AppStoreStyle())
-                                    }
-                                } icon: {
-                                    WebImage(url: URL(string: app.iconURL))
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
-                                }
-                            }
-                        }
+        VStack {
+            SearchBar(searchText: $searchText)
+            List(repo.apps, id: \.self) { app in
+                NavigationLink(destination: AppDetailsView(appDetails: app)) {
+                    HStack {
+                        WebImage(url: URL(string: app.iconURL))
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                        Text(app.name)
                     }
                 }
             }
-            .environment(\.defaultMinListRowHeight, 50)
-            .navigationTitle(repo.name ?? "Unnamed Repo")
-            .navigationBarTitle("", displayMode: .inline)
-
         }
+        .environment(\.defaultMinListRowHeight, 50)
+        .navigationTitle(repo.name ?? "Unnamed Repo")
+        .navigationBarTitle("", displayMode: .inline)
     }
     
-    var filteredApps: [stuff] {
+    var filteredApps: [Application] {
         if searchText.isEmpty {
             return mergeApps(appList: repo.apps)
         } else {
@@ -78,15 +42,12 @@ struct SourceView: View {
     }
 }
 
+struct SearchBar: View {
+    @Binding var searchText: String
 
-
-struct SourceView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleRepo = Repo(
-            name: "test repo",
-            apps: []
-        )
-
-        SourceView(repo: sampleRepo)
+    var body: some View {
+        TextField("Search", text: $searchText)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
     }
 }

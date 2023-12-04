@@ -9,71 +9,16 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct AppDetailsView: View {
-    var appDetails: stuff
+    @Environment(\.colorScheme) var colorScheme
 
-    @State private var InstallingIPA = false
-    @State private var DownloadingIPA = true
-    @State private var InstallingIPAInfo: stuff? = nil
-    @State private var downloadError: Bool = false
-    @State private var showAlert: Bool = false
-    @State private var alertToPresent: Alert?
+    var appDetails: Application
+
     @State private var installedAppsBundleIDs = [String]()
     
-    @ViewBuilder
-    func appButton(json: stuff)->some View {
-        if isAppInstalled(appDetails.bundleIdentifier) {
-            Button("OPEN") {
-                OpenApp(json.bundleIdentifier)
-            }
-        } else {
-            DynamicButton(initialText: "GET") { updater in
-                if(InstallingIPA == false) {
-                    DispatchQueue.global(qos: .utility).async {
-                        InstallingIPA = true
-                        InstallingIPAInfo = json
-                        DownloadingIPA = true
-                        updater("Loading...")
-                        if DownloadIPA(json.downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")) {
-                            DownloadingIPA = false
-                            InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                            InstallingIPA = false
-                            InstallingIPAInfo = nil
-                            Task { await refresh() }
-                        } else {
-                            DownloadingIPA = false
-                            InstallingIPA = false
-                            InstallingIPAInfo = nil
-                            downloadError = true
-                            updater("GET")
-                            
-
-                            let alert = Alert(
-                                title: Text("Failed to install app"),
-                                message: Text("This could be due to missing permissions."),
-                                dismissButton: .default(Text("Ok"))
-                            )
-
-                            DispatchQueue.main.async {
-                                showAlert = true
-                                alertToPresent = alert
-                            }
-                        }
-                    }
-                } else {
-                    let alert = Alert(
-                        title: Text("Unable to start installation"),
-                        message: Text("Please wait for your other installation to finish."),
-                        dismissButton: .default(Text("Ok"))
-                    )
-
-                    DispatchQueue.main.async {
-                        showAlert = true
-                        alertToPresent = alert
-                    }
-                }
-            }
-        }
-    }
+    @State private var selectedVersionIndex: Int = 0
+    @State private var isExpanded: Bool = false
+    
+    let maxLines: Int = 3
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
@@ -91,18 +36,80 @@ struct AppDetailsView: View {
                         Text(appDetails.developerName)
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        Text(appDetails.version)
+                        Text(appDetails.versions?[selectedVersionIndex].version ?? "Unknown Version")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         Spacer()
-                        appButton(json: appDetails)
-                            .buttonStyle(AppStoreStyle())
+                        
+                        HStack {
+                            DynamicInstallButton(appDetails: appDetails, installedAppsBundleIDs: GetApps(), selectedVersionIndex: selectedVersionIndex)
+                            
+                            Button(action: {
+                                guard let window = UIApplication.shared.windows.first else { return }
+                                while true {
+                                    window.snapshotView(afterScreenUpdates: false)
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: "arrow.clockwise.circle")
+                                }
+                            }
+                            .buttonStyle(AppStoreIconStyle())
+                        }
+
+                        
                     }
                 }
                 .padding()
                 
-                Text(appDetails.localizedDescription)
+                if let versions = appDetails.versions, versions.count == 1 {
+                    
+                } else if let versions = appDetails.versions {
+                    Picker("Select Version", selection: $selectedVersionIndex) {
+                        ForEach(0..<versions.count, id: \.self) { index in
+                            Text(versions[index].version)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
                     .padding(.horizontal, 15)
+                } else {
+                    Text("No versions available")
+                }
+
+                let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription
+
+                if((versionDesc != nil && versionDesc != "") || appDetails.localizedDescription != "") {
+                    Section {
+                        VStack(alignment: .leading, spacing: 5) {
+                            CollapsibleText(
+                                text: appDetails.versions?[selectedVersionIndex].localizedDescription ?? appDetails.localizedDescription,
+                                isExpanded: $isExpanded,
+                                maxLines: maxLines
+                            )
+                            
+                            if !isExpanded {
+                                Button("Read More") {
+                                    withAnimation {
+                                        isExpanded.toggle()
+                                    }
+                                }
+                            } else if isExpanded {
+                                Button("Read Less") {
+                                    withAnimation {
+                                        isExpanded.toggle()
+                                    }
+                                }
+                            }
+                        }
+                        .padding(15)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(backgroundFillColor)
+                        )
+                    }
+                    .padding(.horizontal, 15)
+                }
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -113,7 +120,6 @@ struct AppDetailsView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 275)
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
-
                             }
                         }
                     }
@@ -125,8 +131,9 @@ struct AppDetailsView: View {
         }
         .onAppear { Task { await refresh() } }
         .navigationBarTitle("", displayMode: .inline)
-        .alert(isPresented: $showAlert) {
-            alertToPresent ?? Alert(title: Text("Default Title"), message: Text("Default Message"))
+        
+        var backgroundFillColor: Color {
+            return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
         }
     }
     
@@ -134,44 +141,9 @@ struct AppDetailsView: View {
     func refresh() async {
         let currentInstalledAppsBundleIDs = GetApps()
         DispatchQueue.main.async {
-            withAnimation{
-                self.installedAppsBundleIDs=currentInstalledAppsBundleIDs
+            withAnimation {
+                self.installedAppsBundleIDs = currentInstalledAppsBundleIDs
             }
         }
-    }
-    func isAppInstalled(_ BundleID: String) -> Bool {
-        installedAppsBundleIDs.contains(BundleID)
-    }
-}
-
-private func InstallIPA(downloadURL: String) {
-    if let url = URL(string: "apple-magnifier://install?url=" + downloadURL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-}
-
-struct AppDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleStuff = stuff(
-            name: "Paperback",
-            bundleIdentifier: "dev.faizandurrani.moe.paperback.app",
-            version: "0.8.6",
-            versionDate: "2023-08-05",
-            size: 10727226,
-            downloadURL: "https://github.com/swaggyP36000/TrollStore-IPAs/releases/download/08-05-2023/Paperback-0.8.6.ipa",
-            developerName: "",
-            localizedDescription: "",
-            iconURL: "https://raw.githubusercontent.com/swaggyP36000/TrollStore-IPAs/main/icons/dev.faizandurrani.moe.paperback.app.png",
-        featured: true,
-            screenshotURLs: [
-                "https://i.imgur.com/W2j590N.png",
-                "https://i.imgur.com/W2j590N.png",
-                "https://i.imgur.com/W2j590N.png"
-            ]
-        )
-        
-        // Use the sample instance in your AppDetailsView preview
-        AppDetailsView(appDetails: sampleStuff)
-
     }
 }
