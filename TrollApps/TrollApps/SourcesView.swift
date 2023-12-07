@@ -173,6 +173,10 @@ struct SourcesView: View {
                             
                             repos = repoManager.ReposData
                             badRepos = repoManager.BadRepos
+                            
+                            if badRepos.count == 0 {
+                                showFailed = false
+                            }
                         }, label:
                                 {
                             Text("Delete Repo")
