@@ -8,22 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
+
     var body: some View {
-        TabView {
-            FeaturedView()
-                .tabItem {
-                    Image(systemName: "star.fill")
-                    Text("Featured")
-                }
+        TabView(selection: $selectedTab) {
+//            FeaturedView()
+//                .tabItem {
+//                    Image(systemName: "star.fill")
+//                    Text("Featured")
+//                }
+//                .tag(0)
             SourcesView()
                 .tabItem {
-                    Label("Sources", systemImage: "globe.americas.fill")
+                    Label("Repos", systemImage: "globe.americas.fill")
                 }
+                .tag(0)
             OtherView()
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")
                 }
+                .tag(1)
+        }
+        .onOpenURL { url in
+            selectedTab = 0
         }
     }
 }

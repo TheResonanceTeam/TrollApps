@@ -8,7 +8,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>TrollApps URL Scheme</string>
+			<string>org.resonance.store</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>trollapps</string>

@@ -10,90 +10,53 @@ import SDWebImageSwiftUI
 
 struct FeaturedView: View {
     
-    var body: some View {
-        Text("Feature view will be back in the next update <3")
-    }
+        var body: some View {
+            Text("Featured view will be back in the next update <3")
+        }
     
-//    @Environment(\.scenePhase) var scenePhase
-//    @State private var apps: [stuff] = []
-//    @State private var installedAppsBundleIDs = [String]()
-//    @State private var showAlert: Bool = false
-//    @State private var alertToPresent: Alert?
+    
+//    struct RepoFeaturedApps: Decodable, Identifiable, Equatable, Hashable {
+//        let id = UUID()
+//        var name: String?
+//        var apps: [Application]
+//    }
 //    
-//    @State private var selectedVersionIndex: Int = 0
-//    
+//    @EnvironmentObject var repoManager: RepositoryManager
+//    @State private var featuredApps: [RepoFeaturedApps] = []
+//
 //    var body: some View {
 //        NavigationView {
-//            let form = Form {
-//                Section {
-//                    ForEach(apps) { json in
-//                        NavigationLink(destination: AppDetailsView(appDetails: json)) {
-//                            Label {
-//                                HStack {
-//                                    Text(json.name)
-//                                    Spacer()
-//                                    DynamicInstallButton(appDetails: json, installedAppsBundleIDs: GetApps(), selectedVersionIndex: selectedVersionIndex)
-//                                }
-//                            } icon: {
-//                                WebImage(url: URL(string: json.iconURL))
-//                                    .resizable()
-//                                    .frame(width: 30, height: 30)
-//                                    .clipShape(RoundedRectangle(cornerRadius: 7))
-//                            }
-//                        }
+//            List {
+////                Section(header: Text(repo.data.name ?? "Unnamed Repo")) {
+////                    NavigationLink(destination: AppDetailsView(appDetails: app)) {
+////                        HStack {
+////                            WebImage(url: URL(string: app.iconURL ?? ""))
+////                                .resizable()
+////                                .frame(width: 30, height: 30)
+////                                .clipShape(RoundedRectangle(cornerRadius: 7))
+////                            Text(app.name)
+////                        }
+////                    }
+////                }
+//            }
+//            .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 20))
+//            .environment(\.defaultMinListRowHeight, 50)
+//            .navigationTitle("Featured")
+//        }.onAppear {
+//            if !repoManager.hasFetchedRepos {
+//                repoManager.fetchRepos()
+//            }
+//            
+//            
+//            for repo in repoManager.ReposData {
+//                for featuredApp in repo.data.featuredApps ?? [] {
+//                    if let app = repo.data.apps.first(where: { $0.bundleIdentifier == featuredAppBundleId }) {
+//                        // featuredApps.append()
+//                    } else {
+//                        
 //                    }
 //                }
 //            }
-//                .environment(\.defaultMinListRowHeight, 50)
-//                .navigationTitle("Featured")
-//            //  from https://www.hackingwithswift.com/books/ios-swiftui/how-to-be-notified-when-your-swiftui-app-moves-to-the-background
-//                .onChange(of: scenePhase) { newPhase in
-//                    if newPhase == .active {
-//                        print("Active, will refresh")
-//                        Task(operation: refresh)
-//                    }
-//                }
-//            if #available(iOS 15.0, *) {
-//                form
-//                    .refreshable {
-//                        Task{await refresh()}
-//                    }
-//            } else {
-//                form
-//                    .toolbar{
-//                        ToolbarItem(placement: .navigationBarTrailing){
-//                            AsyncButton(action: refresh){
-//                                Image(systemName: "arrow.clockwise")
-//                            }
-//                        }
-//                    }
-//            }
-//        }
-//        .alert(isPresented: $showAlert) {
-//            alertToPresent ?? Alert(title: Text("Default Title"), message: Text("Default Message"))
 //        }
 //    }
-//        
-//    @Sendable
-//    func refresh() async {
-//        let currentInstalledAppsBundleIDs = GetApps()
-//        DispatchQueue.main.async {
-//            withAnimation {
-//                self.installedAppsBundleIDs = currentInstalledAppsBundleIDs
-//            }
-//        }
-//        
-//        guard let updatedApps = await FetchFeaturedApps() else { return }
-//        DispatchQueue.main.async {
-//            withAnimation {
-//                self.apps = updatedApps
-//            }
-//        }
-//    }
-}
-
-struct FeaturedView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeaturedView()
-    }
 }

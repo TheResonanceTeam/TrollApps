@@ -14,7 +14,7 @@ struct SourceView: View {
     var body: some View {
         VStack {
             SearchBar(searchText: $searchText)
-            List(repo.apps, id: \.self) { app in
+            List(filteredApps, id: \.self) { app in
                 NavigationLink(destination: AppDetailsView(appDetails: app)) {
                     HStack {
                         WebImage(url: URL(string: app.iconURL))
@@ -33,9 +33,9 @@ struct SourceView: View {
     
     var filteredApps: [Application] {
         if searchText.isEmpty {
-            return mergeApps(appList: repo.apps)
+            return repo.apps
         } else {
-            return mergeApps(appList: repo.apps).filter { app in
+            return repo.apps.filter { app in
                 app.name.localizedCaseInsensitiveContains(searchText)
             }
         }

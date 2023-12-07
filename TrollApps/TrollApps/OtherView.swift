@@ -30,8 +30,8 @@ struct OtherView: View {
                             })
                         }
                     }
-                    Button("Delete All Sources") {
-                        UIApplication.shared.alert(title: "Deleting Sources", body: "Please wait", animated: false, withButton: false)
+                    Button("Delete All Repos") {
+                        UIApplication.shared.alert(title: "Deleting Repos", body: "Please wait", animated: false, withButton: false)
                         if let bundleID = Bundle.main.bundleIdentifier {
                             UserDefaults.standard.removePersistentDomain(forName: bundleID)
                         }
@@ -46,6 +46,45 @@ struct OtherView: View {
                         }
                     }
                     .foregroundColor(Color.red)
+                }
+                
+                Section(header: Text("Developers")) {
+                    Label {
+                        HStack {
+                            Button("Haxi0") {
+                                openURL(URL(string: "https://www.github.com/Haxi0")!)
+                            }
+                        }
+                    } icon: {
+                        Image("Haxi0Icon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
+                    Label {
+                        HStack {
+                            Button("Cleover") {
+                                openURL(URL(string: "https://www.github.com/Cleover")!)
+                            }
+                        }
+                    } icon: {
+                        Image("CleoverIcon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
+                    Label {
+                        HStack {
+                            Button("BonnieDev") {
+                                openURL(URL(string: "https://www.github.com/Bonnie39")!)
+                            }
+                        }
+                    } icon: {
+                        Image("BonnieDevIcon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
                 }
                 
                 Section(header: Text("Thanks to..."), footer: Text("Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!")) {
@@ -119,30 +158,6 @@ struct OtherView: View {
                             .frame(width: 30, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 7))
                     }
-                    Label {
-                        HStack {
-                            Button("BonnieDev") {
-                                openURL(URL(string: "https://www.github.com/Bonnie39")!)
-                            }
-                        }
-                    } icon: {
-                        Image("BonnieDevIcon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                    Label {
-                        HStack {
-                            Button("Cleover") {
-                                openURL(URL(string: "https://www.github.com/Cleover")!)
-                            }
-                        }
-                    } icon: {
-                        Image("CleoverIcon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
                 }
                 
                 Section(header: Text("Other projects used and their licenses")) {
@@ -154,12 +169,15 @@ struct OtherView: View {
                     }
                 }
                 
-                Section(header: Text("Help the project"), footer: Text("If you are having any issues with this project, you can report a bug by pressing the button above. Please describe the problem properly, so I can fix it. :)")) {
+                Section(header: Text("Help the project")) {
+                    Button("Join our Discord!") {
+                        openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
+                    }
                     Button("Report a Bug!") {
-                        openURL(URL(string: "https://github.com/haxi0/TrollApps/issues/new")!)
+                        openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
                     }.foregroundColor(Color.red)
-                    Button("JSON template for your own custom source") {
-                        openURL(URL(string: "https://raw.githubusercontent.com/haxi0/TrollApps-Static-API/main/ExampleRepo.json")!)
+                    Button("JSON template to create your own repo!") {
+                        openURL(URL(string: "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json")!)
                     }
                 }
             }

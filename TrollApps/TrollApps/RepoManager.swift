@@ -2,15 +2,15 @@
 //  RepoManager.swift
 //  TrollApps
 //
-//  Created by Cleo Debeau on 2023-12-02.
+//  Created by Cleopatra on 2023-12-02.
 //
 
 import SwiftUI
 
-struct Repo: Decodable, Identifiable, Equatable {
+struct Repo: Decodable, Identifiable, Equatable, Hashable {
     let id = UUID()
     var name: String?
-    var icon: String?
+    var iconURL: String?
     var featuredApps: [String]?
     var apps: [Application]
 }
@@ -18,15 +18,28 @@ struct Repo: Decodable, Identifiable, Equatable {
 struct RepoMemory: Identifiable {
     let id = UUID()
     var url: String
-    var data: Result<Repo, Error>
+    var data: Repo
+}
+
+struct BadRepoMemory: Identifiable {
+    let id = UUID()
+    var url: String
+}
+
+
+struct ErrorMemory: Identifiable {
+    let id = UUID()
+    var url: String
+    var data: Repo
 }
 
 struct Version: Codable, Equatable {
+    var absoluteVersion: String?
     var version: String
     var date: String
     var localizedDescription: String?
     var downloadURL: String
-    var size: Int32?
+    var size: Int64?
     var minOSVersion: String?
     var maxOSVersion: String?
 }
@@ -34,20 +47,19 @@ struct Version: Codable, Equatable {
 struct Application: Codable, Identifiable, Hashable {
     var id = UUID()
     var name: String
-    var bundleIdentifier: String
+    var bundleIdentifier: String?
     var version: String?
     var versionDate: String?
-    var size: Int32?
+    var size: Int64?
     var downloadURL: String?
     var developerName: String
-    var localizedDescription: String
+    var localizedDescription: String?
     var iconURL: String
-    var featured: Bool?
     var screenshotURLs: [String]?
     var versions: [Version]?
 
     enum CodingKeys: String, CodingKey {
-        case name, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, iconURL, featured, screenshotURLs, versions
+        case name, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, iconURL, screenshotURLs, versions
     }
 
     func hash(into hasher: inout Hasher) {
@@ -58,49 +70,91 @@ struct Application: Codable, Identifiable, Hashable {
 let decoder = JSONDecoder()
 
 class RepositoryManager: ObservableObject {
-    @AppStorage("repos") var RepoList: [String] = ["https://raw.githubusercontent.com/Cleover/TrollStore-IPAs/main/apps.json"]
+    @AppStorage("repos") var RepoList: [String] = ["https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json", "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/BonnieRepo_2.0.json"]
     @Published var ReposData: [RepoMemory] = []
+    @Published var BadRepos: [BadRepoMemory] = []
+
     @Published var hasFetchedRepos: Bool = false
+    @Published var hasFinishedFetchingRepos: Bool = false
 
     func fetchRepos() {
-        fetchRepos(RepoList) { fetchedResults in
+        self.hasFetchedRepos = true
+
+        
+        fetchRepos(RepoList) { fetchedResults, errors in
             self.ReposData = fetchedResults
-            self.hasFetchedRepos = true
+            self.BadRepos = errors
+            
+            print(self.ReposData.first?.url)
+            self.hasFinishedFetchingRepos = true
         }
     }
 
     func addRepo(_ repoURL: String, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
 
-        dispatchGroup.enter()
+        if !RepoList.contains(repoURL) {
+            dispatchGroup.enter()
+            
+            let regex = try! NSRegularExpression(pattern: #"^repo\[[A-Za-z0-9+/]+={0,2}\]$"#, options: .caseInsensitive)
 
-        fetchRepo(repoURL) { result in
-            DispatchQueue.main.async {
-                self.RepoList.append(repoURL)
-                
-                let outputRepoMemory = RepoMemory(
-                    url: repoURL,
-                    data: result
-                )
-                
-                self.ReposData.append(outputRepoMemory)
+            let range = NSRange(location: 0, length: repoURL.utf16.count)
+            let isMatch = regex.firstMatch(in: repoURL, options: [], range: range) != nil
 
-                dispatchGroup.leave()
+            if isMatch {
+                if let base64String = repoURL.components(separatedBy: "[").last?.components(separatedBy: "]").first,
+                    let data = Data(base64Encoded: base64String),
+                    let decodedString = String(data: data, encoding: .utf8) {
+                    var urlArray = decodedString.split(separator: ",").map { String($0) }
+                    urlArray = urlArray.filter { !self.RepoList.contains($0) }
+                    
+                    fetchRepos(urlArray) { fetchedResults, errors in
+                        self.ReposData = self.ReposData + fetchedResults
+                        self.BadRepos = self.BadRepos + errors
+                        self.RepoList = self.RepoList + urlArray
+                        
+                        dispatchGroup.leave()
+                    }
+                } else {
+                    UIApplication.shared.alert(title: "Error decoding Base64 string", body: "Please verify this is a proper repo[] string.", animated: false, withButton: true)
+                }
+            } else {
+                fetchRepos([repoURL]) { fetchedResults, errors in
+                    self.ReposData = self.ReposData + fetchedResults
+                    self.BadRepos = self.BadRepos + errors
+                    self.RepoList = self.RepoList + [repoURL]
+                    
+                    dispatchGroup.leave()
+                }
             }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
+            
+            dispatchGroup.notify(queue: .main) {
+                completion()
+            }
+        } else {
             completion()
         }
     }
 
-    func removeRepo(repoMemory: RepoMemory) {
-        if let index = RepoList.firstIndex(of: repoMemory.url) {
-            RepoList.remove(at: index)
-         }
-        
-        if let index = ReposData.firstIndex(where: { $0.id == repoMemory.id }) {
-            ReposData.remove(at: index)
+    func removeRepos(repoIds: Set<UUID>) {
+        for repoId in repoIds {
+            if let reposIndex = ReposData.firstIndex(where: { $0.id == repoId }) {
+                if let repoListIndex = RepoList.firstIndex(of: ReposData[reposIndex].url) {
+                    RepoList.remove(at: repoListIndex)
+                }
+                ReposData.remove(at: reposIndex)
+            }
+        }
+    }
+    
+    func removeBadRepos(repoIds: Set<UUID>) {
+        for repoId in repoIds {
+            if let badReposIndex = BadRepos.firstIndex(where: { $0.id == repoId }) {
+                if let repoListIndex = RepoList.firstIndex(of: BadRepos[badReposIndex].url) {
+                    RepoList.remove(at: repoListIndex)
+                }
+                BadRepos.remove(at: badReposIndex)
+            }
         }
     }
     
@@ -125,7 +179,28 @@ class RepositoryManager: ObservableObject {
             }
 
             do {
-                let decodedRepo = try decoder.decode(Repo.self, from: data)
+                var decodedRepo = try decoder.decode(Repo.self, from: data)
+
+                for index in decodedRepo.apps.indices {
+                    let app = decodedRepo.apps[index]
+
+                    if app.downloadURL != nil {
+                        let builtVersion = Version(
+                            version: app.version ?? "",
+                            date: app.versionDate ?? "",
+                            localizedDescription: app.localizedDescription ?? "",
+                            downloadURL: app.downloadURL ?? "",
+                            size: app.size ?? nil
+                        )
+                        
+                        if app.versions == nil {
+                            decodedRepo.apps[index].versions = []
+                        }
+
+                        decodedRepo.apps[index].versions?.insert(builtVersion, at: 0)
+                    }
+                }
+
                 completion(.success(decodedRepo))
             } catch {
                 completion(.failure(error))
@@ -160,27 +235,34 @@ class RepositoryManager: ObservableObject {
         return result
     }
 
-    func fetchRepos(_ repoURLs: [String], completion: @escaping ([RepoMemory]) -> Void) {
+    func fetchRepos(_ repoURLs: [String], completion: @escaping ([RepoMemory], [BadRepoMemory]) -> Void) {
         let dispatchGroup = DispatchGroup()
         var results: [RepoMemory] = []
-        
+        var errors: [BadRepoMemory] = []
+
         for repoURL in repoURLs {
             dispatchGroup.enter()
 
-            fetchRepo(repoURL) { result in
-                
-                let outputRepoMemory = RepoMemory(
-                    url: repoURL,
-                    data: result
-                )
+            fetchRepo(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) { result in
+                if let unwrappedResult = result {
+                    let outputRepoMemory = RepoMemory(
+                        url: repoURL,
+                        data: unwrappedResult
+                    )
+                    results.append(outputRepoMemory)
+                } else {
+                    let outputBadRepoMemory = BadRepoMemory(
+                        url: repoURL
+                    )
+                    errors.append(outputBadRepoMemory)
+                }
 
-                results.append(outputRepoMemory)
                 dispatchGroup.leave()
             }
         }
 
         dispatchGroup.notify(queue: .main) {
-            completion(results)
+            completion(results, errors)
         }
     }
 }

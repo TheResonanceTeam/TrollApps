@@ -36,7 +36,7 @@ struct AppDetailsView: View {
                         Text(appDetails.developerName)
                             .font(.subheadline)
                             .foregroundColor(.gray)
-                        Text(appDetails.versions?[selectedVersionIndex].version ?? "Unknown Version")
+                        Text(appDetails.versions?[selectedVersionIndex].absoluteVersion ?? appDetails.versions?[selectedVersionIndex].version ?? "Unknown Version")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         Spacer()
@@ -61,28 +61,26 @@ struct AppDetailsView: View {
                     }
                 }
                 .padding()
-                
+                                
                 if let versions = appDetails.versions, versions.count == 1 {
                     
                 } else if let versions = appDetails.versions {
                     Picker("Select Version", selection: $selectedVersionIndex) {
                         ForEach(0..<versions.count, id: \.self) { index in
-                            Text(versions[index].version)
+                            Text(versions[index].absoluteVersion ?? versions[index].version)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
                     .padding(.horizontal, 15)
-                } else {
-                    Text("No versions available")
                 }
-
+                
                 let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription
 
-                if((versionDesc != nil && versionDesc != "") || appDetails.localizedDescription != "") {
+                if(versionDesc != nil && versionDesc != "") {
                     Section {
                         VStack(alignment: .leading, spacing: 5) {
                             CollapsibleText(
-                                text: appDetails.versions?[selectedVersionIndex].localizedDescription ?? appDetails.localizedDescription,
+                                text: appDetails.versions?[selectedVersionIndex].localizedDescription ?? "",
                                 isExpanded: $isExpanded,
                                 maxLines: maxLines
                             )
@@ -136,6 +134,7 @@ struct AppDetailsView: View {
             return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
         }
     }
+
     
     @Sendable
     func refresh() async {

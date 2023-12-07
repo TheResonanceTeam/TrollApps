@@ -26,6 +26,21 @@ func InstallIPA(_ IPAPath: String) {
     }
 }
 
+extension URL {
+    // Helper method to parse query parameters from URL
+    var queryParameters: [String: String]? {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+              let queryItems = components.queryItems else {
+            return nil
+        }
+        var parameters = [String: String]()
+        for queryItem in queryItems {
+            parameters[queryItem.name] = queryItem.value
+        }
+        return parameters
+    }
+}
+
 struct CollapsibleText: View {
     var text: String
     @Binding var isExpanded: Bool
@@ -37,53 +52,16 @@ struct CollapsibleText: View {
     }
 }
 
-// TODO: Fix up this function for better handeling
-func mergeApps(appList: [Application]) -> [Application] {
-    var uniqueAppsSet = Set<String>()
-    var uniqueApps = [Application]()
+func reposEncode(reposUrl: [String]) -> String {
+    let repoUrlString = reposUrl.map { ($0) }.joined(separator: ",")
+    
+    print(repoUrlString)
 
-    for app in appList {
-        if uniqueAppsSet.insert(app.bundleIdentifier).inserted {
-            
-            var builtApp = app
-            
-            if (app.downloadURL != nil) {
-                let builtVersion = Version(
-                    version: app.version ?? "0.0.0",
-                    date: app.versionDate ?? "",
-                    localizedDescription: app.localizedDescription,
-                    downloadURL: app.downloadURL ?? "",
-                    size: app.size
-                )
-                
-                if builtApp.versions == nil {
-                    builtApp.versions = [builtVersion]
-                } else {
-                    builtApp.versions?.append(builtVersion)
-                }
-            }
-
-            uniqueApps.append(builtApp)
-        } else {
-            if let existingAppIndex = uniqueApps.firstIndex(where: { $0.bundleIdentifier == app.bundleIdentifier }) {                
-                let builtVersion = Version(
-                    version: app.version ?? "0.0.0",
-                    date: app.versionDate ?? "",
-                    localizedDescription: app.localizedDescription,
-                    downloadURL: app.downloadURL ?? "",
-                    size: app.size
-                )
-                
-                if uniqueApps[existingAppIndex].versions == nil {
-                    uniqueApps[existingAppIndex].versions = [builtVersion]
-                } else {
-                    uniqueApps[existingAppIndex].versions?.append(builtVersion)
-                }
-            }
-        }
+    if let data = repoUrlString.data(using: .utf8) {
+        return "repo[" + data.base64EncodedString() + "]"
     }
-
-    return uniqueApps
+    
+    return ""
 }
 
 func DownloadIPA(_ IPA: String) -> Bool {
