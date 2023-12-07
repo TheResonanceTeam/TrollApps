@@ -1,6 +1,7 @@
 <p align="center">
-    <a href="url"><img src="/TrollApps/TrollApps/Assets.xcassets/AppIcon.appiconset/1024.png" " alt="Logo" width="70" height="70" style="border-radius:20%"></a>
+    <img src="./assets/TrollAppsIcon.png" alt="Logo" width="70" height="70"></img>
 </p>
+
 
 <h1 align="center">TrollApps</h1>
 <h6 align="center">An App Store-like Addition for TrollStore.</h6>
