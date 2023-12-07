@@ -173,6 +173,10 @@ struct SourcesView: View {
                             
                             repos = repoManager.ReposData
                             badRepos = repoManager.BadRepos
+                            
+                            if badRepos.count == 0 {
+                                showFailed = false
+                            }
                         }, label:
                                 {
                             Text("Delete Repo")
@@ -242,11 +246,15 @@ struct SourcesView: View {
             if url.absoluteString.hasPrefix("trollapps://add?url=") {
                 if let repoURL = url.queryParameters?["url"] {
                     if repoURL != "" {
-                        isAddingURL = true
-                        repoManager.addRepo(repoURL) {
-                            repos = repoManager.ReposData
-                            badRepos = repoManager.BadRepos
-                            isAddingURL = false
+                        if (repoManager.RepoList.contains(repoURL)) {
+                            UIApplication.shared.alert(title: "Duplicate Repo", body: "You've already added this repo to your repo list.", animated: false, withButton: true)
+                        } else {
+                            isAddingURL = true
+                            repoManager.addRepo(repoURL) {
+                                repos = repoManager.ReposData
+                                badRepos = repoManager.BadRepos
+                                isAddingURL = false
+                            }
                         }
                     }
                 }
@@ -292,11 +300,16 @@ struct AddSourceView: View {
                 TextField("Repo URL", text: $RepoURL)
                     .keyboardType(.URL)
                 Button("Add Repos") {
-                    repoManager.addRepo(RepoURL) {
-                        RepoURL = ""
-                        presentationMode.wrappedValue.dismiss()
-                        onDismiss()
+                    if (repoManager.RepoList.contains(RepoURL)) {
+                        UIApplication.shared.alert(title: "Duplicate Repo", body: "You've already added this repo to your repo list.", animated: false, withButton: true)
+                    } else {
+                        repoManager.addRepo(RepoURL) {
+                            RepoURL = ""
+                            presentationMode.wrappedValue.dismiss()
+                            onDismiss()
+                        }
                     }
+
                 }.disabled(self.RepoURL.isEmpty)
             }
         }

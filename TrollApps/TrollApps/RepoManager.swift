@@ -85,7 +85,6 @@ class RepositoryManager: ObservableObject {
             self.ReposData = fetchedResults
             self.BadRepos = errors
             
-            print(self.ReposData.first?.url)
             self.hasFinishedFetchingRepos = true
         }
     }
