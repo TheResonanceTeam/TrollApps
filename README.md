@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./assets/TrollAppsIcon.png" alt="Logo" width="70" height="70"></img>
+    <img src="./assets/ResonanceStoreIcon.png" alt="Logo" width="70" height="70"></img>
 </p>
 
 
