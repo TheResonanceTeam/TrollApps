@@ -16,7 +16,7 @@ TrollApps is an alternative to the iOS App Store for TrollStore users. TrollApps
     <img width=256 height=auto src="./assets/Screenshot-3.png"></img>
 </p>
 
-#
+
 # Found a bug / want to send feedback? 
 <h3>Join our <a href="https://discord.gg/PrF6XqpGgX">Discord</a>!</h3>
 
