@@ -17,6 +17,22 @@ struct AppDetailsView: View {
     @State private var isExpanded: Bool = false
     
     let maxLines: Int = 3
+
+    let description: String = {
+        let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription ?? ""
+        return versionDesc
+    }()
+    
+    let truncatedDescription: String = {
+        let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription ?? ""
+        return versionDesc.truncate(maxLines: maxLines)
+    }()
+    
+    var shouldShowReadMoreButton: Bool {
+        let fullHeight = getHeight(for: description)
+        let truncatedHeight = getHeight(for: truncatedDescription)
+        return fullHeight > truncatedHeight
+    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
@@ -63,21 +79,21 @@ struct AppDetailsView: View {
                     Section {
                         VStack(alignment: .leading, spacing: 5) {
                             CollapsibleText(
-                                text: appDetails.versions?[selectedVersionIndex].localizedDescription ?? "",
+                                text: description,
                                 isExpanded: $isExpanded,
-                                maxLines: maxLines
+                                maxLines: isExpanded ? nil : maxLines
                             )
-                            
-                            if !isExpanded {
+            
+                            if !isExpanded && shouldShowReadMoreButton {
                                 Button("Read More") {
                                     withAnimation {
-                                        isExpanded.toggle()
+                                    isExpanded.toggle()
                                     }
                                 }
                             } else if isExpanded {
                                 Button("Read Less") {
                                     withAnimation {
-                                        isExpanded.toggle()
+                                    isExpanded.toggle()
                                     }
                                 }
                             }
@@ -114,6 +130,24 @@ struct AppDetailsView: View {
         
         var backgroundFillColor: Color {
             return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
+        }
+
+        func getHeight(for text: String) -> CGFloat {
+            let font = Font.system(size: 14)
+            let attributedText = NSAttributedString(
+                string: text,
+                attributes: [.font: font]
+            )
+            let constraintRect = CGSize(
+                width: UIScreen.main.bounds.width - 30,  // Adjust the width as needed
+                height: .greatestFiniteMagnitude
+            )
+            let boundingBox = attributedText.boundingRect(
+                with: constraintRect,
+                options: [.usesLineFragmentOrigin],
+                context: nil
+            )
+            return boundingBox.height
         }
     }
 }
