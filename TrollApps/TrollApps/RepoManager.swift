@@ -7,6 +7,31 @@
 
 import SwiftUI
 
+// https://medium.com/swlh/decoding-a-json-field-that-could-be-string-or-double-with-swift-f6ea6a2babf8
+enum StringOrDouble: Decodable, Encodable, Equatable {
+    case string(String)
+    case double(Double)
+
+    init(from decoder: Decoder) throws {
+        do {
+            let container = try decoder.singleValueContainer()
+            if let double = try? container.decode(Double.self) {
+                self = .double(double)
+            } else if let string = try? container.decode(String.self) {
+                self = .string(string)
+            } else {
+                throw Error.couldNotFindStringOrDouble
+            }
+        } catch {
+            throw Error.couldNotFindStringOrDouble
+        }
+    }
+
+    enum Error: Swift.Error {
+        case couldNotFindStringOrDouble
+    }
+}
+
 struct Repo: Decodable, Identifiable, Equatable, Hashable {
     let id = UUID()
     var name: String?
@@ -26,7 +51,6 @@ struct BadRepoMemory: Identifiable {
     var url: String
 }
 
-
 struct ErrorMemory: Identifiable {
     let id = UUID()
     var url: String
@@ -39,7 +63,7 @@ struct Version: Codable, Equatable {
     var date: String
     var localizedDescription: String?
     var downloadURL: String
-    var size: Int64?
+    var size: StringOrDouble?
     var minOSVersion: String?
     var maxOSVersion: String?
 }
@@ -50,9 +74,9 @@ struct Application: Codable, Identifiable, Hashable {
     var bundleIdentifier: String?
     var version: String?
     var versionDate: String?
-    var size: Int64?
+    var size: StringOrDouble?
     var downloadURL: String?
-    var developerName: String
+    var developerName: String?
     var localizedDescription: String?
     var iconURL: String
     var screenshotURLs: [String]?
@@ -70,17 +94,24 @@ struct Application: Codable, Identifiable, Hashable {
 let decoder = JSONDecoder()
 
 class RepositoryManager: ObservableObject {
-    @AppStorage("repos") var RepoList: [String] = ["https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json", "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/BonnieRepo_2.0.json"]
+    @AppStorage("repos") var RepoList: [String] = [
+        "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json",
+        "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/BonnieRepo_2.0.json",
+        "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/ResonanceTeamRepo.json"
+    ]
     @Published var ReposData: [RepoMemory] = []
     @Published var BadRepos: [BadRepoMemory] = []
+    @Published var InstalledApps = GetApps()
 
     @Published var hasFetchedRepos: Bool = false
     @Published var hasFinishedFetchingRepos: Bool = false
+    
+    @Published var isInstallingApp = false
+    @Published var isDownloadingApp = false
+
 
     func fetchRepos() {
         self.hasFetchedRepos = true
-
-        
         fetchRepos(RepoList) { fetchedResults, errors in
             self.ReposData = fetchedResults
             self.BadRepos = errors
@@ -92,7 +123,7 @@ class RepositoryManager: ObservableObject {
     func addRepo(_ repoURL: String, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
 
-        if !RepoList.contains(repoURL) {
+        if !RepoList.contains(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
             dispatchGroup.enter()
             
             let regex = try! NSRegularExpression(pattern: #"^repo\[[A-Za-z0-9+/]+={0,2}\]$"#, options: .caseInsensitive)
@@ -104,7 +135,7 @@ class RepositoryManager: ObservableObject {
                 if let base64String = repoURL.components(separatedBy: "[").last?.components(separatedBy: "]").first,
                     let data = Data(base64Encoded: base64String),
                     let decodedString = String(data: data, encoding: .utf8) {
-                    var urlArray = decodedString.split(separator: ",").map { String($0) }
+                    var urlArray = decodedString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
                     urlArray = urlArray.filter { !self.RepoList.contains($0) }
                     
                     fetchRepos(urlArray) { fetchedResults, errors in
@@ -121,7 +152,7 @@ class RepositoryManager: ObservableObject {
                 fetchRepos([repoURL]) { fetchedResults, errors in
                     self.ReposData = self.ReposData + fetchedResults
                     self.BadRepos = self.BadRepos + errors
-                    self.RepoList = self.RepoList + [repoURL]
+                    self.RepoList = self.RepoList + [repoURL.trimmingCharacters(in: .whitespacesAndNewlines)]
                     
                     dispatchGroup.leave()
                 }
@@ -159,7 +190,13 @@ class RepositoryManager: ObservableObject {
     
     func fetchRepo(_ repoURL: String, completion: @escaping (Result<Repo, Error>) -> Void) {
                 
-        guard let url = URL(string: repoURL) else {
+        var modifiedRepoURL = repoURL
+        
+        if !repoURL.contains("://") {
+            modifiedRepoURL = "https://\(repoURL)"
+        }
+        
+        guard let url = URL(string: modifiedRepoURL) else {
             completion(.failure(URLError(.badURL)))
             return
         }
@@ -245,13 +282,13 @@ class RepositoryManager: ObservableObject {
             fetchRepo(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) { result in
                 if let unwrappedResult = result {
                     let outputRepoMemory = RepoMemory(
-                        url: repoURL,
+                        url: repoURL.trimmingCharacters(in: .whitespacesAndNewlines),
                         data: unwrappedResult
                     )
                     results.append(outputRepoMemory)
                 } else {
                     let outputBadRepoMemory = BadRepoMemory(
-                        url: repoURL
+                        url: repoURL.trimmingCharacters(in: .whitespacesAndNewlines)
                     )
                     errors.append(outputBadRepoMemory)
                 }
@@ -262,6 +299,33 @@ class RepositoryManager: ObservableObject {
 
         dispatchGroup.notify(queue: .main) {
             completion(results, errors)
+        }
+    }
+    
+    func IsAppInstalled(_ BundleID: String) -> Bool {
+        let installedApps = InstalledApps
+        return installedApps.contains { $0.id == BundleID }
+    }
+    
+    func IsTrollStoreManaged(_ BundleID: String) -> Bool {
+        let installedApps = InstalledApps
+        if let installedApp = installedApps.first(where: { $0.id == BundleID }) {
+            return installedApp.isTrollStore
+        } else {
+            return false
+        }
+    }
+    
+    func showUpdateButton(version1: String, BundleID: String) -> Int32 {
+        let installedApps = InstalledApps
+        if let installedApp = installedApps.first(where: { $0.id == BundleID }) {
+            if (installedApp.version == version1) {
+                return 0
+            } else {
+                return compareVersions(version1, installedApp.version) ? 1 : 2
+            }
+        } else {
+            return 0
         }
     }
 }

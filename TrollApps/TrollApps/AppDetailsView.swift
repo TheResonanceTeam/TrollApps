@@ -12,8 +12,6 @@ struct AppDetailsView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var appDetails: Application
-
-    @State private var installedAppsBundleIDs = [String]()
     
     @State private var selectedVersionIndex: Int = 0
     @State private var isExpanded: Bool = false
@@ -33,7 +31,7 @@ struct AppDetailsView: View {
                     VStack(alignment: .leading) {
                         Text(appDetails.name)
                             .font(.title.bold())
-                        Text(appDetails.developerName)
+                        Text(appDetails.developerName ?? "Unknown Developer")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         Text(appDetails.versions?[selectedVersionIndex].absoluteVersion ?? appDetails.versions?[selectedVersionIndex].version ?? "Unknown Version")
@@ -41,23 +39,8 @@ struct AppDetailsView: View {
                             .foregroundColor(.gray)
                         Spacer()
                         
-                        HStack {
-                            DynamicInstallButton(appDetails: appDetails, installedAppsBundleIDs: GetApps(), selectedVersionIndex: selectedVersionIndex)
-                            
-                            Button(action: {
-                                guard let window = UIApplication.shared.windows.first else { return }
-                                while true {
-                                    window.snapshotView(afterScreenUpdates: false)
-                                }
-                            }) {
-                                HStack {
-                                    Image(systemName: "arrow.clockwise.circle")
-                                }
-                            }
-                            .buttonStyle(AppStoreIconStyle())
-                        }
-
-                        
+                        DynamicInstallButton(appDetails: appDetails, selectedVersionIndex: selectedVersionIndex)
+                                .buttonStyle(AppStoreStyleBlue())
                     }
                 }
                 .padding()
@@ -74,9 +57,9 @@ struct AppDetailsView: View {
                     .padding(.horizontal, 15)
                 }
                 
-                let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription
+                let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription ?? ""
 
-                if(versionDesc != nil && versionDesc != "") {
+                if(!versionDesc.isEmpty) {
                     Section {
                         VStack(alignment: .leading, spacing: 5) {
                             CollapsibleText(
@@ -127,22 +110,10 @@ struct AppDetailsView: View {
             }
             .padding(.bottom, 20)
         }
-        .onAppear { Task { await refresh() } }
         .navigationBarTitle("", displayMode: .inline)
         
         var backgroundFillColor: Color {
             return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
-        }
-    }
-
-    
-    @Sendable
-    func refresh() async {
-        let currentInstalledAppsBundleIDs = GetApps()
-        DispatchQueue.main.async {
-            withAnimation {
-                self.installedAppsBundleIDs = currentInstalledAppsBundleIDs
-            }
         }
     }
 }

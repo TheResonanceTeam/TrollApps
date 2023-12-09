@@ -30,8 +30,8 @@ struct OtherView: View {
                             })
                         }
                     }
-                    Button("Delete All Repos") {
-                        UIApplication.shared.alert(title: "Deleting Repos", body: "Please wait", animated: false, withButton: false)
+                    Button("Reset Repos") {
+                        UIApplication.shared.alert(title: "Reseting Repos", body: "Please wait", animated: false, withButton: false)
                         if let bundleID = Bundle.main.bundleIdentifier {
                             UserDefaults.standard.removePersistentDomain(forName: bundleID)
                         }
@@ -46,6 +46,15 @@ struct OtherView: View {
                         }
                     }
                     .foregroundColor(Color.red)
+                    Button("Reload Springboard") {
+                        UIApplication.shared.alert(title: "Reloading Springboard", body: "Please wait", animated: false, withButton: false)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            guard let window = UIApplication.shared.windows.first else { return }
+                            while true {
+                                window.snapshotView(afterScreenUpdates: false)
+                            }
+                        })
+                    }
                 }
                 
                 Section(header: Text("Developers")) {

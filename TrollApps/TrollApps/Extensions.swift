@@ -14,13 +14,14 @@ func InstallIPA(_ IPAPath: String) {
         let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
         spawnRoot(trollstoreHelperPath, ["install", IPAPath])
     } else {
-        print("Error: TrollStore app not found.")
+        UIApplication.shared.alert(title: "Error: TrollStore app not found.", body: "", animated: false, withButton: true)
     }
     
     if FileManager.default.fileExists(atPath: IPAPath) {
         do {
             try FileManager.default.removeItem(atPath: IPAPath)
         } catch {
+            UIApplication.shared.alert(title: "Error removing .ipa file:", body: "\(error)", animated: false, withButton: true)
             print("Error removing .ipa file: \(error)")
         }
     }
@@ -49,6 +50,7 @@ struct CollapsibleText: View {
     var body: some View {
         Text(text)
             .lineLimit(isExpanded ? nil : maxLines)
+            .multilineTextAlignment(.leading)
     }
 }
 
@@ -89,18 +91,32 @@ func DownloadIPA(_ IPA: String) -> Bool {
     }
 }
 
-
 public struct AppStoreStyle: ButtonStyle {
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(Font.body.weight(.semibold))
             .foregroundColor(Color.accentColor)
             .padding(.vertical, 12)
-            .frame(width: 70, height: 29, alignment: .center)
+            .frame(width: 85, height: 29, alignment: .center)
             .background(
                 RoundedRectangle(cornerRadius: 25.0, style: .continuous)
                     .fill(Color.gray)
                     .opacity(0.2)
+            )
+            .opacity(configuration.isPressed ? 0.2 : 1.0)
+    }
+}
+
+public struct AppStoreStyleBlue: ButtonStyle {
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(Font.body.weight(.semibold))
+            .foregroundColor(Color.white)
+            .padding(.vertical, 12)
+            .frame(width: 85, height: 29, alignment: .center)
+            .background(
+                RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+                    .fill(Color.blue)
             )
             .opacity(configuration.isPressed ? 0.2 : 1.0)
     }
@@ -122,34 +138,55 @@ public struct AppStoreIconStyle: ButtonStyle {
     }
 }
 
-
-public struct somebuttonstyle: ButtonStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(Font.body.weight(.medium))
-            .foregroundColor(Color.accentColor)
-            .padding(.vertical, 12)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 14.0, style: .continuous)
-                    .fill(Color.gray)
-                    .opacity(0.2)
-                )
-            .opacity(configuration.isPressed ? 0.2 : 1.0)
+func compareVersions(_ version1: String, _ version2: String) -> Bool {
+    let components1 = version1.components(separatedBy: CharacterSet(charactersIn: "."))
+    let components2 = version2.components(separatedBy: CharacterSet(charactersIn: "."))
+    
+    for (component1, component2) in zip(components1, components2) {
+        if let number1 = Int(component1), let number2 = Int(component2) {
+            if number1 != number2 {
+                return number1 > number2
+            }
+        } else {
+            if component1 < component2 {
+                return false
+            } else if component1 > component2 {
+                return true
+            }
+        }
     }
+    
+    return components1.count >= components2.count
 }
 
-func GetApps() -> [String] {
-    var apps: [String] = []
+struct BundledApp: Identifiable {
+    let id: String
+    var name: String
+    var version: String
+    var isTrollStore: Bool
+}
+
+func GetApps() -> [BundledApp] {
+    var apps: [BundledApp] = []
+    
     for app in LSApplicationWorkspace().allInstalledApplications() as! [LSApplicationProxy] {
-        apps.append((NSDictionary(contentsOfFile: "\(app.bundleURL.path)/Info.plist")?.value(forKey: "CFBundleIdentifier") ?? "Unknown") as! String)
+        let appDict = NSDictionary(contentsOfFile: "\(app.bundleURL.path)/Info.plist")
+        
+        let parentDirectory = app.bundleURL.deletingLastPathComponent()
+        let filePath = parentDirectory.appendingPathComponent("_TrollStore")
+        let fileExists = FileManager.default.fileExists(atPath: filePath.path)
+
+        let bundledApp = BundledApp(
+            id: (appDict?.value(forKey: "CFBundleIdentifier") ?? "Unknown") as! String,
+            name: (appDict?.value(forKey: "CFBundleDisplayName") ?? appDict?.value(forKey: "CFBundleName") ?? "Unknown") as! String,
+            version: (appDict?.value(forKey: "CFBundleShortVersionString") ?? "Unknown") as! String,
+            isTrollStore: fileExists
+        )
+        
+        apps.append(bundledApp)
     }
     
     return apps
-}
-
-func IsAppInstalled(_ BundleID: String) -> Bool {
-    return GetApps().contains(BundleID)
 }
 
 func OpenApp(_ BundleID: String) {

@@ -34,62 +34,120 @@ struct DynamicButton: View {
                 Text(buttonText)
             }
         }
+        
     }
+    
+    
 }
 
 struct DynamicInstallButton: View {
-    @State private var InstallingIPA = false
     @State private var DownloadingIPA = true
     @State private var InstallingIPAInfo: Application? = nil
     @State private var downloadError: Bool = false
-    
+        
+    @EnvironmentObject var repoManager: RepositoryManager
+
     var appDetails: Application
-//    var refreshCallback: () -> Void
-    @State var installedAppsBundleIDs = [String]()
     var selectedVersionIndex: Int
+
     @State var isInstalled: Bool = false
-
-
-    @ViewBuilder
-    func appButton(json: Application)->some View {
-        if isAppInstalled(json.bundleIdentifier ?? "") || isInstalled {
-            Button("OPEN") {
-                OpenApp(json.bundleIdentifier ?? "")
-            }
-        } else {
-            DynamicButton(initialText: "GET") { updater in
-                if(InstallingIPA == false) {
-                    DispatchQueue.global(qos: .utility).async {
-                        InstallingIPA = true
-                        InstallingIPAInfo = json
-                        DownloadingIPA = true
-                        updater("Loading...")
-                        
-                        let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
-                                                                        
-                        if let downloadURL = downloadURL {
-                            let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
-                            if DownloadIPA(formattedURL) {
-                                DownloadingIPA = false
-                                InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                                InstallingIPA = false
-                                InstallingIPAInfo = nil
-                                isInstalled = true
-                            } else {
-                                DownloadingIPA = false
-                                InstallingIPA = false
-                                InstallingIPAInfo = nil
-                                downloadError = true
-                                updater("GET")
+    
+    @State var updatingTrollApps: Bool = false
+    
+    func downloadAndInstallApp(updater: @escaping (String) -> Void) {
+        DispatchQueue.global(qos: .utility).async {
+            repoManager.isInstallingApp = true
+            InstallingIPAInfo = appDetails
+            DownloadingIPA = true
+            updater("Loading...")
+            
+            let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
+            
+            if let downloadURL = downloadURL {
+                let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
+                if DownloadIPA(formattedURL) {
+                    DownloadingIPA = false
+                    InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                    repoManager.isInstallingApp = false
+                    InstallingIPAInfo = nil
+                                        
+                    DispatchQueue.main.async {
+                        withAnimation {
+                            repoManager.InstalledApps = GetApps()
+                            
+                            if !repoManager.IsAppInstalled(appDetails.bundleIdentifier ?? "") {
+                                isInstalled = false
+                                UIApplication.shared.alert(title: "An unknown error occoured while installing this app.", body: "Please retry this installation another time.", animated: false, withButton: true)
                                 
-                                UIApplication.shared.alert(title: "Failed to install app", body: "This could be due to missing permissions.", animated: false, withButton: true)
+                                updater("GET")
+                            } else {
+                                isInstalled = true
                             }
-                        } else {
-                            UIApplication.shared.alert(title: "Failed to fetch app download url", body: "Likely a repo issue.", animated: false, withButton: true)
                         }
                     }
                 } else {
-                    UIApplication.shared.alert(title: "Unable to start installation", body: "Please wait for your other installation to finish.", animated: false, withButton: true)
+                    DownloadingIPA = false
+                    repoManager.isInstallingApp = false
+                    InstallingIPAInfo = nil
+                    downloadError = true
+                    
+                    UIApplication.shared.alert(title: "Failed to download and parse app", body: "This could be due to missing permissions, a broken download link.", animated: false, withButton: true)
+                    
+                    updater("GET")
+                }
+            } else {
+                UIApplication.shared.alert(title: "Failed to fetch app download url", body: "Likely a repo issue.", animated: false, withButton: true)
+                
+                updater("GET")
+            }
+        }
+    }
+
+    @ViewBuilder
+    func appButton(json: Application) -> some View {
+        if repoManager.IsAppInstalled(json.bundleIdentifier ?? "") || isInstalled {
+            
+            let appVersion = appDetails.versions?[selectedVersionIndex].version
+            
+            if let version = appVersion {
+                
+                let status = repoManager.showUpdateButton(version1: version, BundleID: json.bundleIdentifier ?? "")
+
+                switch(status) {
+                    case 0:
+                    // Installed
+                    Button("OPEN") {
+                        OpenApp(json.bundleIdentifier ?? "")
+                    }
+                    case 1:
+                    // Need to Update
+                    DynamicButton(initialText: "UPDATE") { updater in
+                        let isTollStoreManaged = repoManager.IsTrollStoreManaged(json.bundleIdentifier ?? "")
+                        if (isTollStoreManaged) {
+                            if json.bundleIdentifier == Bundle.main.bundleIdentifier {
+                                updatingTrollApps = true
+                            } else {
+                                downloadAndInstallApp(updater: updater)
+                            }
+                        } else {
+                            UIApplication.shared.alert(title: "Unable to update.", body: "This application was not initially installed through TrollStore and, as a result, cannot install this update. Consider uninstalling the application, then reinstalling in TrollApps.", animated: false, withButton: true)
+                        }
+                    }
+                    case 2:
+                    // Older Version
+                    Button("OLDER") {} .disabled(true)
+                    
+                    default:
+                        EmptyView()
+                }
+            }
+        } else {
+            DynamicButton(initialText: "GET") { updater in
+                if(!repoManager.isInstallingApp) {
+                    downloadAndInstallApp(updater: updater)
+
+                } else {
+                    UIApplication.shared.alert(title: "Unable to start app installation.", body: "Please wait for the current installation to finish.", animated: false, withButton: true)
                 }
             }
         }
@@ -97,11 +155,30 @@ struct DynamicInstallButton: View {
     
     var body: some View {
         appButton(json: appDetails)
-            .buttonStyle(AppStoreStyle())
-    }
-
-    func isAppInstalled(_ BundleID: String) -> Bool {
-        installedAppsBundleIDs.contains(BundleID)
+            .alert(isPresented: $updatingTrollApps, content: {
+                Alert(
+                    title: Text("TrollApps will close and you will be transfered to TrollStore to complete the update process."),
+                    message: Text("Do you still wish to update TrollApps?"),
+                    primaryButton: .default(Text("Yes")) {
+                        let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
+                        
+                        if let downloadURL = downloadURL {
+                            let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
+                            if let url = URL(string: "apple-magnifier://install?url=\(downloadURL)"), UIApplication.shared.canOpenURL(url) {
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                                    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                                        exit(0)
+                                    }
+                                })
+                            }
+                        }
+                    },
+                    secondaryButton: .cancel(Text("Cancel")) {}
+                )
+            })
     }
 }
 
