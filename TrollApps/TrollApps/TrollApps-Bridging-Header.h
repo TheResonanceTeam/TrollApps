@@ -3,6 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 extern int spawnRoot(NSString* path, NSArray* args);
 
@@ -35,4 +36,8 @@ extern int spawnRoot(NSString* path, NSArray* args);
 
 @interface
  LSApplicationProxy : LSBundleProxy
+@end
+
+@interface UIImage (Private)
++(id)_applicationIconImageForBundleIdentifier:(id)arg0 format:(int)arg1 scale:(CGFloat)arg2;
 @end

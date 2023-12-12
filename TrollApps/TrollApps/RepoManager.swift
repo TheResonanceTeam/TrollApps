@@ -30,12 +30,22 @@ enum StringOrDouble: Decodable, Encodable, Equatable {
     enum Error: Swift.Error {
         case couldNotFindStringOrDouble
     }
+    
+    func toString() -> String {
+        switch self {
+        case .string(let stringValue):
+            return stringValue
+        case .double(let doubleValue):
+            return String(doubleValue)
+        }
+    }
 }
 
 struct Repo: Decodable, Identifiable, Equatable, Hashable {
     let id = UUID()
     var name: String?
     var iconURL: String?
+    var headerURL: String?
     var featuredApps: [String]?
     var apps: [Application]
 }
@@ -71,6 +81,7 @@ struct Version: Codable, Equatable {
 struct Application: Codable, Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var subtitle: String?
     var bundleIdentifier: String?
     var version: String?
     var versionDate: String?
@@ -83,7 +94,7 @@ struct Application: Codable, Identifiable, Hashable {
     var versions: [Version]?
 
     enum CodingKeys: String, CodingKey {
-        case name, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, iconURL, screenshotURLs, versions
+        case name, subtitle, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, iconURL, screenshotURLs, versions
     }
 
     func hash(into hasher: inout Hasher) {
@@ -102,14 +113,14 @@ class RepositoryManager: ObservableObject {
     @Published var ReposData: [RepoMemory] = []
     @Published var BadRepos: [BadRepoMemory] = []
     @Published var InstalledApps = GetApps()
-
+    
     @Published var hasFetchedRepos: Bool = false
     @Published var hasFinishedFetchingRepos: Bool = false
     
     @Published var isInstallingApp = false
     @Published var isDownloadingApp = false
-
-
+    
+    
     func fetchRepos() {
         self.hasFetchedRepos = true
         fetchRepos(RepoList) { fetchedResults, errors in
@@ -119,22 +130,22 @@ class RepositoryManager: ObservableObject {
             self.hasFinishedFetchingRepos = true
         }
     }
-
+    
     func addRepo(_ repoURL: String, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
-
+        
         if !RepoList.contains(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
             dispatchGroup.enter()
             
             let regex = try! NSRegularExpression(pattern: #"^repo\[[A-Za-z0-9+/]+={0,2}\]$"#, options: .caseInsensitive)
-
+            
             let range = NSRange(location: 0, length: repoURL.utf16.count)
             let isMatch = regex.firstMatch(in: repoURL, options: [], range: range) != nil
-
+            
             if isMatch {
                 if let base64String = repoURL.components(separatedBy: "[").last?.components(separatedBy: "]").first,
-                    let data = Data(base64Encoded: base64String),
-                    let decodedString = String(data: data, encoding: .utf8) {
+                   let data = Data(base64Encoded: base64String),
+                   let decodedString = String(data: data, encoding: .utf8) {
                     var urlArray = decodedString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
                     urlArray = urlArray.filter { !self.RepoList.contains($0) }
                     
@@ -146,7 +157,7 @@ class RepositoryManager: ObservableObject {
                         dispatchGroup.leave()
                     }
                 } else {
-                    UIApplication.shared.alert(title: "Error decoding Base64 string", body: "Please verify this is a proper repo[] string.", animated: false, withButton: true)
+                    UIApplication.shared.alert(title: NSLocalizedString("ERROR_DECODING_BASE64_STRING", comment: ""), body: NSLocalizedString("PLEASE_VERIFY_VALID_REPO_STRING", comment: ""), animated: false, withButton: true)
                 }
             } else {
                 fetchRepos([repoURL]) { fetchedResults, errors in
@@ -165,7 +176,7 @@ class RepositoryManager: ObservableObject {
             completion()
         }
     }
-
+    
     func removeRepos(repoIds: Set<UUID>) {
         for repoId in repoIds {
             if let reposIndex = ReposData.firstIndex(where: { $0.id == repoId }) {
@@ -189,7 +200,7 @@ class RepositoryManager: ObservableObject {
     }
     
     func fetchRepo(_ repoURL: String, completion: @escaping (Result<Repo, Error>) -> Void) {
-                
+        
         var modifiedRepoURL = repoURL
         
         if !repoURL.contains("://") {
@@ -200,7 +211,7 @@ class RepositoryManager: ObservableObject {
             completion(.failure(URLError(.badURL)))
             return
         }
-
+        
         URLSession.shared.dataTask(with: url) { data, response, error in
             
             
@@ -208,18 +219,18 @@ class RepositoryManager: ObservableObject {
                 completion(.failure(error))
                 return
             }
-
+            
             guard let data = data else {
                 completion(.failure(URLError(.unknown)))
                 return
             }
-
+            
             do {
                 var decodedRepo = try decoder.decode(Repo.self, from: data)
-
+                
                 for index in decodedRepo.apps.indices {
                     let app = decodedRepo.apps[index]
-
+                    
                     if app.downloadURL != nil {
                         let builtVersion = Version(
                             version: app.version ?? "",
@@ -232,18 +243,18 @@ class RepositoryManager: ObservableObject {
                         if app.versions == nil {
                             decodedRepo.apps[index].versions = []
                         }
-
+                        
                         decodedRepo.apps[index].versions?.insert(builtVersion, at: 0)
                     }
                 }
-
+                
                 completion(.success(decodedRepo))
             } catch {
                 completion(.failure(error))
             }
         }.resume()
     }
-
+    
     func fetchRepo(_ repoURL: String, completion: @escaping (Repo?) -> Void) {
         fetchRepo(repoURL) { result in
             switch result {
@@ -255,7 +266,7 @@ class RepositoryManager: ObservableObject {
             }
         }
     }
-
+    
     func fetchRepo(_ repoURL: String) -> Repo? {
         var result: Repo?
         let semaphore = DispatchSemaphore(value: 0)
@@ -264,21 +275,21 @@ class RepositoryManager: ObservableObject {
             result = repo
             semaphore.signal()
         }
-
+        
         semaphore.wait()
         
-
+        
         return result
     }
-
+    
     func fetchRepos(_ repoURLs: [String], completion: @escaping ([RepoMemory], [BadRepoMemory]) -> Void) {
         let dispatchGroup = DispatchGroup()
         var results: [RepoMemory] = []
         var errors: [BadRepoMemory] = []
-
+        
         for repoURL in repoURLs {
             dispatchGroup.enter()
-
+            
             fetchRepo(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) { result in
                 if let unwrappedResult = result {
                     let outputRepoMemory = RepoMemory(
@@ -292,11 +303,11 @@ class RepositoryManager: ObservableObject {
                     )
                     errors.append(outputBadRepoMemory)
                 }
-
+                
                 dispatchGroup.leave()
             }
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             completion(results, errors)
         }
@@ -327,5 +338,9 @@ class RepositoryManager: ObservableObject {
         } else {
             return 0
         }
+    }
+    
+    func fetchAppsInRepo(repoInput: Repo, bundleIdInput: String) -> [Application] {
+        return repoInput.apps.filter { $0.bundleIdentifier == bundleIdInput }
     }
 }

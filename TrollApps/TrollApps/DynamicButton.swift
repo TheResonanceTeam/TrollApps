@@ -49,6 +49,7 @@ struct DynamicInstallButton: View {
 
     var appDetails: Application
     var selectedVersionIndex: Int
+    var buttonStyle: String
 
     @State var isInstalled: Bool = false
     
@@ -77,8 +78,9 @@ struct DynamicInstallButton: View {
                             
                             if !repoManager.IsAppInstalled(appDetails.bundleIdentifier ?? "") {
                                 isInstalled = false
-                                UIApplication.shared.alert(title: "An unknown error occoured while installing this app.", body: "Please retry this installation another time.", animated: false, withButton: true)
                                 
+                                UIApplication.shared.alert(title: NSLocalizedString("UNKNOWN_ERROR_WHILE_INSTALLING", comment: ""), body: NSLocalizedString("PLEASE_RETRY_LATER", comment: ""), animated: false, withButton: true)
+
                                 updater("GET")
                             } else {
                                 isInstalled = true
@@ -91,13 +93,14 @@ struct DynamicInstallButton: View {
                     InstallingIPAInfo = nil
                     downloadError = true
                     
-                    UIApplication.shared.alert(title: "Failed to download and parse app", body: "This could be due to missing permissions, a broken download link.", animated: false, withButton: true)
-                    
+                    UIApplication.shared.alert(title: NSLocalizedString("FAILED_TO_DOWNLOAD_OR_PARSE_APP", comment: ""), body: NSLocalizedString("THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK", comment: ""), animated: false, withButton: true)
+
                     updater("GET")
                 }
             } else {
-                UIApplication.shared.alert(title: "Failed to fetch app download url", body: "Likely a repo issue.", animated: false, withButton: true)
                 
+                UIApplication.shared.alert(title: NSLocalizedString("FAILED_TO_FETCH_APP_DOWNLOAD_URL", comment: ""), body: NSLocalizedString("LIKELY_REPO_ISSUE", comment: ""), animated: false, withButton: true)
+
                 updater("GET")
             }
         }
@@ -119,6 +122,8 @@ struct DynamicInstallButton: View {
                     Button("OPEN") {
                         OpenApp(json.bundleIdentifier ?? "")
                     }
+                    .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
+
                     case 1:
                     // Need to Update
                     DynamicButton(initialText: "UPDATE") { updater in
@@ -130,13 +135,17 @@ struct DynamicInstallButton: View {
                                 downloadAndInstallApp(updater: updater)
                             }
                         } else {
-                            UIApplication.shared.alert(title: "Unable to update.", body: "This application was not initially installed through TrollStore and, as a result, cannot install this update. Consider uninstalling the application, then reinstalling in TrollApps.", animated: false, withButton: true)
+                            
+                            UIApplication.shared.alert(title: NSLocalizedString("UNABLE_TO_UPDATE", comment: ""), body: NSLocalizedString("NOT_TROLLSTORE_MANAGED", comment: ""), animated: false, withButton: true)
                         }
                     }
+                    .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
+
                     case 2:
                     // Older Version
                     Button("OLDER") {} .disabled(true)
-                    
+                        .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: true) : AppStoreStyle(type: "blue", dissabled: true))
+
                     default:
                         EmptyView()
                 }
@@ -147,9 +156,11 @@ struct DynamicInstallButton: View {
                     downloadAndInstallApp(updater: updater)
 
                 } else {
-                    UIApplication.shared.alert(title: "Unable to start app installation.", body: "Please wait for the current installation to finish.", animated: false, withButton: true)
+                    
+                    UIApplication.shared.alert(title: NSLocalizedString("UNABLE_TO_START_INSTALL", comment: ""), body: NSLocalizedString("PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH", comment: ""), animated: false, withButton: true)
                 }
             }
+            .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
         }
     }
     
@@ -157,13 +168,13 @@ struct DynamicInstallButton: View {
         appButton(json: appDetails)
             .alert(isPresented: $updatingTrollApps, content: {
                 Alert(
-                    title: Text("TrollApps will close and you will be transfered to TrollStore to complete the update process."),
-                    message: Text("Do you still wish to update TrollApps?"),
-                    primaryButton: .default(Text("Yes")) {
+                    title: Text("TROLLAPPS_WILL_CLOSE"),
+                    message: Text("DO_YOU_STILL_WISH_TO_UPDATE"),
+                    primaryButton: .default(Text("YES")) {
                         let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
                         
                         if let downloadURL = downloadURL {
-                            let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
+                            _ = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
                             if let url = URL(string: "apple-magnifier://install?url=\(downloadURL)"), UIApplication.shared.canOpenURL(url) {
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
@@ -176,7 +187,7 @@ struct DynamicInstallButton: View {
                             }
                         }
                     },
-                    secondaryButton: .cancel(Text("Cancel")) {}
+                    secondaryButton: .cancel(Text("CANCEL")) {}
                 )
             })
     }
