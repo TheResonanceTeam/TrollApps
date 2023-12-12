@@ -42,7 +42,7 @@ enum StringOrDouble: Decodable, Encodable, Equatable {
 }
 
 struct Repo: Decodable, Identifiable, Equatable, Hashable {
-    let id = UUID()
+    var id = UUID()
     var name: String?
     var iconURL: String?
     var headerURL: String?

@@ -27,7 +27,7 @@
 "UNNAMED_REPO" = "Unnamed Repo";
 "COPY_SOURCE_URL" = "Copy Source URL";
 "COPY_REPO_URL" = "Copy Repo[] URL";
-"DELETE_REPO" = "DELETE_REPO";
+"DELETE_REPO" = "Delete Repo";
 
 "UNABLE_TO_LOAD_REPO" = "Unable to load repo";
 

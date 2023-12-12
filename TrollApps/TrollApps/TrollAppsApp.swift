@@ -14,6 +14,7 @@ struct TrollAppsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.locale, .init(identifier: "zh"))
                 .environmentObject(repoManager)
                 .onAppear {
                     if !repoManager.hasFetchedRepos {
