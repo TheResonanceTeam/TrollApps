@@ -32,69 +32,63 @@ struct SourcesView: View {
         NavigationView {
             if !showFailed {
                 List(selection: $repoMultiSelection) {
-                    
-                    let allRepo = Repo(
-                         name: "All Apps",
-                         apps:  repos.flatMap { $0.data.apps }
-                    )
-                    
-                    NavigationLink(destination: SourceView(repo: allRepo)) {
-                        VStack(alignment: .leading) {
-                            Text("All Apps")
-                            Text("See all apps from all repos")
-                                .font(.caption)
-                                .foregroundColor(.gray)
+                    ForEach(repos.sorted(by: { $0.data.name ?? "UNNAMED_REPO" < $1.data.name ?? "UNNAMED_REPO" })) { repo in
+                        HStack {
+                            if(repo.data.iconURL == nil || repo.data.iconURL == "") {
+                                Image("MissingRepo")
+                                    .resizable()
+                                    .frame(width: 48, height: 48)
+                                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    .padding(.trailing, 7)
+                            } else {
+                                WebImage(url: URL(string: repo.data.iconURL ?? ""))
+                                    .resizable()
+                                    .frame(width: 48, height: 48)
+                                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    .padding(.trailing, 7)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text(repo.data.name ?? "UNNAMED_REPO")
+                                CollapsibleText(text: repo.url, isExpanded: $showFullUrls, maxLines: 2)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
                         }
-                    }
-                    
-                    Section(header: Text("Repos")) {
-                        ForEach(repos.sorted(by: { $0.data.name ?? "Unnamed Repo" < $1.data.name ?? "Unnamed Repo" })) { repo in
-                            NavigationLink(destination: SourceView(repo: repo.data)) {
-                                HStack {
-                                    WebImage(url: URL(string:  repo.data.iconURL ?? "https://raw.githubusercontent.com/TheResonanceTeam/TrollApps/main/assets/RepoMissingIcon.png"))
-                                        .resizable()
-                                        .frame(width: 48, height: 48)
-                                        .clipShape(RoundedRectangle(cornerRadius: 7))
-                                        .padding(.trailing, 8)
-                                    VStack(alignment: .leading) {
-                                        Text(repo.data.name ?? "Unnamed Repo")
-                                        CollapsibleText(text: repo.url, isExpanded: $showFullUrls, maxLines: 2)
-                                            .font(.caption)
-                                            .foregroundColor(.gray)
-                                    }
-                                }
-                            }
-                            .contextMenu
-                            {
-                                Button(action: {
-                                    UIPasteboard.general.string = repo.url
-                                }, label:
-                                        {
-                                    Text("Copy Source URL")
-                                })
-                                Button(action: {
-                                    UIPasteboard.general.string = reposEncode(reposUrl: [repo.url])
-                                }, label:
-                                        {
-                                    Text("Copy Repo[] URL")
-                                })
-                                Button(action: {
-                                    repoManager.removeRepos(repoIds: [repo.id])
-                                    
-                                    repos = repoManager.ReposData
-                                    badRepos = repoManager.BadRepos
-                                }, label:
-                                {
-                                    Text("Delete Repo")
-                                })
-                            }
+                        .background(
+                            NavigationLink("", destination: SourceView(repo: repo.data))
+                                .opacity(0)
+                        )
+                        .contextMenu
+                        {
+                            Button(action: {
+                                UIPasteboard.general.string = repo.url
+                            }, label:
+                                    {
+                                Text("COPY_SOURCE_URL")
+                            })
+                            Button(action: {
+                                UIPasteboard.general.string = reposEncode(reposUrl: [repo.url])
+                            }, label:
+                                    {
+                                Text("COPY_REPO_URL")
+                            })
+                            Button(action: {
+                                repoManager.removeRepos(repoIds: [repo.id])
+                                
+                                repos = repoManager.ReposData
+                                badRepos = repoManager.BadRepos
+                            }, label:
+                                    {
+                                Text("DELETE_REPO")
+                            })
                         }
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 20))
                 .environment(\.defaultMinListRowHeight, 50)
                 .listStyle(PlainListStyle())
-                .navigationTitle("Sources")
+                .navigationTitle("SOURCES")
                 .onDisappear {
                     repoMultiSelection.removeAll()
                 }
@@ -121,9 +115,9 @@ struct SourcesView: View {
                                 let selectedUrls = repos.filter { repo in repoMultiSelection.contains(repo.id) }.map { $0.url }
                                 UIPasteboard.general.string = reposEncode(reposUrl: selectedUrls)
                                 
-                                UIApplication.shared.alert(title: "Copied Repo(s) to clipboard", body: "", animated: false, withButton: true)
+                                UIApplication.shared.alert(title: NSLocalizedString("COPIED_REPOS_TO_CLIPBOARD", comment: ""), body: "", animated: false, withButton: true)
                             }) {
-                                Text("Export")
+                                Text("EXPORT")
                             }
                         }
                     }
@@ -136,7 +130,7 @@ struct SourcesView: View {
                                 repos = repoManager.ReposData
                                 badRepos = repoManager.BadRepos
                             }) {
-                                Text("Delete")
+                                Text("DELETE")
                                     .foregroundColor(Color.red)
                             }
                         }
@@ -160,7 +154,7 @@ struct SourcesView: View {
                             .frame(width: 48, height: 48)
                             .padding(.trailing, 8)
                         VStack(alignment: .leading) {
-                            Text("Unable To Load Repo")
+                            Text("UNABLE_TO_LOAD_REPO")
                             CollapsibleText(
                                 text: badRepo.url,
                                 isExpanded: $showFullUrls,
@@ -174,13 +168,13 @@ struct SourcesView: View {
                             UIPasteboard.general.string = badRepo.url
                         }, label:
                                 {
-                            Text("Copy Source URL")
+                            Text("COPY_SOURCE_URL")
                         })
                         Button(action: {
                             UIPasteboard.general.string = reposEncode(reposUrl: [badRepo.url])
                         }, label:
                                 {
-                            Text("Copy Repo[] URL")
+                            Text("COPY_REPO_URL")
                         })
                         Button(action: {
                             repoManager.removeBadRepos(repoIds: [badRepo.id])
@@ -193,14 +187,14 @@ struct SourcesView: View {
                             }
                         }, label:
                                 {
-                            Text("Delete Repo")
+                            Text("DELETE_REPO")
                         })
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 20))
                 .environment(\.defaultMinListRowHeight, 50)
                 .listStyle(PlainListStyle())
-                .navigationTitle("Broken Sources")
+                .navigationTitle("BROKEN_SOURCES")
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         EditButton()
@@ -221,9 +215,9 @@ struct SourcesView: View {
                                 let selectedUrls = repos.filter { repo in failedMultiSelection.contains(repo.id) }.map { $0.url }
                                 UIPasteboard.general.string = reposEncode(reposUrl: selectedUrls)
                                 
-                                UIApplication.shared.alert(title: "Copied Repo(s) to clipboard", body: "", animated: false, withButton: true)
+                                UIApplication.shared.alert(title: NSLocalizedString("COPIED_REPOS_TO_CLIPBOARD", comment: ""), body: "", animated: false, withButton: true)
                             }) {
-                                Text("Export")
+                                Text("EXPORT")
                             }
                         }
                     }
@@ -242,7 +236,7 @@ struct SourcesView: View {
                                     showFailed = false
                                 }
                             }) {
-                                Text("Delete")
+                                Text("DELETE")
                                     .foregroundColor(Color.red)
                             }
                         }
@@ -263,8 +257,9 @@ struct SourcesView: View {
             if url.absoluteString.hasPrefix("trollapps://add?url=") {
                 if let repoURL = url.queryParameters?["url"] {
                     if repoURL != "" {
+                        
                         if (repoManager.RepoList.contains(repoURL)) {
-                            UIApplication.shared.alert(title: "Duplicate Repo", body: "You've already added this repo to your repo list.", animated: false, withButton: true)
+                            UIApplication.shared.alert(title: NSLocalizedString("DUPLICATE_REPO", comment: ""), body: NSLocalizedString("ALREADY_ON_REPO_LIST", comment: ""), animated: false, withButton: true)
                         } else {
                             isAddingURL = true
                             repoManager.addRepo(repoURL) {
@@ -278,9 +273,9 @@ struct SourcesView: View {
             }
         }
         .alert(isPresented: $isAddingURL) {
-            Alert(title: Text("Adding Repo"), message: Text("Please wait..."))
+            Alert(title: Text("ADDING_REPO"), message: Text("PLEASE_WAIT"))
         }
-        .onChange(of: repoManager.hasFinishedFetchingRepos) { newValue in
+        .onChange(of: repoManager.hasFinishedFetchingRepos) { _ in
             repos = repoManager.ReposData
             badRepos = repoManager.BadRepos
         }
@@ -296,11 +291,12 @@ struct AddSourceView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Add Repos"), footer: Text("Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.")) {
-                TextField("Repo URL", text: $RepoURL)
-                Button("Add Repos") {
+            Section(header: Text("ADD_REPOS"), footer: Text("ADD_REPOS_TOOLTIP")) {
+                TextField("REPO_URL", text: $RepoURL)
+                Button("ADD_REPOS") {
                     if (repoManager.RepoList.contains(RepoURL)) {
-                        UIApplication.shared.alert(title: "Duplicate Repo", body: "You've already added this repo to your repo list.", animated: false, withButton: true)
+                        
+                        UIApplication.shared.alert(title: NSLocalizedString("DUPLICATE_REPO", comment: ""), body: NSLocalizedString("ALREADY_ON_REPO_LIST", comment: ""), animated: false, withButton: true)
                     } else {
                         repoManager.addRepo(RepoURL) {
                             RepoURL = ""

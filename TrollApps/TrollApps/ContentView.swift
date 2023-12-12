@@ -14,22 +14,31 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            SourcesView()
+            FeaturedView()
                 .tabItem {
-                    Label("Sources", systemImage: "shippingbox")
+                    Label("FEATURED", systemImage: "star.fill")
                 }
                 .tag(0)
-//            AppsView()
-//                .tabItem {
-//                    Label("Apps", systemImage: "app.badge.checkmark")
-//                }
-//                .tag(1)
-            OtherView()
+            SourcesView()
                 .tabItem {
-                    Image(systemName: "gearshape")
-                    Text("Settings")
+                    Label("SOURCES", systemImage: "shippingbox")
                 }
                 .tag(1)
+            BrowseView()
+                .tabItem {
+                    Label("BROWSE", systemImage: "magnifyingglass")
+                }
+                .tag(2)
+            AppsView()
+                .tabItem {
+                    Label("APPS", systemImage: "app")
+                }
+                .tag(3)
+            OtherView()
+                .tabItem {
+                    Label("SETTINGS", systemImage: "gearshape")
+                }
+                .tag(4)
         }
         .onOpenURL { url in
             selectedTab = 0

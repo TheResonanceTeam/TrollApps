@@ -25,6 +25,8 @@
 		74C348682B1953D60043AA8C /* AppDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C348672B1953D60043AA8C /* AppDetailsView.swift */; };
 		74C3486A2B19AF270043AA8C /* SourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C348692B19AF270043AA8C /* SourceView.swift */; };
 		74C3486F2B1A562F0043AA8C /* DynamicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C3486E2B1A562F0043AA8C /* DynamicButton.swift */; };
+		74E2E2AE2B25627B009E1D73 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E2E2AD2B25627B009E1D73 /* BrowseView.swift */; };
+		74E2E2B22B27C086009E1D73 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74E2E2B42B27C086009E1D73 /* Localizable.strings */; };
 		CC759147293BD896007DE225 /* TSUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CC759146293BD896007DE225 /* TSUtil.m */; };
 		CC75914A293BD95B007DE225 /* SpringBoardFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC759149293BD95A007DE225 /* SpringBoardFoundation.tbd */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,9 @@
 		74C348672B1953D60043AA8C /* AppDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailsView.swift; sourceTree = "<group>"; };
 		74C348692B19AF270043AA8C /* SourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceView.swift; sourceTree = "<group>"; };
 		74C3486E2B1A562F0043AA8C /* DynamicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicButton.swift; sourceTree = "<group>"; };
+		74E2E2AD2B25627B009E1D73 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
+		74E2E2B32B27C086009E1D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74E2E2B52B27C098009E1D73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CC759146293BD896007DE225 /* TSUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSUtil.m; sourceTree = "<group>"; };
 		CC759149293BD95A007DE225 /* SpringBoardFoundation.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = SpringBoardFoundation.tbd; path = TrollApps/SpringBoardFoundation.tbd; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +121,7 @@
 		6D8817C4291ECB97007139C6 /* TrollApps */ = {
 			isa = PBXGroup;
 			children = (
+				74E2E2AF2B27C035009E1D73 /* Resources */,
 				7489B46B2B1A8129007F372B /* Info.plist */,
 				CC759146293BD896007DE225 /* TSUtil.m */,
 				6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */,
@@ -134,6 +140,7 @@
 				7489B46C2B1C2633007F372B /* RepoManager.swift */,
 				741300952B22AC7500B5B6EE /* SourcesViewBeta.swift */,
 				74A5F72B2B23AF5900C2E816 /* AppsView.swift */,
+				74E2E2AD2B25627B009E1D73 /* BrowseView.swift */,
 			);
 			path = TrollApps;
 			sourceTree = "<group>";
@@ -144,6 +151,14 @@
 				6D8817CC291ECB9B007139C6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		74E2E2AF2B27C035009E1D73 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				74E2E2B42B27C086009E1D73 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		CC759148293BD95A007DE225 /* Frameworks */ = {
@@ -222,6 +237,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 6D8817B9291ECB97007139C6;
 			packageReferences = (
@@ -250,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D8817CD291ECB9B007139C6 /* Preview Assets.xcassets in Resources */,
+				74E2E2B22B27C086009E1D73 /* Localizable.strings in Resources */,
 				6D8817CA291ECB9B007139C6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +294,7 @@
 				CC759147293BD896007DE225 /* TSUtil.m in Sources */,
 				7489B46D2B1C2633007F372B /* RepoManager.swift in Sources */,
 				6D29D3D82923C78300AF0602 /* SourcesView.swift in Sources */,
+				74E2E2AE2B25627B009E1D73 /* BrowseView.swift in Sources */,
 				6D8817C8291ECB97007139C6 /* ContentView.swift in Sources */,
 				741300962B22AC7500B5B6EE /* SourcesViewBeta.swift in Sources */,
 				6D8817C6291ECB97007139C6 /* TrollAppsApp.swift in Sources */,
@@ -296,6 +314,18 @@
 			targetProxy = 0299094429225B3B006D62D9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		74E2E2B42B27C086009E1D73 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74E2E2B32B27C086009E1D73 /* en */,
+				74E2E2B52B27C098009E1D73 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0299094729225B3B006D62D9 /* Debug */ = {

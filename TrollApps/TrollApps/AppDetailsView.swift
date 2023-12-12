@@ -14,62 +14,83 @@ struct AppDetailsView: View {
     var appDetails: Application
     
     @State private var selectedVersionIndex: Int = 0
-    @State private var isExpanded: Bool = false
-    
-    let maxLines: Int = 3
+    @State private var expandDescription: Bool = false
+    @State private var expandVersionDescription: Bool = false
+    @State private var expandVersion: Bool = false
 
-    let description: String = {
-        let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription ?? ""
-        return versionDesc
-    }()
-    
-    let truncatedDescription: String = {
-        let versionDesc = appDetails.versions?[selectedVersionIndex].localizedDescription ?? ""
-        return versionDesc.truncate(maxLines: maxLines)
-    }()
-    
-    var shouldShowReadMoreButton: Bool {
-        let fullHeight = getHeight(for: description)
-        let truncatedHeight = getHeight(for: truncatedDescription)
-        return fullHeight > truncatedHeight
-    }
+    let maxLines: Int = 3
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
             VStack(alignment: .leading) {
+                
+                let version = appDetails.versions?[selectedVersionIndex].version ?? "UNKNOWN_VERSION"
+                
                 HStack {
-                    WebImage(url: URL(string: appDetails.iconURL))
-                        .resizable()
-                        .frame(width: 115, height: 115)
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        .padding(.trailing, 7)
-                    
+                    if(appDetails.iconURL != "") {
+                        WebImage(url: URL(string: appDetails.iconURL))
+                            .resizable()
+                            .frame(width: 115, height: 115)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                            .padding(.trailing, 7)
+                        
+                    } else {
+                        Image("MissingApp")
+                            .resizable()
+                            .frame(width: 115, height: 115)
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                            .padding(.trailing, 7)
+                    }
+
                     VStack(alignment: .leading) {
                         Text(appDetails.name)
-                            .font(.title.bold())
-                        Text(appDetails.developerName ?? "Unknown Developer")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        Text(appDetails.versions?[selectedVersionIndex].absoluteVersion ?? appDetails.versions?[selectedVersionIndex].version ?? "Unknown Version")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        Spacer()
+                            .font(.title2.bold())
                         
-                        DynamicInstallButton(appDetails: appDetails, selectedVersionIndex: selectedVersionIndex)
-                                .buttonStyle(AppStoreStyleBlue())
+                        Text(appDetails.developerName ?? "UNKNOWN DEVELOPER")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                        
+                        CollapsibleText(
+                            text: version,
+                            isExpanded: $expandVersion,
+                            maxLines: 1
+                        )
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        
+                        Spacer()
+                                                
+                        HStack {
+                            DynamicInstallButton(appDetails: appDetails, selectedVersionIndex: selectedVersionIndex, buttonStyle: "Details")
+                            
+                            if let versions = appDetails.versions, versions.count == 1 {
+                                
+                            } else if let versions = appDetails.versions {
+                                Picker("SELECT_VERSION", selection: $selectedVersionIndex) {
+                                    ForEach(0..<versions.count, id: \.self) { index in
+                                        Text(versions[index].absoluteVersion ?? versions[index].version)
+                                    }
+                                }
+                                .pickerStyle(MenuPickerStyle())
+                            }
+                        }
                     }
                 }
                 .padding()
-                                
-                if let versions = appDetails.versions, versions.count == 1 {
-                    
-                } else if let versions = appDetails.versions {
-                    Picker("Select Version", selection: $selectedVersionIndex) {
-                        ForEach(0..<versions.count, id: \.self) { index in
-                            Text(versions[index].absoluteVersion ?? versions[index].version)
-                        }
+                
+                let subtitle = appDetails.subtitle ?? ""
+
+                if(!subtitle.isEmpty) {
+                    Section {
+                        Text(subtitle)
+                            .font(.subheadline)
+                            .padding(15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(backgroundFillColor)
+                            )
                     }
-                    .pickerStyle(MenuPickerStyle())
                     .padding(.horizontal, 15)
                 }
                 
@@ -78,23 +99,20 @@ struct AppDetailsView: View {
                 if(!versionDesc.isEmpty) {
                     Section {
                         VStack(alignment: .leading, spacing: 5) {
+                            Text("WHATS_NEW")
+                                .font(.title2.bold())
+                            
+                            Text("VERSION \(version)")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 1.5)
                             CollapsibleText(
-                                text: description,
-                                isExpanded: $isExpanded,
-                                maxLines: isExpanded ? nil : maxLines
-                            )
-            
-                            if !isExpanded && shouldShowReadMoreButton {
-                                Button("Read More") {
-                                    withAnimation {
-                                    isExpanded.toggle()
-                                    }
-                                }
-                            } else if isExpanded {
-                                Button("Read Less") {
-                                    withAnimation {
-                                    isExpanded.toggle()
-                                    }
+                                text: versionDesc,
+                                isExpanded: $expandVersionDescription,
+                                maxLines: maxLines
+                            ).onTapGesture {
+                                withAnimation {
+                                    expandVersionDescription.toggle()
                                 }
                             }
                         }
@@ -115,14 +133,39 @@ struct AppDetailsView: View {
                                 WebImage(url: URL(string: screenshotURL))
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: 275)
+                                    .frame(width: 250)
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
                             }
                         }
                     }
-                    .padding(.horizontal, 10)
-                                    }
-                .padding(.top, 10)
+                    .padding(.horizontal, 20)
+                }
+                .padding(.vertical, 10)
+                
+                let description = appDetails.localizedDescription ?? ""
+                
+                if(!description.isEmpty) {
+                    Section {
+                        VStack(alignment: .leading, spacing: 5) {
+                            CollapsibleText(
+                                text: description,
+                                isExpanded: $expandDescription,
+                                maxLines: maxLines
+                            ).onTapGesture {
+                                withAnimation {
+                                    expandDescription.toggle()
+                                }
+                            }
+                        }
+                        .padding(15)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(backgroundFillColor)
+                        )
+                    }
+                    .padding(.horizontal, 15)
+                }
             }
             .padding(.bottom, 20)
         }
@@ -130,24 +173,6 @@ struct AppDetailsView: View {
         
         var backgroundFillColor: Color {
             return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
-        }
-
-        func getHeight(for text: String) -> CGFloat {
-            let font = Font.system(size: 14)
-            let attributedText = NSAttributedString(
-                string: text,
-                attributes: [.font: font]
-            )
-            let constraintRect = CGSize(
-                width: UIScreen.main.bounds.width - 30,  // Adjust the width as needed
-                height: .greatestFiniteMagnitude
-            )
-            let boundingBox = attributedText.boundingRect(
-                with: constraintRect,
-                options: [.usesLineFragmentOrigin],
-                context: nil
-            )
-            return boundingBox.height
         }
     }
 }

@@ -14,14 +14,14 @@ struct OtherView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Options"), footer: Text("The Delete Cache button should be used if the app weights a bit too much on your Device.")) {
-                    Button("Delete Cache") {
-                        UIApplication.shared.alert(title: "Clearing Cache", body: "Please wait", animated: false, withButton: false)
+                Section(header: Text("OPTIONS"), footer: Text("DELETE_CACHE_TOOLTIP")) {
+                    Button("DELETE_CACHE") {
+                        UIApplication.shared.alert(title: NSLocalizedString("CLEARING_CACHE", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
                         SDImageCache.shared.clearMemory()
                         SDImageCache.shared.clearDisk()
                         URLCache.shared.removeAllCachedResponses()
                         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
-                            UIApplication.shared.change(title: "Success!", body: "The app will now quit...")
+                            UIApplication.shared.change(title: NSLocalizedString("SUCCESS", comment: ""), body: NSLocalizedString("THE_APP_WILL_NOW_QUIT", comment: ""))
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                                 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -30,13 +30,14 @@ struct OtherView: View {
                             })
                         }
                     }
-                    Button("Reset Repos") {
-                        UIApplication.shared.alert(title: "Reseting Repos", body: "Please wait", animated: false, withButton: false)
+                    Button("RESET_REPOS") {
+                        
+                        UIApplication.shared.alert(title: NSLocalizedString("RESETING_REPOS", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
                         if let bundleID = Bundle.main.bundleIdentifier {
                             UserDefaults.standard.removePersistentDomain(forName: bundleID)
                         }
                         Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-                            UIApplication.shared.change(title: "Success!", body: "The app will now quit...")
+                            UIApplication.shared.change(title: NSLocalizedString("SUCCESS", comment: ""), body: NSLocalizedString("THE_APP_WILL_NOW_QUIT", comment: ""))
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                                 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -46,8 +47,8 @@ struct OtherView: View {
                         }
                     }
                     .foregroundColor(Color.red)
-                    Button("Reload Springboard") {
-                        UIApplication.shared.alert(title: "Reloading Springboard", body: "Please wait", animated: false, withButton: false)
+                    Button("RELOAD_SPRINGBOARD") {
+                        UIApplication.shared.alert(title: NSLocalizedString("RELOADING_SPRINGBOARD", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                             guard let window = UIApplication.shared.windows.first else { return }
                             while true {
@@ -57,7 +58,7 @@ struct OtherView: View {
                     }
                 }
                 
-                Section(header: Text("Developers")) {
+                Section(header: Text("DEVELOPERS")) {
                     Label {
                         HStack {
                             Button("Haxi0") {
@@ -96,7 +97,7 @@ struct OtherView: View {
                     }
                 }
                 
-                Section(header: Text("Thanks to..."), footer: Text("Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!")) {
+                Section(header: Text("THANKS_TO"), footer: Text("THANKS_TO_TOOLTIP")) {
                     Label {
                         HStack {
                             Button("@AppInstalleriOS") {
@@ -169,7 +170,9 @@ struct OtherView: View {
                     }
                 }
                 
-                Section(header: Text("Other projects used and their licenses")) {
+                
+                
+                Section(header: Text("OTHER_PROJECTS_AND_LICENSES")) {
                     Button("SDWebImageSwiftUI Project") {
                         openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI")!)
                     }
@@ -178,19 +181,19 @@ struct OtherView: View {
                     }
                 }
                 
-                Section(header: Text("Help the project")) {
-                    Button("Join our Discord!") {
+                Section(header: Text("HELP_THE_PROJECT")) {
+                    Button("JOIN_OUR_DISCORD") {
                         openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
                     }
-                    Button("Report a Bug!") {
+                    Button("REPORT_A_BUG") {
                         openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
                     }.foregroundColor(Color.red)
-                    Button("JSON template to create your own repo!") {
+                    Button("JSON_TEMPLATE") {
                         openURL(URL(string: "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json")!)
                     }
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle("SETTINGS")
         }
         .navigationViewStyle(.stack)
     }

@@ -14,14 +14,13 @@ func InstallIPA(_ IPAPath: String) {
         let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
         spawnRoot(trollstoreHelperPath, ["install", IPAPath])
     } else {
-        UIApplication.shared.alert(title: "Error: TrollStore app not found.", body: "", animated: false, withButton: true)
+        print("Error: TrollStore app not found.")
     }
     
     if FileManager.default.fileExists(atPath: IPAPath) {
         do {
             try FileManager.default.removeItem(atPath: IPAPath)
         } catch {
-            UIApplication.shared.alert(title: "Error removing .ipa file:", body: "\(error)", animated: false, withButton: true)
             print("Error removing .ipa file: \(error)")
         }
     }
@@ -39,6 +38,17 @@ extension URL {
             parameters[queryItem.name] = queryItem.value
         }
         return parameters
+    }
+}
+
+extension String {
+    func truncate(maxLines: Int) -> String {
+        var lines = self.components(separatedBy: "\n")
+        guard lines.count > maxLines else {
+            return self
+        }
+        lines = Array(lines.prefix(maxLines))
+        return lines.joined(separator: "\n")
     }
 }
 
@@ -92,47 +102,24 @@ func DownloadIPA(_ IPA: String) -> Bool {
 }
 
 public struct AppStoreStyle: ButtonStyle {
+    let type: String
+    let dissabled: Bool
+
+    public init(type: String, dissabled: Bool) {
+        self.type = type
+        self.dissabled = dissabled
+    }
+
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(Font.body.weight(.semibold))
-            .foregroundColor(Color.accentColor)
+            .foregroundColor(type == "blue" ? Color.white : Color.accentColor)
             .padding(.vertical, 12)
             .frame(width: 85, height: 29, alignment: .center)
             .background(
                 RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-                    .fill(Color.gray)
-                    .opacity(0.2)
-            )
-            .opacity(configuration.isPressed ? 0.2 : 1.0)
-    }
-}
-
-public struct AppStoreStyleBlue: ButtonStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(Font.body.weight(.semibold))
-            .foregroundColor(Color.white)
-            .padding(.vertical, 12)
-            .frame(width: 85, height: 29, alignment: .center)
-            .background(
-                RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-                    .fill(Color.blue)
-            )
-            .opacity(configuration.isPressed ? 0.2 : 1.0)
-    }
-}
-
-public struct AppStoreIconStyle: ButtonStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(Font.body.weight(.semibold))
-            .foregroundColor(Color.accentColor)
-            .padding(.vertical, 12)
-            .frame(width: 29, height: 29, alignment: .center)
-            .background(
-                RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-                    .fill(Color.gray)
-                    .opacity(0.2)
+                    .fill(type == "blue" ? Color.blue : Color.gray)
+                    .opacity(dissabled ? 0.4 : type == "blue" ? 1 : 0.2)
             )
             .opacity(configuration.isPressed ? 0.2 : 1.0)
     }
@@ -159,11 +146,16 @@ func compareVersions(_ version1: String, _ version2: String) -> Bool {
     return components1.count >= components2.count
 }
 
-struct BundledApp: Identifiable {
+struct BundledApp: Identifiable, Hashable {
     let id: String
     var name: String
     var version: String
     var isTrollStore: Bool
+    var icon: UIImage
+}
+
+private func applicationIconImage() -> Int32 {
+    return UIDevice.current.userInterfaceIdiom == .pad ? 8 : 10
 }
 
 func GetApps() -> [BundledApp] {
@@ -175,13 +167,22 @@ func GetApps() -> [BundledApp] {
         let parentDirectory = app.bundleURL.deletingLastPathComponent()
         let filePath = parentDirectory.appendingPathComponent("_TrollStore")
         let fileExists = FileManager.default.fileExists(atPath: filePath.path)
-
+        
+        let bundleID = (appDict?.value(forKey: "CFBundleIdentifier") ?? "Unknown") as! String
+        
+        
+        let icon = UIImage._applicationIconImage(forBundleIdentifier: bundleID, format: applicationIconImage(), scale: UIScreen.main.scale) as! UIImage
+        
+        
         let bundledApp = BundledApp(
-            id: (appDict?.value(forKey: "CFBundleIdentifier") ?? "Unknown") as! String,
+            id: bundleID,
             name: (appDict?.value(forKey: "CFBundleDisplayName") ?? appDict?.value(forKey: "CFBundleName") ?? "Unknown") as! String,
             version: (appDict?.value(forKey: "CFBundleShortVersionString") ?? "Unknown") as! String,
-            isTrollStore: fileExists
+            isTrollStore: fileExists,
+            icon: icon
         )
+        
+        
         
         apps.append(bundledApp)
     }
@@ -222,26 +223,27 @@ extension UIApplication {
             currentUIAlertController?.dismiss(animated: animated)
         }
     }
-    func alert(title: String = "Alert", body: String, animated: Bool = true, withButton: Bool = true) {
+    
+    func alert(title: String = NSLocalizedString("ALERT", comment: ""), body: String, animated: Bool = true, withButton: Bool = true) {
         DispatchQueue.main.async {
             currentUIAlertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
             if withButton { currentUIAlertController?.addAction(.init(title: "OK", style: .cancel)) }
             self.present(alert: currentUIAlertController!)
         }
     }
-    func confirmAlert(title: String = "Alert", body: String, onOK: @escaping () -> (), noCancel: Bool) {
+    func confirmAlert(title: String = NSLocalizedString("ALERT", comment: ""), body: String, onOK: @escaping () -> (), noCancel: Bool) {
         DispatchQueue.main.async {
             currentUIAlertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
             if !noCancel {
-                currentUIAlertController?.addAction(.init(title: "Cancel", style: .cancel))
+                currentUIAlertController?.addAction(.init(title: NSLocalizedString("CANCEL", comment: ""), style: .cancel))
             }
-            currentUIAlertController?.addAction(.init(title: "OK", style: noCancel ? .cancel : .default, handler: { _ in
+            currentUIAlertController?.addAction(.init(title: NSLocalizedString("OK", comment: ""), style: noCancel ? .cancel : .default, handler: { _ in
                 onOK()
             }))
             self.present(alert: currentUIAlertController!)
         }
     }
-    func change(title: String = "Alert", body: String) {
+    func change(title: String = NSLocalizedString("ALERT", comment: ""), body: String) {
         DispatchQueue.main.async {
             currentUIAlertController?.title = title
             currentUIAlertController?.message = body
