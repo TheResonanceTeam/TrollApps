@@ -13,7 +13,7 @@
 For both users and repo managers, ensure the following criteria are met:
 
 * You are running the **latest version** of TrollStore
-* You are running the **latest version** of TrollApps (see the <a href="https://github.com/TheResonanceTeam/TrollApps/releases" target="_blank">releases page</a>)
+* You are running the **latest version** of TrollApps (see the <a href="https://github.com/TheResonanceTeam/TrollApps/releases" target="_blank" rel="noopener noreferrer">releases page</a>)
 * You have **TrollStore's URL Scheme** enabled.
 
 <p align="center">
@@ -32,7 +32,7 @@ You can add a button to your website that adds your repo to TrollApps automatica
 
 * `<a href=trollapps://add?url=alt.getutm.app>Add Repo</a>`
 
-For additional examples, you can check out the trusted sources page on <a href="https://theresonanceteam.github.io/trusted-sources" target="_blank">our website</a>.
+For additional examples, you can check out the trusted sources page on <a href="https://theresonanceteam.github.io/trusted-sources" target="_blank" rel="noopener noreferrer">our website</a>.
 
 #
 
@@ -50,4 +50,4 @@ TrollApps utilizes a json structure extremely similar to AltStore, allowing for 
 
 * `"tintColor": <HEX>` is also (currently) unused.
 
-See <a href="https://raw.githubusercontent.com/TheResonanceTeam/TrollApps/main/assets/Docs/repo_template.json" target="_blank">here</a> for a basic source template.
+See <a href="https://raw.githubusercontent.com/TheResonanceTeam/TrollApps/main/assets/Docs/repo_template.json" target="_blank" rel="noopener noreferrer">here</a> for a basic source template.
