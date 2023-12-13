@@ -13,12 +13,17 @@ TrollApps is an alternative to the iOS App Store for TrollStore users. TrollApps
 You require a TollStore 1.0 / 2.0 compatible device, and TrollStore must be installed to use this application. It is also required that you enable schema urls within TrollStore.
 
 #
+
 <p align="center">
     <img width=256 height=auto src="./assets/Screenshot-1.png"></img>
     <img width=256 height=auto src="./assets/Screenshot-2.png"></img>
     <img width=256 height=auto src="./assets/Screenshot-3.png"></img>
 </p>
 
+# Check out our documentation!
+Information on TrollApps sources and our URL Scheme can be found <a href="https://github.com/TheResonanceTeam/TrollApps/blob/main/assets/Docs/DOCUMENTATION.md">here</a>
+
+#
 
 # Found a bug / want to send feedback? 
 <h3>Join our <a href="https://discord.gg/PrF6XqpGgX">Discord</a>!</h3>

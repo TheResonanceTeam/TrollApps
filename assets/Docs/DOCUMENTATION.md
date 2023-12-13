@@ -17,7 +17,7 @@ For both users and repo managers, ensure the following criteria are met:
 * You have **TrollStore's URL Scheme** enabled.
 
 <p align="center">
-    <img src="../../assets/docs/img/TS_URL_Scheme.jpeg" alt="TrollStore URL Scheme" width="420" height="auto"></img>
+    <img src="https://raw.githubusercontent.com/TheResonanceTeam/TrollApps/main/assets/Docs/img/TS_URL_Scheme.jpeg" alt="TrollStore URL Scheme" width="420" height="auto"></img>
 <p>
 
 #
@@ -50,4 +50,4 @@ TrollApps utilizes a json structure extremely similar to AltStore, allowing for 
 
 * `"tintColor": <HEX>` is also (currently) unused.
 
-See <a href="">here</a> for a basic source template.
+See <a href="https://raw.githubusercontent.com/TheResonanceTeam/TrollApps/main/assets/Docs/repo_template.json">here</a> for a basic source template.
