@@ -13,13 +13,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var repoManager: RepositoryManager?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("Hit 1")
+        //print("Hit 1")
         self.launchOptions = launchOptions
         return true
     }
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        print("Hit 2")
+        //print("Hit 2")
 
         guard let scheme = url.scheme, scheme == "trollapps" else { return false }
 
