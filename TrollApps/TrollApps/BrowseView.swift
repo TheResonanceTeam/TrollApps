@@ -15,7 +15,8 @@ struct BrowseView: View {
 
     @State private var apps: [Application] = []
     @EnvironmentObject var repoManager: RepositoryManager
-    
+    @StateObject private var alertManager = AlertManager()
+
     func commonView() -> some View {
         List(filteredApps.sorted { $0.name < $1.name }, id: \.self) { app in
             

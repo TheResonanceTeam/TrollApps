@@ -14,7 +14,9 @@ struct FeaturedView: View {
     
     @State private var repos: [RepoMemory] = []
     @EnvironmentObject var repoManager: RepositoryManager
-    
+    @EnvironmentObject var alertManager: AlertManager
+    @EnvironmentObject var userSettings: UserSettings
+
     var body: some View {
         NavigationView {
             List {
@@ -68,6 +70,13 @@ struct FeaturedView: View {
             .environment(\.defaultMinListRowHeight, 50)
             .listStyle(PlainListStyle())
             .navigationTitle("FEATURED")
+            .blur(radius: userSettings.reducedMotion
+                  ? alertManager.isAlertPresented ? 1 : 0
+                  : alertManager.isAlertPresented ? 4 : 0
+            )
+            .scaleEffect(userSettings.reducedMotion || !alertManager.canAnimate ? 1 : alertManager.isAlertPresented ? 0.85 : 1)
+            .animation(.spring(), value: alertManager.isAlertPresented)
+            
         }
         .onAppear {
             repos = repoManager.ReposData

@@ -10,17 +10,26 @@ import SwiftUI
 @main
 struct TrollAppsApp: App {
     @StateObject private var repoManager = RepositoryManager()
+    @StateObject private var alertManager = AlertManager()
+    @StateObject private var userSettings = UserSettings()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.locale, .init(identifier: "zh"))
-                .environmentObject(repoManager)
-                .onAppear {
-                    if !repoManager.hasFetchedRepos {
-                        repoManager.fetchRepos()
-                    }
+            ZStack {
+                ContentView()
+                    .zIndex(2)
+                AlertManagerView()
+                    .zIndex(3)
+            }
+            .environment(\.locale, .init(identifier: userSettings.lang))
+            .environmentObject(repoManager)
+            .environmentObject(alertManager)
+            .environmentObject(userSettings)
+            .onAppear {
+                if !repoManager.hasFetchedRepos {
+                    repoManager.fetchRepos()
                 }
+            }
         }
     }
 }

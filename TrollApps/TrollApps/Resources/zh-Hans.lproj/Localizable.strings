@@ -16,6 +16,7 @@
 /* Buttons */
 "OPEN" = "打开";
 "GET" = "安装";
+"UPDATE" = "更新";
 "OLDER" = "旧版本";
 "SOURCES" = "软件源";
 "BROKEN_SOURCES" = "错误的来源";
@@ -29,7 +30,7 @@
 /* Add Repo Menu */
 "ADD_REPOS" = "添加软件源";
 "REPO_URL" = "软件源 URL";
-"ADD_REPO_TOOLTIP" = "请确保您输入有效的软件源URL。建议您复制并粘贴在这里，而不是手动输入。";
+"ADD_REPOS_TOOLTIP" = "请确保您输入有效的软件源URL。建议您复制并粘贴在这里，而不是手动输入。";
 /* Apps Detailed View */
 "WHATS_NEW" = "最新消息";
 "VERSION %@" = "版本 %@";
@@ -46,6 +47,11 @@
 "RESET_REPOS" = "重置软件源";
 "RELOAD_SPRINGBOARD" = "重新加载跳板";
 "DELETE_CACHE_TOOLTIP" = "如果应用程序在您的设备上的存储过大，则应使用删除缓存按钮。";
+
+"APP_SETTINGS" = "应用设置";
+"REDUCED_MOTION" = "应用语言";
+"APP_LANGUAGE" = "减少动画";
+
 "DEVELOPERS" = "开发人员";
 "THANKS_TO" = "多亏了...";
 "THANKS_TO_TOOLTIP" = "非常感谢这些精彩的应用程序、文章和人物！没有他们，这个项目将不可能甚至不存在！";

@@ -10,6 +10,7 @@ import SDWebImageSwiftUI
 struct SourceView: View {
     @State private var searchText = ""
     @EnvironmentObject var repoManager: RepositoryManager
+    @StateObject private var alertManager = AlertManager()
     
     @State private var showFullVersion: Bool = false
 

@@ -11,17 +11,33 @@ import SDWebImageSwiftUI
 struct OtherView: View {
     @Environment(\.openURL) var openURL
     @State private var safemode = true
+    
+    @EnvironmentObject var userSettings: UserSettings
+    @EnvironmentObject var alertManager: AlertManager
+
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("OPTIONS"), footer: Text("DELETE_CACHE_TOOLTIP")) {
                     Button("DELETE_CACHE") {
-                        UIApplication.shared.alert(title: NSLocalizedString("CLEARING_CACHE", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
+                        
+                        alertManager.showAlert(
+                            title: "CLEARING_CACHE",
+                            body: "PLEASE_WAIT",
+                            showButtons: false
+                        )
+                        
                         SDImageCache.shared.clearMemory()
                         SDImageCache.shared.clearDisk()
                         URLCache.shared.removeAllCachedResponses()
                         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
-                            UIApplication.shared.change(title: NSLocalizedString("SUCCESS", comment: ""), body: NSLocalizedString("THE_APP_WILL_NOW_QUIT", comment: ""))
+                            
+                            alertManager.showAlert(
+                                title: "SUCCESS",
+                                body: "THE_APP_WILL_NOW_QUIT",
+                                showButtons: false
+                            )
+                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                                 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -32,12 +48,23 @@ struct OtherView: View {
                     }
                     Button("RESET_REPOS") {
                         
-                        UIApplication.shared.alert(title: NSLocalizedString("RESETING_REPOS", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
+                        alertManager.showAlert(
+                            title: "RESETING_REPOS",
+                            body: "PLEASE_WAIT",
+                            showButtons: false
+                        )
+                        
                         if let bundleID = Bundle.main.bundleIdentifier {
                             UserDefaults.standard.removePersistentDomain(forName: bundleID)
                         }
                         Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-                            UIApplication.shared.change(title: NSLocalizedString("SUCCESS", comment: ""), body: NSLocalizedString("THE_APP_WILL_NOW_QUIT", comment: ""))
+                            
+                            alertManager.showAlert(
+                                title: "SUCCESS",
+                                body: "THE_APP_WILL_NOW_QUIT",
+                                showButtons: false
+                            )
+                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                                 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -48,7 +75,12 @@ struct OtherView: View {
                     }
                     .foregroundColor(Color.red)
                     Button("RELOAD_SPRINGBOARD") {
-                        UIApplication.shared.alert(title: NSLocalizedString("RELOADING_SPRINGBOARD", comment: ""), body: NSLocalizedString("PLEASE_WAIT", comment: ""), animated: false, withButton: false)
+                        
+                        alertManager.showAlert(
+                            title: "RELOADING_SPRINGBOARD",
+                            body: "PLEASE_WAIT"
+                        )
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                             guard let window = UIApplication.shared.windows.first else { return }
                             while true {
@@ -56,6 +88,20 @@ struct OtherView: View {
                             }
                         })
                     }
+                }
+                
+                Section(header: Text("APP_SETTINGS")) {
+                    Toggle("REDUCED_MOTION", isOn: $userSettings.reducedMotion)
+                    
+                    let langOptions = ["en", "zh", "de", "id", "ar"]
+
+                    
+                    Picker("APP_LANGUAGE", selection: $userSettings.lang) {
+                        ForEach(langOptions, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.menu)
                 }
                 
                 Section(header: Text("DEVELOPERS")) {

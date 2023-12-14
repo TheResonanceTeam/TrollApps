@@ -8,107 +8,110 @@
 
 // Bottom Bar
 "FEATURED" = "Featured";
-"SOURCES" = "Sources";
-"BROWSE" = "Browse";
+"SOURCES" = "Quellen";
+"BROWSE" = "Durchsuchen";
 "APPS" = "Apps";
-"SETTINGS" = "Settings";
+"SETTINGS" = "Einstellungen";
 
 // Buttons
-"OPEN" = "OPEN";
-"GET" = "GET";
-"UPDATE" = "UPDATE";
-"OLDER" = "OLDER";
+"OPEN" = "ÖFFNEN";
+"GET" = "LADEN";
+"OLDER" = "ÄLTER";
 
 // Sources Menu
-"SOURCES" = "Sources";
-"BROKEN_SOURCES" = "Broken Sources";
-"EXPORT" = "Export";
-"DELETE" = "Delete";
+"SOURCES" = "Quellen";
+"BROKEN_SOURCES" = "Fehlerhafte Quellen";
+"EXPORT" = "Exportieren";
+"DELETE" = "Löschen";
 
-"UNNAMED_REPO" = "Unnamed Repo";
-"COPY_SOURCE_URL" = "Copy Source URL";
-"COPY_REPO_URL" = "Copy Repo[] URL";
-"DELETE_REPO" = "Delete Repo";
+"UNNAMED_REPO" = "Unbenanntes Repo";
+"COPY_SOURCE_URL" = "Quell-URL kopieren";
+"COPY_REPO_URL" = "Quell-URL[] kopieren";
+"DELETE_REPO" = "Repo löschen";
 
-"UNABLE_TO_LOAD_REPO" = "Unable to load repo";
+"UNABLE_TO_LOAD_REPO" = "Repo kann nicht geladen werden";
 
 // Add Repo Menu
-"ADD_REPOS" = "Add Repos";
+"ADD_REPOS" = "Repos hinzufügen";
 "REPO_URL" = "Repo URL";
-"ADD_REPO_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
+"ADD_REPOS_TOOLTIP" = "Bitte stell sicher, dass Repo-URL gültig ist. Es wird empfohlen, sie zu kopieren und hier einzufügen, anstatt sie manuell einzugeben.";
 
 // Apps Detailed View
-"WHATS_NEW" = "What's New";
+"WHATS_NEW" = "Neuigkeiten";
 "VERSION %@" = "Version %@";
-"UNKNOWN_VERSION" = "Unknown Version";
-"UNKNOWN DEVELOPER" = "Unknown Developer";
+"UNKNOWN_VERSION" = "Unbekannte Version";
+"UNKNOWN DEVELOPER" = "Unbekannter Entwickler";
 
-"SELECT_VERSION" = "Select Version";
+"SELECT_VERSION" = "Version auswählen";
 
 // Browse View
-"SEARCH" = "Search";
+"SEARCH" = "Suchen";
 
 // Apps View
-"INSTALLED_APPS" = "Installed Apps";
+"INSTALLED_APPS" = "Installierte Apps";
 
 // Settings View
-"OPTIONS" = "Options";
-"DELETE_CACHE" = "Delete Cache";
-"RESET_REPOS" = "Reset Repos";
-"RELOAD_SPRINGBOARD" = "Reload Springboard";
-"DELETE_CACHE_TOOLTIP" = "The Delete Cache button should be used if the app weights a bit too much on your Device.";
+"OPTIONS" = "Optionen";
+"DELETE_CACHE" = "Cache löschen";
+"RESET_REPOS" = "Repos zurücksetzen";
+"RELOAD_SPRINGBOARD" = "Springboard neu laden";
+"DELETE_CACHE_TOOLTIP" = "Die Schaltfläche \"Cache löschen\" sollte verwendet werden, wenn die App etwas zu viel Platz auf dem Gerät einnimmt.";
 
-"DEVELOPERS" = "Developers";
 
-"THANKS_TO" = "Thanks To...";
-"THANKS_TO_TOOLTIP" = "Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!";
+"APP_SETTINGS" = "App Einstellungen";
+"REDUCED_MOTION" = "Bewegung reduzieren";
+"APP_LANGUAGE" = "Spracheinstellungen";
 
-"OTHER_PROJECTS_AND_LICENSES" = "Other projects used and their licenses";
+"DEVELOPERS" = "Entwickler";
 
-"HELP_THE_PROJECT" = "Help The Project";
-"JOIN_OUR_DISCORD" = "Join our Discord";
-"REPORT_A_BUG" = "Report a Bug!";
-"JSON_TEMPLATE" = "JSON template to create your own repo!";
+"THANKS_TO" = "Vielen Dank an...";
+"THANKS_TO_TOOLTIP" = "Ein großes Dankeschön an diese großartigen Apps, Artikel and Personen! Ohne sie wäre dieses Projekt so nicht möglich oder würde gar nicht existieren.";
+
+"OTHER_PROJECTS_AND_LICENSES" = "Weitere genutzt Projekte und ihre Lizenzen";
+
+"HELP_THE_PROJECT" = "Untersütze das Projekt!";
+"JOIN_OUR_DISCORD" = "Tritt unserem Discord bei!";
+"REPORT_A_BUG" = "Melde einen Fehler!";
+"JSON_TEMPLATE" = "JSON Vorlage für dein eigenes Repo!";
 
 // Alerts
-"ALERT" = "Alert";
+"ALERT" = "Hinweis";
 "OK" = "Ok";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
+"CANCEL" = "Abbrechen";
+"YES" = "Ja";
 
-"SUCCESS" = "Success!";
-"THE_APP_WILL_NOW_QUIT" = "The app will now quit...";
+"SUCCESS" = "Erfolg!";
+"THE_APP_WILL_NOW_QUIT" = "Die App wird beendet...";
 
-"CLEARING_CACHE" = "Clearing Cache";
-"RESETING_REPOS" = "Resetting Repos";
-"RELOADING_SPRINGBOARD" = "Reloading Springboard";
-"PLEASE_WAIT" = "Please Wait";
+"CLEARING_CACHE" = "Lösche Cache";
+"RESETING_REPOS" = "Setze Repos zurück";
+"RELOADING_SPRINGBOARD" = "Lade Springboard neu";
+"PLEASE_WAIT" = "Bitte warten";
 
-"COPIED_REPOS_TO_CLIPBOARD" = "Copied Repo(s) to clipboard";
+"COPIED_REPOS_TO_CLIPBOARD" = "Repo(s) in Zwischenablage kopiert";
 
-"DUPLICATE_REPO" = "Duplicate Repo";
-"ALREADY_ON_REPO_LIST" = "You've already added this repo to your repo list.";
+"DUPLICATE_REPO" = "Doppeltes Repo";
+"ALREADY_ON_REPO_LIST" = "Du hast dieses Repo bereits zur Repo-Liste hinzugefügt.";
 
-"ADDING_REPO" = "Adding Repo";
+"ADDING_REPO" = "Füge Repo hinzu";
 
-"UNKNOWN_ERROR_WHILE_INSTALLING" = "An unknown error occoured while installing this app.";
-"PLEASE_RETRY_LATER" = "Please retry this installation another time.";
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "Ein unbekannter Fehler ist beim Installieren der App aufgetreten.";
+"PLEASE_RETRY_LATER" = "Bitte versuche die Installation zu einem anderen Zeitpunkt erneut.";
 
-"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Failed to download and parse app.";
-"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "This could be due to missing permissions, a broken download link.";
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Herunterladen und verarbeiten der App fehlgeschlagen.";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "Dies könnte auf fehlende Berechtigungen oder einen fehlerhaften Download-Link zurückzuführen sein.";
 
-"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Failed to fetch app download url.";
-"LIKELY_REPO_ISSUE" = "Likely a repo issue.";
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "App Download-URL konnte nicht abgerufen werden.";
+"LIKELY_REPO_ISSUE" = "Vermutlich liegt ein Problem mit dem Repo vor.";
 
-"UNABLE_TO_UPDATE" = "Unable to update.";
-"NOT_TROLLSTORE_MANAGED" = "This application was not initially installed through TrollStore and, as a result, cannot install this update. Consider uninstalling the application, then reinstalling in TrollApps.";
+"UNABLE_TO_UPDATE" = "Update nicht möglich.";
+"NOT_TROLLSTORE_MANAGED" = "Diese App wurde ursprünglich nicht über TrollStore installiert. In der Folge kann dieses Update nicht installiert werden. Zieh in Erwägung die App zu deinstallieren und über TrollStore erneut zu installieren.";
 
-"UNABLE_TO_START_INSTALL" = "Unable to start app installation.";
-"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Please wait for the current installation to finish.";
+"UNABLE_TO_START_INSTALL" = "Start der App-Installation nicht möglich.";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Bitte warte, bis die aktuelle Installation abgeschlossen ist.";
 
-"TROLLAPPS_WILL_CLOSE" = "TrollApps will close and you will be transfered to TrollStore to complete the update process.";
-"DO_YOU_STILL_WISH_TO_UPDATE" = "Do you still wish to update TrollApps?";
+"TROLLAPPS_WILL_CLOSE" = "TrollApps wird geschlossen und du wirst zum TrollStore weitergeleitet, um den Aktualisierungsvorgang abzuschließen.";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "Möchtest du TrollApps trotzdem aktualisieren?";
 
-"ERROR_DECODING_BASE64_STRING" = "Error decoding Base64 string.";
-"PLEASE_VERIFY_VALID_REPO_STRING" = "Please verify this is a proper repo[] string.";
-
+"ERROR_DECODING_BASE64_STRING" = "Fehler beim Entschlüsseln des Base64-Strings.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Bitte stell sicher, dass dies ein korrekter Repo[]-string ist.";

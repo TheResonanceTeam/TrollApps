@@ -13,6 +13,7 @@ struct SourcesView: View {
     @State private var badRepos: [BadRepoMemory] = []
 
     @EnvironmentObject var repoManager: RepositoryManager
+    @EnvironmentObject var alertManager: AlertManager
 
     @State private var isAddingURL: Bool = false
     @State private var isRequestingURL: Bool = false
@@ -115,7 +116,11 @@ struct SourcesView: View {
                                 let selectedUrls = repos.filter { repo in repoMultiSelection.contains(repo.id) }.map { $0.url }
                                 UIPasteboard.general.string = reposEncode(reposUrl: selectedUrls)
                                 
-                                UIApplication.shared.alert(title: NSLocalizedString("COPIED_REPOS_TO_CLIPBOARD", comment: ""), body: "", animated: false, withButton: true)
+                                alertManager.showAlert(
+                                    title: "COPIED_REPOS_TO_CLIPBOARD",
+                                    body: ""
+                                )
+
                             }) {
                                 Text("EXPORT")
                             }
@@ -215,7 +220,11 @@ struct SourcesView: View {
                                 let selectedUrls = repos.filter { repo in failedMultiSelection.contains(repo.id) }.map { $0.url }
                                 UIPasteboard.general.string = reposEncode(reposUrl: selectedUrls)
                                 
-                                UIApplication.shared.alert(title: NSLocalizedString("COPIED_REPOS_TO_CLIPBOARD", comment: ""), body: "", animated: false, withButton: true)
+                                alertManager.showAlert(
+                                    title: "COPIED_REPOS_TO_CLIPBOARD",
+                                    body: ""
+                                )
+
                             }) {
                                 Text("EXPORT")
                             }
@@ -259,10 +268,15 @@ struct SourcesView: View {
                     if repoURL != "" {
                         
                         if (repoManager.RepoList.contains(repoURL)) {
-                            UIApplication.shared.alert(title: NSLocalizedString("DUPLICATE_REPO", comment: ""), body: NSLocalizedString("ALREADY_ON_REPO_LIST", comment: ""), animated: false, withButton: true)
+                            
+                            alertManager.showAlert(
+                                title: "DUPLICATE_REPO",
+                                body: "ALREADY_ON_REPO_LIST"
+                            )
+
                         } else {
                             isAddingURL = true
-                            repoManager.addRepo(repoURL) {
+                            repoManager.addRepo(repoURL, alertManager: alertManager) {
                                 repos = repoManager.ReposData
                                 badRepos = repoManager.BadRepos
                                 isAddingURL = false
@@ -286,6 +300,7 @@ struct AddSourceView: View {
     @EnvironmentObject var repoManager: RepositoryManager
     @State var RepoURL = ""
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var alertManager: AlertManager
 
     var onDismiss: () -> Void
 
@@ -295,10 +310,12 @@ struct AddSourceView: View {
                 TextField("REPO_URL", text: $RepoURL)
                 Button("ADD_REPOS") {
                     if (repoManager.RepoList.contains(RepoURL)) {
-                        
-                        UIApplication.shared.alert(title: NSLocalizedString("DUPLICATE_REPO", comment: ""), body: NSLocalizedString("ALREADY_ON_REPO_LIST", comment: ""), animated: false, withButton: true)
+                        alertManager.showAlert(
+                            title: "DUPLICATE_REPO",
+                            body: "ALREADY_ON_REPO_LIST"
+                        )
                     } else {
-                        repoManager.addRepo(RepoURL) {
+                        repoManager.addRepo(RepoURL, alertManager: alertManager) {
                             RepoURL = ""
                             presentationMode.wrappedValue.dismiss()
                             onDismiss()

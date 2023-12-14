@@ -31,13 +31,11 @@ struct DynamicButton: View {
                     .foregroundColor(.white)
                     .padding(8)
             } else {
-                Text(buttonText)
+                Text(LocalizedStringKey(buttonText))
             }
         }
         
     }
-    
-    
 }
 
 struct DynamicInstallButton: View {
@@ -46,6 +44,7 @@ struct DynamicInstallButton: View {
     @State private var downloadError: Bool = false
         
     @EnvironmentObject var repoManager: RepositoryManager
+    @EnvironmentObject var alertManager: AlertManager
 
     var appDetails: Application
     var selectedVersionIndex: Int
@@ -78,10 +77,13 @@ struct DynamicInstallButton: View {
                             
                             if !repoManager.IsAppInstalled(appDetails.bundleIdentifier ?? "") {
                                 isInstalled = false
+
+                                alertManager.showAlert(
+                                    title: "UNKNOWN_ERROR_WHILE_INSTALLING",
+                                    body: "PLEASE_RETRY_LATER"
+                                )
                                 
-                                UIApplication.shared.alert(title: NSLocalizedString("UNKNOWN_ERROR_WHILE_INSTALLING", comment: ""), body: NSLocalizedString("PLEASE_RETRY_LATER", comment: ""), animated: false, withButton: true)
-                                
-                                updater(NSLocalizedString("GET", comment: ""))
+                                updater("GET")
                             } else {
                                 isInstalled = true
                             }
@@ -93,15 +95,21 @@ struct DynamicInstallButton: View {
                     InstallingIPAInfo = nil
                     downloadError = true
                     
-                    UIApplication.shared.alert(title: NSLocalizedString("FAILED_TO_DOWNLOAD_OR_PARSE_APP", comment: ""), body: NSLocalizedString("THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK", comment: ""), animated: false, withButton: true)
-
-                    updater(NSLocalizedString("GET", comment: ""))
+                    alertManager.showAlert(
+                        title: "FAILED_TO_DOWNLOAD_OR_PARSE_APP",
+                        body: "THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK"
+                    )
+                    
+                    updater("GET")
                 }
             } else {
                 
-                UIApplication.shared.alert(title: NSLocalizedString("FAILED_TO_FETCH_APP_DOWNLOAD_URL", comment: ""), body: NSLocalizedString("LIKELY_REPO_ISSUE", comment: ""), animated: false, withButton: true)
+                alertManager.showAlert(
+                    title: "FAILED_TO_FETCH_APP_DOWNLOAD_URL",
+                    body: "LIKELY_REPO_ISSUE"
+                )
 
-                updater(NSLocalizedString("GET", comment: ""))
+                updater("GET")
             }
         }
     }
@@ -136,7 +144,11 @@ struct DynamicInstallButton: View {
                             }
                         } else {
                             
-                            UIApplication.shared.alert(title: NSLocalizedString("UNABLE_TO_UPDATE", comment: ""), body: NSLocalizedString("NOT_TROLLSTORE_MANAGED", comment: ""), animated: false, withButton: true)
+                            alertManager.showAlert(
+                                title: "UNABLE_TO_UPDATE",
+                                body: "NOT_TROLLSTORE_MANAGED"
+                            )
+
                         }
                     }
                     .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
@@ -151,13 +163,17 @@ struct DynamicInstallButton: View {
                 }
             }
         } else {
-            DynamicButton(initialText: NSLocalizedString("GET", comment: "")) { updater in
+            DynamicButton(initialText: "GET") { updater in
                 if(!repoManager.isInstallingApp) {
                     downloadAndInstallApp(updater: updater)
 
                 } else {
                     
-                    UIApplication.shared.alert(title: NSLocalizedString("UNABLE_TO_START_INSTALL", comment: ""), body: NSLocalizedString("PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH", comment: ""), animated: false, withButton: true)
+                    alertManager.showAlert(
+                        title: "UNABLE_TO_START_INSTALL",
+                        body: "PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH"
+                    )
+                    
                 }
             }
             .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))

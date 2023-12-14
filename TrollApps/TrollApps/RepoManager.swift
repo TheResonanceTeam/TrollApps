@@ -42,7 +42,7 @@ enum StringOrDouble: Decodable, Encodable, Equatable {
 }
 
 struct Repo: Decodable, Identifiable, Equatable, Hashable {
-    var id = UUID()
+    let id = UUID()
     var name: String?
     var iconURL: String?
     var headerURL: String?
@@ -131,7 +131,7 @@ class RepositoryManager: ObservableObject {
         }
     }
     
-    func addRepo(_ repoURL: String, completion: @escaping () -> Void) {
+    func addRepo(_ repoURL: String, alertManager: AlertManager, completion: @escaping () -> Void) {
         let dispatchGroup = DispatchGroup()
         
         if !RepoList.contains(repoURL.trimmingCharacters(in: .whitespacesAndNewlines)) {
@@ -157,7 +157,10 @@ class RepositoryManager: ObservableObject {
                         dispatchGroup.leave()
                     }
                 } else {
-                    UIApplication.shared.alert(title: NSLocalizedString("ERROR_DECODING_BASE64_STRING", comment: ""), body: NSLocalizedString("PLEASE_VERIFY_VALID_REPO_STRING", comment: ""), animated: false, withButton: true)
+                    alertManager.showAlert(
+                        title: "ERROR_DECODING_BASE64_STRING",
+                        body: "PLEASE_VERIFY_VALID_REPO_STRING"
+                    )
                 }
             } else {
                 fetchRepos([repoURL]) { fetchedResults, errors in

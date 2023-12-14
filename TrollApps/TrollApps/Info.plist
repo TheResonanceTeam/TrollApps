@@ -15,5 +15,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array/>
 </dict>
 </plist>

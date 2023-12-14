@@ -16,6 +16,7 @@
 // Buttons
 "OPEN" = "OPEN";
 "GET" = "GET";
+"UPDATE" = "UPDATE";
 "OLDER" = "OLDER";
 
 // Sources Menu
@@ -34,7 +35,7 @@
 // Add Repo Menu
 "ADD_REPOS" = "Add Repos";
 "REPO_URL" = "Repo URL";
-"ADD_REPO_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
+"ADD_REPOS_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
 
 // Apps Detailed View
 "WHATS_NEW" = "What's New";
@@ -56,6 +57,10 @@
 "RESET_REPOS" = "Reset Repos";
 "RELOAD_SPRINGBOARD" = "Reload Springboard";
 "DELETE_CACHE_TOOLTIP" = "The Delete Cache button should be used if the app weights a bit too much on your Device.";
+
+"APP_SETTINGS" = "App Settings";
+"REDUCED_MOTION" = "Reduced Motion";
+"APP_LANGUAGE" = "App Language";
 
 "DEVELOPERS" = "Developers";
 
