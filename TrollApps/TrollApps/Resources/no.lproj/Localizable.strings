@@ -1,0 +1,112 @@
+/* 
+  Localizable.strings
+  TrollApps
+
+  Created by Cleopatra on 2023-12-11.
+  
+*/
+
+// Bottom Bar
+"FEATURED" = "Utvalgte";
+"SOURCES" = "Kilder";
+"BROWSE" = "Søk";
+"APPS" = "Apper";
+"SETTINGS" = "Innstillinger";
+
+// Buttons
+"OPEN" = "START";
+"GET" = "SKAFFE";
+"OLDER" = "FORELDET";
+
+// Sources Menu
+"SOURCES" = "Kilder";
+"BROKEN_SOURCES" = "Ødelagte Kilder";
+"EXPORT" = "Eksport";
+"DELETE" = "Slett";
+
+"UNNAMED_REPO" = "Uten navn Kilder";
+"COPY_SOURCE_URL" = "Kopier Kilde-URL";
+"COPY_REPO_URL" = "Kopier Repo-URL";
+"DELETE_REPO" = "Slett Kilde";
+
+"UNABLE_TO_LOAD_REPO" = "Kan ikke laste inn kilde";
+
+// Add Repo Menu
+"ADD_REPOS" = "Legg til Kilder";
+"REPO_URL" = "Kilde-URL";
+"ADD_REPO_TOOLTIP" = "Sørg for at du har oppgitt en gyldig kilde-URL. Det anbefales å kopiere og lime den inn her i stedet for å skrive den inn manuelt.";
+
+// Apps Detailed View
+"WHATS_NEW" = "Hva er nytt";
+"VERSION %@" = "Versjon %@";
+"UNKNOWN_VERSION" = "Ukjent versjon";
+"UNKNOWN DEVELOPER" = "Ukjent utvikler";
+
+"SELECT_VERSION" = "Velg versjon";
+
+// Browse View
+"SEARCH" = "Søk";
+
+// Apps View
+"INSTALLED_APPS" = "Installerte apper";
+
+// Settings View
+"OPTIONS" = "Innstillinger";
+"DELETE_CACHE" = "Slett hurtigbuffer";
+"RESET_REPOS" = "Tilbakestill Kilder";
+"RELOAD_SPRINGBOARD" = "Last inn Springboard på nytt";
+"DELETE_CACHE_TOOLTIP" = "Slett hurtigbuffer bør bare brukes hvis appen bruker for mye lagringsplass.";
+
+"DEVELOPERS" = "Utviklere";
+
+"THANKS_TO" = "Tusen takk...";
+"THANKS_TO_TOOLTIP" = "Takk til disse personene som gjorde dette prosjektet mulig.";
+
+"OTHER_PROJECTS_AND_LICENSES" = "Andre prosjekter og lisenser";
+
+"HELP_THE_PROJECT" = "Hjelp prosjektet";
+"JOIN_OUR_DISCORD" = "Bli med på vår Discord";
+"REPORT_A_BUG" = "Rapporter en feil!";
+"JSON_TEMPLATE" = "JSON-mal for å opprette din egen kilde!";
+
+// Alerts
+"ALERT" = "Varsel";
+"OK" = "OK";
+"CANCEL" = "Avbryt";
+"YES" = "Ja";
+
+"SUCCESS" = "Suksess!";
+"THE_APP_WILL_NOW_QUIT" = "Appen vil nå avslutte...";
+
+"CLEARING_CACHE" = "Tømmer hurtigbuffer";
+"RESETING_REPOS" = "Tilbakestiller Kilder";
+"RELOADING_SPRINGBOARD" = "Laster inn Springboard på nytt";
+"PLEASE_WAIT" = "Vennligst vent";
+
+"COPIED_REPOS_TO_CLIPBOARD" = "Kopierte Kilder til utklippstavlen";
+
+"DUPLICATE_REPO" = "Dupliser Kilde";
+"ALREADY_ON_REPO_LIST" = "Du har allerede lagt til denne kilden i kildelisten din.";
+
+"ADDING_REPO" = "Legger til Kilde";
+
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "En ukjent feil oppstod under installasjonen av denne appen.";
+"PLEASE_RETRY_LATER" = "Vennligst prøv denne installasjonen igjen senere.";
+
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Klarte ikke å laste ned og analysere appen.";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "Dette kan skyldes manglende tillatelser eller en ødelagt nedlastingslenke.";
+
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Klarte ikke å hente nedlastings-URL for appen.";
+"LIKELY_REPO_ISSUE" = "Sannsynligvis et kildeproblem.";
+
+"UNABLE_TO_UPDATE" = "Kan ikke oppdatere.";
+"NOT_TROLLSTORE_MANAGED" = "Denne applikasjonen ble ikke installert gjennom TrollStore og kan derfor ikke oppdatere. Vurder å avinstallere applikasjonen og deretter installere på nytt i TrollApps.";
+
+"UNABLE_TO_START_INSTALL" = "Kan ikke starte installasjonen av appen.";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Vent på at den nåværende installasjonen skal fullføres.";
+
+"TROLLAPPS_WILL_CLOSE" = "TrollApps vil lukkes, og du vil bli overført til TrollStore for å fullføre oppdateringsprosessen.";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "Ønsker du fortsatt å oppdatere TrollApps?";
+
+"ERROR_DECODING_BASE64_STRING" = "Feil ved avkoding av Base64-streng.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Vennligst bekreft at dette er en gyldig kildenstreng.";

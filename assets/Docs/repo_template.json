@@ -1,0 +1,38 @@
+{
+    "name": "SOURCE_NAME",
+    "subtitle": "SHORT_DESCRIPTION",
+    "description": "LONG_DESCRIPTION",
+    "iconURL": "LINK_TO_IMAGE.png",
+    "headerURL": "LINK_TO_IMAGE.png",
+    "website": "YOUR_WEBSITE_URL",
+    "tintColor": "#F54F32",
+    "featuredApps": [],
+    "apps": [
+        {
+            "name": "APP_NAME",
+            "bundleIdentifier": "APP.BUNDLE.ID",
+            "developerName": "DEVELOPER_NAME",
+            "subtitle": "SHORT_APP_DESCRIPTION",
+            "localizedDescription": "LONG_APP_DESCRIPTION",
+            "iconURL": "LINK_TO_ICON.png",
+            "tintColor": "#F54F32",
+            "screenshotURLs": [
+                "LINK_TO_SCREENSHOT_1.png",
+                "LINK_TO_SCREENSHOT_2.png"
+            ],
+            "versions": [
+                {
+                  "version": "APP.VERSION",
+                  "date": "YYYY-MM-DD",
+                  "localizedDescription": "LONG_APP_DESCRIPTION_OR_CHANGELOG",
+                  "downloadURL": "LINK_TO_APP.ipa",
+                  "size": APP_SIZE_IN_BYTES_INT,
+                  "minOSVersion": "14.0",
+                  "maxOSVersion": "17.0"
+                }
+              ],
+            "appPermissions": {}
+        }
+    ],
+    "news": []
+  }
