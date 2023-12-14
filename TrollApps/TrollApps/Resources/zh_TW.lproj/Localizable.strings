@@ -1,0 +1,117 @@
+/* 
+  Localizable.strings
+  TrollApps
+
+  Created by Cleopatra on 2023-12-11.
+  Translated by Oliver Tzeng（曾嘉禾）on 2023-12-14
+*/
+
+// Bottom Bar
+"FEATURED" = "精選";
+"SOURCES" = "軟體源";
+"BROWSE" = "瀏覽";
+"APPS" = "已安裝";
+"SETTINGS" = "設定";
+
+// Buttons
+"OPEN" = "打開";
+"GET" = "取得";
+"UPDATE" = "更新";
+"OLDER" = "版本太新";
+
+// Sources Menu
+"SOURCES" = "軟體源";
+"BROKEN_SOURCES" = "已損壞的軟體源";
+"EXPORT" = "導出";
+"DELETE" = "移除";
+
+"UNNAMED_REPO" = "未命名之軟體源";
+"COPY_SOURCE_URL" = "複製軟體源";
+"COPY_REPO_URL" = "複製軟體源（repo[base64]）";
+"DELETE_REPO" = "移除軟體源";
+
+"UNABLE_TO_LOAD_REPO" = "無法載入軟體源";
+
+// Add Repo Menu
+"ADD_REPOS" = "新增軟體源";
+"REPO_URL" = "軟體源網址";
+"ADD_REPOS_TOOLTIP" = "請再三確認網址是否正確。建議複製貼上軟體源以降低出錯機會";
+
+// Apps Detailed View
+"WHATS_NEW" = "新功能";
+"VERSION %@" = "版本 %@";
+"UNKNOWN_VERSION" = "未知版本";
+"UNKNOWN DEVELOPER" = "未知開發者";
+
+"SELECT_VERSION" = "選取版本";
+
+// Browse View
+"SEARCH" = "搜尋";
+
+// Apps View
+"INSTALLED_APPS" = "已安裝應用程式";
+
+// Settings View
+"OPTIONS" = "選項";
+"DELETE_CACHE" = "清除快取";
+"RESET_REPOS" = "回覆預設軟體源";
+"RELOAD_SPRINGBOARD" = "重新啟動主畫面";
+"DELETE_CACHE_TOOLTIP" = "「清除快取」來減少應用程式大小";
+
+"APP_SETTINGS" = "應用程式設定";
+"REDUCED_MOTION" = "減少動畫";
+"APP_LANGUAGE" = "語言";
+
+"DEVELOPERS" = "開發者";
+
+"THANKS_TO" = "感謝";
+"THANKS_TO_TOOLTIP" = "獻最大的感謝給這些應用程式、文章、以及好心的開發者！此應用程式造就於這些人！";
+
+"OTHER_PROJECTS_AND_LICENSES" = "此應用程式所使用的資料庫以及其授權條款";
+
+"HELP_THE_PROJECT" = "為此應用程式貢獻";
+"JOIN_OUR_DISCORD" = "加入 Discord";
+"REPORT_A_BUG" = "回報錯誤";
+"JSON_TEMPLATE" = "軟體源 JSON 樣本";
+
+// Alerts
+"ALERT" = "⚠️警告⚠️";
+"OK" = "關閉";
+"CANCEL" = "取消";
+"YES" = "確認";
+
+"SUCCESS" = "成功！";
+"THE_APP_WILL_NOW_QUIT" = "即將關閉此應用程式";
+
+"CLEARING_CACHE" = "正在清除快取";
+"RESETING_REPOS" = "正在回覆軟體源";
+"RELOADING_SPRINGBOARD" = "正在重新啟動主畫面";
+"PLEASE_WAIT" = "請稍候";
+
+"COPIED_REPOS_TO_CLIPBOARD" = "Copied Repo(s) to clipboard";
+
+"DUPLICATE_REPO" = "相同軟體源";
+"ALREADY_ON_REPO_LIST" = "已增加此軟體源";
+
+"ADDING_REPO" = "正在增加軟體源";
+
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "安裝此應用程式時出錯";
+"PLEASE_RETRY_LATER" = "請等會再試一次";
+
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "下載與解壓縮應用程式時出錯";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "可能因無適當權限或連結破損而導致";
+
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Failed to fetch app download url.";
+"LIKELY_REPO_ISSUE" = "很可能為軟體源問題";
+
+"UNABLE_TO_UPDATE" = "無法更新";
+"NOT_TROLLSTORE_MANAGED" = "此應用程式並非從 TrollStore 安裝導致無法安裝更新。請先在 TrollStore 內刪除此應用程式並且在 TrollApps 內重新安裝。";
+
+"UNABLE_TO_START_INSTALL" = "無法開始安裝應用程式";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "請等待目前正在安裝的應用程式完成";
+
+"TROLLAPPS_WILL_CLOSE" = "TrollApps 將關閉並且將開啟 TrollStore 以完成此更新";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "是否更新 TrollApps？";
+
+"ERROR_DECODING_BASE64_STRING" = "解碼 Base64 軟體源時出錯";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "請確認是否為 repo[亂碼] 的格式";
