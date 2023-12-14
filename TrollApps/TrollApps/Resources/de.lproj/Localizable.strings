@@ -1,0 +1,114 @@
+/* 
+  Localizable.strings
+  TrollApps
+
+  Created by Cleopatra on 2023-12-11.
+  
+*/
+
+// Bottom Bar
+"FEATURED" = "Featured";
+"SOURCES" = "Sources";
+"BROWSE" = "Browse";
+"APPS" = "Apps";
+"SETTINGS" = "Settings";
+
+// Buttons
+"OPEN" = "OPEN";
+"GET" = "GET";
+"UPDATE" = "UPDATE";
+"OLDER" = "OLDER";
+
+// Sources Menu
+"SOURCES" = "Sources";
+"BROKEN_SOURCES" = "Broken Sources";
+"EXPORT" = "Export";
+"DELETE" = "Delete";
+
+"UNNAMED_REPO" = "Unnamed Repo";
+"COPY_SOURCE_URL" = "Copy Source URL";
+"COPY_REPO_URL" = "Copy Repo[] URL";
+"DELETE_REPO" = "Delete Repo";
+
+"UNABLE_TO_LOAD_REPO" = "Unable to load repo";
+
+// Add Repo Menu
+"ADD_REPOS" = "Add Repos";
+"REPO_URL" = "Repo URL";
+"ADD_REPO_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
+
+// Apps Detailed View
+"WHATS_NEW" = "What's New";
+"VERSION %@" = "Version %@";
+"UNKNOWN_VERSION" = "Unknown Version";
+"UNKNOWN DEVELOPER" = "Unknown Developer";
+
+"SELECT_VERSION" = "Select Version";
+
+// Browse View
+"SEARCH" = "Search";
+
+// Apps View
+"INSTALLED_APPS" = "Installed Apps";
+
+// Settings View
+"OPTIONS" = "Options";
+"DELETE_CACHE" = "Delete Cache";
+"RESET_REPOS" = "Reset Repos";
+"RELOAD_SPRINGBOARD" = "Reload Springboard";
+"DELETE_CACHE_TOOLTIP" = "The Delete Cache button should be used if the app weights a bit too much on your Device.";
+
+"DEVELOPERS" = "Developers";
+
+"THANKS_TO" = "Thanks To...";
+"THANKS_TO_TOOLTIP" = "Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!";
+
+"OTHER_PROJECTS_AND_LICENSES" = "Other projects used and their licenses";
+
+"HELP_THE_PROJECT" = "Help The Project";
+"JOIN_OUR_DISCORD" = "Join our Discord";
+"REPORT_A_BUG" = "Report a Bug!";
+"JSON_TEMPLATE" = "JSON template to create your own repo!";
+
+// Alerts
+"ALERT" = "Alert";
+"OK" = "Ok";
+"CANCEL" = "Cancel";
+"YES" = "Yes";
+
+"SUCCESS" = "Success!";
+"THE_APP_WILL_NOW_QUIT" = "The app will now quit...";
+
+"CLEARING_CACHE" = "Clearing Cache";
+"RESETING_REPOS" = "Resetting Repos";
+"RELOADING_SPRINGBOARD" = "Reloading Springboard";
+"PLEASE_WAIT" = "Please Wait";
+
+"COPIED_REPOS_TO_CLIPBOARD" = "Copied Repo(s) to clipboard";
+
+"DUPLICATE_REPO" = "Duplicate Repo";
+"ALREADY_ON_REPO_LIST" = "You've already added this repo to your repo list.";
+
+"ADDING_REPO" = "Adding Repo";
+
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "An unknown error occoured while installing this app.";
+"PLEASE_RETRY_LATER" = "Please retry this installation another time.";
+
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Failed to download and parse app.";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "This could be due to missing permissions, a broken download link.";
+
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Failed to fetch app download url.";
+"LIKELY_REPO_ISSUE" = "Likely a repo issue.";
+
+"UNABLE_TO_UPDATE" = "Unable to update.";
+"NOT_TROLLSTORE_MANAGED" = "This application was not initially installed through TrollStore and, as a result, cannot install this update. Consider uninstalling the application, then reinstalling in TrollApps.";
+
+"UNABLE_TO_START_INSTALL" = "Unable to start app installation.";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Please wait for the current installation to finish.";
+
+"TROLLAPPS_WILL_CLOSE" = "TrollApps will close and you will be transfered to TrollStore to complete the update process.";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "Do you still wish to update TrollApps?";
+
+"ERROR_DECODING_BASE64_STRING" = "Error decoding Base64 string.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Please verify this is a proper repo[] string.";
+
