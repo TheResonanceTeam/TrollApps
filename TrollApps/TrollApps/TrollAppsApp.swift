@@ -2,7 +2,7 @@
 //  TrollAppsApp.swift
 //  TrollApps
 //
-//  Created by Анохин Юрий on 11.11.2022.
+//  Created by Cleopatra on 2023-12-15.
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ struct TrollAppsApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ContentView()
+                NavView()
                     .zIndex(2)
                 AlertManagerView()
                     .zIndex(3)

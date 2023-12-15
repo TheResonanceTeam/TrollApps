@@ -9,6 +9,8 @@ import SDWebImageSwiftUI
 
 struct AppsView: View {
     @EnvironmentObject var repoManager: RepositoryManager
+    @EnvironmentObject var alertManager: AlertManager
+
     @State var showFullVersion: Bool = false
 
     private let adaptiveCollums = [
@@ -40,7 +42,33 @@ struct AppsView: View {
                             OpenApp(app.id)
                         }
                         .buttonStyle(AppStoreStyle(type: "gray", dissabled: false))
-
+                    }
+                    .contextMenu
+                    {
+                        if(app.id != "com.opa334.TrollStore" && app.id != Bundle.main.bundleIdentifier) {
+                            Button(action: {
+                                let unistallIPAStatus = UnistallIPA(app.id)
+                                
+                                if(!unistallIPAStatus.error) {
+                                    alertManager.showAlert(
+                                        title: Text(LocalizedStringKey("UNINSTALLED_APP \(app.name)")),
+                                        body: Text(LocalizedStringKey(""))
+                                    )
+                                    
+                                    repoManager.InstalledApps = GetApps()
+                                } else {
+                                    alertManager.showAlert(
+                                        title: Text(LocalizedStringKey(unistallIPAStatus.message?.title ?? "")),
+                                        body: Text(LocalizedStringKey(unistallIPAStatus.message?.body ?? ""))
+                                    )
+                                }
+                            }, label:
+                            {
+                                Text("UNINSTALL_APP")
+                            })
+                        } else {
+                            Button("UNINSTALL_APP") {} .disabled(true)
+                        }
                     }
                 }
             }

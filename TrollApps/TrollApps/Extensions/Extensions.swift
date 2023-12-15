@@ -8,21 +8,74 @@
 import SwiftUI
 import CoreServices
 import Foundation
+import Combine
 
-func InstallIPA(_ IPAPath: String) {
+func InstallIPA(_ IPAPath: String) -> FunctionStatus {
     if let trollStoreApp = SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore") {
         let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
-        spawnRoot(trollstoreHelperPath, ["install", IPAPath])
+        let returnCode = spawnRoot(trollstoreHelperPath, ["install", IPAPath])
+        
+        if(returnCode != 0) {
+            return FunctionStatus(error: true, message: ErrorMessage(title: "FAILED_TO_INSTALL", body: "INSTALLATION_RETURNED_ERROR \(returnCode)"))
+        } else {
+            
+            NotificationCenter.default.post(name: Notification.Name("ApplicationsChanged"), object: nil)
+            PassthroughSubject<Void, Never>().send()
+            
+            if FileManager.default.fileExists(atPath: IPAPath) {
+                do {
+                    try FileManager.default.removeItem(atPath: IPAPath)
+                    return FunctionStatus(error: false)
+                } catch {
+                    print("Error removing .ipa file: \(error)")
+                    return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_REMOVING_IPA_FILE_AFTER_INSTALL", body: "LIKELY_A_PERMS_ISSUE"))
+                }
+            } else {
+                return FunctionStatus(error: true, message: ErrorMessage(title: "MISSING_DOWNLOADED_IPA", body: ""))
+            }
+        }
     } else {
         print("Error: TrollStore app not found.")
+        return FunctionStatus(error: true, message: ErrorMessage(title: "TROLLSTORE_NOT_FOUND", body: ""))
     }
-    
-    if FileManager.default.fileExists(atPath: IPAPath) {
-        do {
-            try FileManager.default.removeItem(atPath: IPAPath)
-        } catch {
-            print("Error removing .ipa file: \(error)")
+}
+
+extension Color {
+    init?(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+            return nil
         }
+
+        self.init(
+            red: Double((rgb & 0xFF0000) >> 16) / 255.0,
+            green: Double((rgb & 0x00FF00) >> 8) / 255.0,
+            blue: Double(rgb & 0x0000FF) / 255.0
+        )
+    }
+}
+
+func UnistallIPA(_ appID: String) -> FunctionStatus {
+    if let trollStoreApp = SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore") {
+        let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
+        let returnCode = spawnRoot(trollstoreHelperPath, ["uninstall", appID])
+        
+        if(returnCode != 0) {
+            return FunctionStatus(error: true, message: ErrorMessage(title: "FAILED_TO_UNINSTALL", body: "UNINSTALLATION_RETURNED_ERROR \(returnCode)"))
+        } else {
+            
+            NotificationCenter.default.post(name: Notification.Name("ApplicationsChanged"), object: nil)
+            PassthroughSubject<Void, Never>().send()
+            
+            return FunctionStatus(error: false)
+        }
+    } else {
+        print("Error: TrollStore app not found.")
+        return FunctionStatus(error: true, message: ErrorMessage(title: "TROLLSTORE_NOT_FOUND", body: ""))
     }
 }
 
@@ -52,6 +105,41 @@ extension String {
     }
 }
 
+extension UIScrollView {
+    
+    private struct Keys {
+        static var onValueChanged: UInt8 = 0
+    }
+    
+    typealias ValueChangedAction = ((_ refreshControl: UIRefreshControl) -> Void)
+    
+    private var onValueChanged: ValueChangedAction? {
+        get {
+            objc_getAssociatedObject(self, &Keys.onValueChanged) as? ValueChangedAction
+        }
+        set {
+            objc_setAssociatedObject(self, &Keys.onValueChanged, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    func onRefresh(_ onValueChanged: @escaping ValueChangedAction) {
+        if refreshControl == nil {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(
+                   self,
+                   action: #selector(self.onValueChangedAction),
+                   for: .valueChanged
+               )
+            self.refreshControl = refreshControl
+        }
+        self.onValueChanged = onValueChanged
+    }
+    
+    @objc private func onValueChangedAction(sender: UIRefreshControl) {
+        self.onValueChanged?(sender)
+    }
+}
+
 struct CollapsibleText: View {
     var text: String
     @Binding var isExpanded: Bool
@@ -76,10 +164,10 @@ func reposEncode(reposUrl: [String]) -> String {
     return ""
 }
 
-func DownloadIPA(_ IPA: String) -> Bool {
+func DownloadIPA(_ IPA: String) -> FunctionStatus {
     guard let url = URL(string: IPA) else {
         print("Invalid URL")
-        return false
+        return FunctionStatus(error: true, message: ErrorMessage(title: "INVALID_DOWNLOAD_URL", body: "LIKELY_A_REPO_ISSUE"))
     }
 
     let IPAPath = "/var/mobile/TrollApps-Tmp-IPA.ipa"
@@ -88,16 +176,16 @@ func DownloadIPA(_ IPA: String) -> Bool {
             try FileManager.default.removeItem(atPath: IPAPath)
         } catch {
             print("Error removing existing .ipa file: \(error)")
-            return false
+            return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_REMOVING_EXISTING_IPA_FILE", body: "LIKELY_A_PERMS_ISSUE"))
         }
     }
 
     do {
         try Data(contentsOf: url).write(to: URL(fileURLWithPath: IPAPath))
-        return true
+        return FunctionStatus(error: false)
     } catch {
         print("Error downloading .ipa file: \(error)")
-        return false
+        return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_DOWNLOADING_AND_WRITING_IPA_FILE", body: "LIKELY_A_PERMS_ISSUE"))
     }
 }
 
@@ -105,7 +193,7 @@ public struct AppStoreStyle: ButtonStyle {
     let type: String
     let dissabled: Bool
 
-    public init(type: String, dissabled: Bool) {
+    public init(type: String, dissabled: Bool, extraWidth: CGFloat = 0) {
         self.type = type
         self.dissabled = dissabled
     }
@@ -114,8 +202,10 @@ public struct AppStoreStyle: ButtonStyle {
         configuration.label
             .font(Font.body.weight(.semibold))
             .foregroundColor(type == "blue" ? Color.white : Color.accentColor)
-            .padding(.vertical, 12)
-            .frame(width: 85, height: 29, alignment: .center)
+            .padding(.vertical, 5)
+            .padding(.horizontal, 18)
+            .frame(height: 30, alignment: .center)
+            .frame(minWidth: 80)
             .background(
                 RoundedRectangle(cornerRadius: 25.0, style: .continuous)
                     .fill(type == "blue" ? Color.blue : Color.gray)
@@ -176,8 +266,16 @@ func GetApps() -> [BundledApp] {
         
         let bundledApp = BundledApp(
             id: bundleID,
-            name: (appDict?.value(forKey: "CFBundleDisplayName") ?? appDict?.value(forKey: "CFBundleName") ?? "Unknown") as! String,
-            version: (appDict?.value(forKey: "CFBundleShortVersionString") ?? "Unknown") as! String,
+            name: (
+                appDict?.value(forKey: "CFBundleDisplayName") ?? 
+                appDict?.value(forKey: "CFBundleName") ??
+                appDict?.value(forKey: "CFBundleExecutable") ??
+                "Unknown"
+            ) as! String,
+            version: (
+                appDict?.value(forKey: "CFBundleShortVersionString") ??
+                "Unknown"
+            ) as! String,
             isTrollStore: fileExists,
             icon: icon
         )

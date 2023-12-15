@@ -25,7 +25,7 @@ struct DynamicButton: View {
                 buttonText = newText
             }
         }) {
-            if buttonText == "Loading..." {
+            if buttonText == "Loader" {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .foregroundColor(.white)
@@ -59,57 +59,66 @@ struct DynamicInstallButton: View {
             repoManager.isInstallingApp = true
             InstallingIPAInfo = appDetails
             DownloadingIPA = true
-            updater("Loading...")
+            updater("Loader")
             
             let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
             
             if let downloadURL = downloadURL {
                 let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
-                if DownloadIPA(formattedURL) {
+                let downloadIPAStatus = DownloadIPA(formattedURL)
+                if !downloadIPAStatus.error {
                     DownloadingIPA = false
-                    InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+                    let installedIPAStatus = InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
                     repoManager.isInstallingApp = false
                     InstallingIPAInfo = nil
-                                        
-                    DispatchQueue.main.async {
-                        withAnimation {
-                            repoManager.InstalledApps = GetApps()
-                            
-                            if !repoManager.IsAppInstalled(appDetails.bundleIdentifier ?? "") {
-                                isInstalled = false
-
-                                alertManager.showAlert(
-                                    title: "UNKNOWN_ERROR_WHILE_INSTALLING",
-                                    body: "PLEASE_RETRY_LATER"
-                                )
+                    
+                    if(!installedIPAStatus.error) {
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                repoManager.InstalledApps = GetApps()
                                 
-                                updater("GET")
-                            } else {
-                                isInstalled = true
+                                if !repoManager.IsAppInstalled(appDetails.bundleIdentifier ?? "") {
+                                    updater("GET")
+                                    isInstalled = false
+
+                                    alertManager.showAlert(
+                                        title: Text(LocalizedStringKey("UNKNOWN_ERROR_WHILE_INSTALLING")),
+                                        body: Text(LocalizedStringKey("PLEASE_RETRY_LATER"))
+                                    )
+                                } else {
+                                    updater("GET")
+                                    isInstalled = true
+                                }
                             }
                         }
+                    } else {
+                        updater("GET")
+                        isInstalled = false
+
+                        alertManager.showAlert(
+                            title: Text(LocalizedStringKey(installedIPAStatus.message?.title ?? "")),
+                            body: Text(LocalizedStringKey(installedIPAStatus.message?.body ?? ""))
+                        )
                     }
                 } else {
+                    updater("GET")
                     DownloadingIPA = false
                     repoManager.isInstallingApp = false
                     InstallingIPAInfo = nil
                     downloadError = true
-                    
+
                     alertManager.showAlert(
-                        title: "FAILED_TO_DOWNLOAD_OR_PARSE_APP",
-                        body: "THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK"
+                        title: Text(LocalizedStringKey(downloadIPAStatus.message?.title ?? "")),
+                        body: Text(LocalizedStringKey(downloadIPAStatus.message?.body ?? ""))
                     )
-                    
-                    updater("GET")
                 }
             } else {
-                
+                updater("GET")
                 alertManager.showAlert(
-                    title: "FAILED_TO_FETCH_APP_DOWNLOAD_URL",
-                    body: "LIKELY_REPO_ISSUE"
+                    title: Text(LocalizedStringKey("FAILED_TO_FETCH_APP_DOWNLOAD_URL")),
+                    body: Text(LocalizedStringKey("LIKELY_REPO_ISSUE"))
                 )
 
-                updater("GET")
             }
         }
     }
@@ -127,10 +136,16 @@ struct DynamicInstallButton: View {
                 switch(status) {
                     case 0:
                     // Installed
-                    Button("OPEN") {
-                        OpenApp(json.bundleIdentifier ?? "")
+                    
+                    if(json.bundleIdentifier == Bundle.main.bundleIdentifier) {
+                        Button("OPEN") {} .disabled(true)
+                        .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:true))
+                    }else {
+                        Button("OPEN") {
+                            OpenApp(json.bundleIdentifier ?? "")
+                        }
+                        .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
                     }
-                    .buttonStyle(buttonStyle == "Main" ? AppStoreStyle(type: "gray", dissabled: false) : AppStoreStyle(type: "blue", dissabled:false))
 
                     case 1:
                     // Need to Update
@@ -145,8 +160,8 @@ struct DynamicInstallButton: View {
                         } else {
                             
                             alertManager.showAlert(
-                                title: "UNABLE_TO_UPDATE",
-                                body: "NOT_TROLLSTORE_MANAGED"
+                                title: Text(LocalizedStringKey("UNABLE_TO_UPDATE")),
+                                body: Text(LocalizedStringKey("NOT_TROLLSTORE_MANAGED"))
                             )
 
                         }
@@ -170,8 +185,8 @@ struct DynamicInstallButton: View {
                 } else {
                     
                     alertManager.showAlert(
-                        title: "UNABLE_TO_START_INSTALL",
-                        body: "PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH"
+                        title: Text(LocalizedStringKey("UNABLE_TO_START_INSTALL")),
+                        body: Text(LocalizedStringKey("PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH"))
                     )
                     
                 }

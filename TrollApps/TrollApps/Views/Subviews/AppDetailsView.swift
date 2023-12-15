@@ -21,6 +21,7 @@ struct AppDetailsView: View {
     let maxLines: Int = 3
     
     var body: some View {
+                
         ScrollView(.vertical, showsIndicators: true) {
             VStack(alignment: .leading) {
                 
@@ -58,7 +59,7 @@ struct AppDetailsView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         
-                        Spacer()
+//                        Spacer()
                                                 
                         HStack {
                             DynamicInstallButton(appDetails: appDetails, selectedVersionIndex: selectedVersionIndex, buttonStyle: "Details")
@@ -104,7 +105,6 @@ struct AppDetailsView: View {
                             
                             Text("VERSION \(version)")
                                 .font(.subheadline)
-                                .foregroundColor(.gray)
                                 .padding(.bottom, 1.5)
                             CollapsibleText(
                                 text: versionDesc,
@@ -172,7 +172,17 @@ struct AppDetailsView: View {
         .navigationBarTitle("", displayMode: .inline)
         
         var backgroundFillColor: Color {
-            return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
+            if let customTintColor = appDetails.tintColor, !customTintColor.isEmpty {
+                if let color = Color(hex: customTintColor) {
+                    print(customTintColor)
+                    return color.opacity(0.65)
+                } else {
+                    return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
+                }
+            } else {
+                return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
+            }
         }
+
     }
 }

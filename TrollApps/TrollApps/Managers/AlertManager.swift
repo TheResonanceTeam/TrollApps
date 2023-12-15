@@ -8,16 +8,26 @@
 import SwiftUI
 import Combine
 
+struct ErrorMessage: Hashable {
+    var title: String
+    var body: String
+}
+
+struct FunctionStatus: Hashable {
+    var error : Bool
+    var message : ErrorMessage?
+}
+
 class AlertManager: ObservableObject {
     @Published var isAlertPresented = false
-    @Published var alertTitle = ""
-    @Published var alertBody = ""
+    @Published var alertTitle = Text("")
+    @Published var alertBody = Text("")
     @Published var showButtons = true
     @Published var canAnimate = true
 
     private var cancellables: Set<AnyCancellable> = []
 
-    func showAlert(title: String, body: String, showButtons : Bool = true, canAnimate: Bool = true) {
+    func showAlert(title: Text, body: Text, showButtons : Bool = true, canAnimate: Bool = true) {
         Just(())
             .receive(on: DispatchQueue.main)
             .sink { _ in
@@ -44,11 +54,11 @@ struct AlertManagerView: View {
                     .ignoresSafeArea()
                     .opacity(0.1)
                 VStack(alignment: .center) {
-                    Text(LocalizedStringKey(alertManager.alertTitle))
+                    alertManager.alertTitle
                         .bold()
                     Divider()
                         .opacity(0.1)
-                    Text(LocalizedStringKey(alertManager.alertBody))
+                    alertManager.alertBody
 
                     if(alertManager.showButtons) {
                         VStack {

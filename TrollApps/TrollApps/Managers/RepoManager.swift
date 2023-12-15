@@ -47,7 +47,9 @@ struct Repo: Decodable, Identifiable, Equatable, Hashable {
     var iconURL: String?
     var headerURL: String?
     var featuredApps: [String]?
+    var tintColor: String?
     var apps: [Application]
+    var news: [News]?
 }
 
 struct RepoMemory: Identifiable {
@@ -78,6 +80,17 @@ struct Version: Codable, Equatable {
     var maxOSVersion: String?
 }
 
+struct News: Codable, Identifiable, Hashable {
+    var id = UUID()
+    var title : String?
+    var caption: String?
+    var date: String?
+    var tintColor: String?
+    var imageURL: String?
+    var url: String?
+    var appID: String?
+}
+
 struct Application: Codable, Identifiable, Hashable {
     var id = UUID()
     var name: String
@@ -89,12 +102,13 @@ struct Application: Codable, Identifiable, Hashable {
     var downloadURL: String?
     var developerName: String?
     var localizedDescription: String?
+    var tintColor: String?
     var iconURL: String
     var screenshotURLs: [String]?
     var versions: [Version]?
 
     enum CodingKeys: String, CodingKey {
-        case name, subtitle, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, iconURL, screenshotURLs, versions
+        case name, subtitle, bundleIdentifier, version, versionDate, size, downloadURL, developerName, localizedDescription, tintColor, iconURL, screenshotURLs, versions
     }
 
     func hash(into hasher: inout Hasher) {
@@ -158,8 +172,8 @@ class RepositoryManager: ObservableObject {
                     }
                 } else {
                     alertManager.showAlert(
-                        title: "ERROR_DECODING_BASE64_STRING",
-                        body: "PLEASE_VERIFY_VALID_REPO_STRING"
+                        title: Text(LocalizedStringKey("ERROR_DECODING_BASE64_STRING")),
+                        body: Text(LocalizedStringKey("PLEASE_VERIFY_VALID_REPO_STRING"))
                     )
                 }
             } else {
@@ -320,7 +334,7 @@ class RepositoryManager: ObservableObject {
         let installedApps = InstalledApps
         return installedApps.contains { $0.id == BundleID }
     }
-    
+        
     func IsTrollStoreManaged(_ BundleID: String) -> Bool {
         let installedApps = InstalledApps
         if let installedApp = installedApps.first(where: { $0.id == BundleID }) {
