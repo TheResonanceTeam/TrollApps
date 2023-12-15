@@ -47,7 +47,7 @@ struct AppDetailsView: View {
                         Text(appDetails.name)
                             .font(.title2.bold())
                         
-                        Text(appDetails.developerName ?? "UNKNOWN DEVELOPER")
+                        Text(appDetails.developerName ?? "UNKNOWN_DEVELOPER")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         
@@ -174,8 +174,7 @@ struct AppDetailsView: View {
         var backgroundFillColor: Color {
             if let customTintColor = appDetails.tintColor, !customTintColor.isEmpty {
                 if let color = Color(hex: customTintColor) {
-                    print(customTintColor)
-                    return color.opacity(0.65)
+                    return color.opacity(0.5)
                 } else {
                     return colorScheme == .dark ? Color(red: 0.1, green: 0.1, blue: 0.1) : Color(.systemGray6)
                 }

@@ -156,13 +156,6 @@ struct SourcesView: View {
                         }
                     }
                 }.environment(\.editMode, $editMode)
-//                if #available(iOS 15.0, *) {
-//                    listTest.refreshable {
-//                        print("refresh")
-//                    }
-//                }else {
-//                    
-//                }
             } else if badRepos.count > 0 {
                 List(badRepos, selection: $failedMultiSelection) { badRepo in
                     HStack {

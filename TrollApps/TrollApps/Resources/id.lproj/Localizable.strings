@@ -8,7 +8,7 @@
 
 // Bottom Bar
 "FEATURED" = "Unggulan";
-"SOURCES" = "Sumber";
+"REPOS" = "Repo";
 "BROWSE" = "Jelajahi";
 "APPS" = "Aplikasi";
 "SETTINGS" = "Pengaturan";
@@ -19,15 +19,14 @@
 "OLDER" = "LAMA";
 "UPDATE" = "PERBARUI";
 
-// Sources Menu
-"SOURCES" = "Sumber";
-"BROKEN_SOURCES" = "Sumber Rusak";
+// Repos Menu
+"BROKEN_REPOS" = "Repo Rusak";
 "EXPORT" = "Ekspor";
 "DELETE" = "Hapus";
 
 "UNNAMED_REPO" = "Repo Tanpa Nama";
-"COPY_SOURCE_URL" = "Salin Sumber URL";
-"COPY_REPO_URL" = "Salin Repo[] URL";
+"COPY_REPO_URL" = "Salin Repo URL";
+"COPY_REPO_BASE_URL" = "Salin Repo[] URL";
 "DELETE_REPO" = "Hapus Repo";
 
 "UNABLE_TO_LOAD_REPO" = "Tidak dapat memuat repo";
@@ -36,12 +35,13 @@
 "ADD_REPOS" = "Tambahkan Repo";
 "REPO_URL" = "URL Repo";
 "ADD_REPOS_TOOLTIP" = "Pastikan Anda memasukkan URL repo yang benar. Disarankan agar Anda menyalin dan menempelkannya di sini, daripada memasukkannya secara manual.";
+"ADD_REPO_FROM_CLIPBOARD" = "Tambahkan repo dari clipboard"; 
 
 // Apps Detailed View
 "WHATS_NEW" = "Yang Baru";
 "VERSION %@" = "Versi %@";
 "UNKNOWN_VERSION" = "Versi Tidak Diketahui";
-"UNKNOWN DEVELOPER" = "Pengembang Tidak Dikenal";
+"UNKNOWN_DEVELOPER" = "Pengembang Tidak Dikenal";
 
 "SELECT_VERSION" = "Pilih Versi";
 
@@ -50,22 +50,33 @@
 
 // Apps View
 "INSTALLED_APPS" = "Aplikasi Terpasang";
+"UNINSTALLED_APP %@" = "Dihapus %@"; 
+"UNINSTALL_APP" = "Hapus Aplikasi"; 
 
 // Settings View
 "OPTIONS" = "Pilihan";
 "DELETE_CACHE" = "Hapus Cache";
-"RESET_REPOS" = "Setel Ulang Repo";
+"RESET_REPOS" = "Atur Ulang Repo";
 "RELOAD_SPRINGBOARD" = "Muat Ulang Springboard";
 "DELETE_CACHE_TOOLTIP" = "Gunakan Tombol Hapus Cache jika aplikasi terlalu membebani Perangkat Anda.";
 
 "APP_SETTINGS" = "Pengaturan Aplikasi";
 "REDUCED_MOTION" = "Kurangi Gerakan";
+"COMPACT_REPO_VIEW" = "Tampilan Ringkas Repo"; 
+"ADD_REPO_KEYBOARD_TYPE" = "Tambahkan Jenis Papan Ketik Repo"; 
+"CURRENT_BLUR_STRENGTH %@" = "Kekuatan Keburaman Latar Belakang: %@"; 
+
 "APP_LANGUAGE" = "Bahasa Aplikasi";
+"LANG_SWITCHED" = "Bahasa dirubah"; 
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Harap tutup dan buka kembali aplikasi agar ini dapat diterapkan dengan benar."; 
 
 "DEVELOPERS" = "Pengembang";
 
 "THANKS_TO" = "Terima Kasih Kepada...";
 "THANKS_TO_TOOLTIP" = "Terima kasih sebesar-besarnya kepada aplikasi, artikel, dan orang-orang yang luar biasa ini! Tanpa mereka, proyek ini tidak akan mungkin atau bahkan tidak akan ada!";
+
+"TRANSLATORS" = "Penerjemah"; 
+"THANKS_TO_TRANSLATORS" = "Terima kasih banyak kepada penerjemah kami yang membantu melokalkan TrollApps!"; 
 
 "OTHER_PROJECTS_AND_LICENSES" = "Proyek lain yang digunakan dan lisensinya";
 
@@ -105,7 +116,7 @@
 "LIKELY_REPO_ISSUE" = "Kemungkinan ada masalah repo.";
 
 "UNABLE_TO_UPDATE" = "Tidak dapat memperbarui.";
-"NOT_TROLLSTORE_MANAGED" = "Aplikasi ini awalnya tidak diinstal melalui TrollStore sehingga tidak dapat menginstal pembaruan ini. Pertimbangkan untuk mencopot pemasangan aplikasi, lalu memasang ulang di TrollApps.";
+"NOT_TROLLSTORE_MANAGED" = "Aplikasi ini awalnya tidak diinstal melalui TrollStore sehingga tidak dapat menginstal pembaruan ini. Pertimbangkan untuk menghapus aplikasi, lalu memasang ulang di TrollApps.";
 
 "UNABLE_TO_START_INSTALL" = "Tidak dapat memulai pemasangan aplikasi.";
 "PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Harap tunggu hingga pemasangan saat ini selesai.";
@@ -114,4 +125,26 @@
 "DO_YOU_STILL_WISH_TO_UPDATE" = "Apakah Anda masih ingin memperbarui TrollApps?";
 
 "ERROR_DECODING_BASE64_STRING" = "Kesalahan mendekode string Base64.";
-"PLEASE_VERIFY_VALID_REPO_STRING" = "Harap verifikasi bahwa ini adalah string repo[] yang tepat.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Harap verifikasi bahwa ini adalah string repo[] yang benar.";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Gagal memasang"; 
+"INSTALLATION_RETURNED_ERROR %@" = "Kesalahan kembali pemasangan: %@"; 
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Kesalahan menghapus IPA setelah pemasangan"; 
+"LIKELY_A_PERMS_ISSUE" = "Ini mungkin masalah izin."; 
+
+"MISSING_DOWNLOADED_IPA" = "IPA yang diunduh tidak lagi ada di lokasi pengunduhan."; 
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore tidak ditemukan"; 
+"TROLLSTORE_IS_REQUIRED" = "TrollStore diperlukan agar TrollApps dapat berfungsi."; 
+
+"FAILED_TO_UNINSTALL" = "Gagal menghapus"; 
+"UNINSTALLATION_RETURNED_ERROR %@" = "Kesalahan kembali penghapusan: %@"; 
+
+"INVALID_DOWNLOAD_URL" = "URL unduhan tidak benar"; 
+"LIKELY_A_REPO_ISSUE" = "Kemungkinan ada masalah dengan repo ini."; 
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Gagal menghapus file IPA dari pemasangan sebelumnya."; 
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Gagal mengunduh / menulis file IPA";

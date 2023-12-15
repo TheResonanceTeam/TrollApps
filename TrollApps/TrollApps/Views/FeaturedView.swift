@@ -71,14 +71,13 @@ struct FeaturedView: View {
             
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(destination: OtherView()) {
+                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "slider.horizontal.3")
                     }
                 }
             }
         }
         
-        //
         .navigationViewStyle(.stack)
         .onAppear {
             repos = repoManager.ReposData

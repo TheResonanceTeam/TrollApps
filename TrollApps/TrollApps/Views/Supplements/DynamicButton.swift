@@ -56,22 +56,27 @@ struct DynamicInstallButton: View {
     
     func downloadAndInstallApp(updater: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .utility).async {
-            repoManager.isInstallingApp = true
-            InstallingIPAInfo = appDetails
-            DownloadingIPA = true
+            DispatchQueue.main.async {
+                repoManager.isInstallingApp = true
+                InstallingIPAInfo = appDetails
+                DownloadingIPA = true
+            }
             updater("Loader")
             
             let downloadURL = appDetails.versions?[selectedVersionIndex].downloadURL
-            
+                        
             if let downloadURL = downloadURL {
                 let formattedURL = downloadURL.replacingOccurrences(of: "apple-magnifier://install?url=", with: "")
                 let downloadIPAStatus = DownloadIPA(formattedURL)
                 if !downloadIPAStatus.error {
-                    DownloadingIPA = false
-                    let installedIPAStatus = InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
-                    repoManager.isInstallingApp = false
-                    InstallingIPAInfo = nil
+                    DispatchQueue.main.async {
+                        DownloadingIPA = false
+                        repoManager.isInstallingApp = false
+                        InstallingIPAInfo = nil
+                    }
                     
+                    let installedIPAStatus = InstallIPA("/var/mobile/TrollApps-Tmp-IPA.ipa")
+
                     if(!installedIPAStatus.error) {
                         DispatchQueue.main.async {
                             withAnimation {
@@ -93,8 +98,11 @@ struct DynamicInstallButton: View {
                         }
                     } else {
                         updater("GET")
-                        isInstalled = false
-
+                        
+                        DispatchQueue.main.async {
+                            isInstalled = false
+                        }
+                        
                         alertManager.showAlert(
                             title: Text(LocalizedStringKey(installedIPAStatus.message?.title ?? "")),
                             body: Text(LocalizedStringKey(installedIPAStatus.message?.body ?? ""))
@@ -102,11 +110,14 @@ struct DynamicInstallButton: View {
                     }
                 } else {
                     updater("GET")
-                    DownloadingIPA = false
-                    repoManager.isInstallingApp = false
-                    InstallingIPAInfo = nil
-                    downloadError = true
-
+                    
+                    DispatchQueue.main.async {
+                        DownloadingIPA = false
+                        repoManager.isInstallingApp = false
+                        InstallingIPAInfo = nil
+                        downloadError = true
+                    }
+                    
                     alertManager.showAlert(
                         title: Text(LocalizedStringKey(downloadIPAStatus.message?.title ?? "")),
                         body: Text(LocalizedStringKey(downloadIPAStatus.message?.body ?? ""))

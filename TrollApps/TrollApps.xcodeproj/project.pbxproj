@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		028DC81B2922695F000F484F /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028DC81A2922695F000F484F /* AsyncButton.swift */; };
-		0299094129225B3B006D62D9 /* TrollAppsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299094029225B3B006D62D9 /* TrollAppsUITests.swift */; };
-		0299094329225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */; };
 		6D29D3D82923C78300AF0602 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D29D3D72923C78300AF0602 /* SourcesView.swift */; };
 		6D71F9C2292BF8220016D853 /* FeaturedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D71F9C1292BF8220016D853 /* FeaturedView.swift */; };
 		6D78B4672920ED7500EFB2FD /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78B4662920ED7500EFB2FD /* SDWebImageSwiftUI */; };
-		6D8817C6291ECB97007139C6 /* TrollAppsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */; };
-		6D8817C8291ECB97007139C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817C7291ECB97007139C6 /* ContentView.swift */; };
 		6D8817CA291ECB9B007139C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8817C9291ECB9B007139C6 /* Assets.xcassets */; };
 		6D8817CD291ECB9B007139C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8817CC291ECB9B007139C6 /* Preview Assets.xcassets */; };
-		6D8817D8291EDAC7007139C6 /* OtherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817D7291EDAC7007139C6 /* OtherView.swift */; };
 		6D8817DA291EE5C9007139C6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8817D9291EE5C9007139C6 /* Extensions.swift */; };
-		740916B32B2937630004A33A /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 740916B22B2937630004A33A /* PopupView */; };
 		740916B52B293A570004A33A /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740916B42B293A570004A33A /* AlertManager.swift */; };
-		740916BB2B29718F0004A33A /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740916BA2B29718F0004A33A /* UserSettings.swift */; };
-		741300962B22AC7500B5B6EE /* SourcesViewBeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741300952B22AC7500B5B6EE /* SourcesViewBeta.swift */; };
+		742E29922B2C3F4A00B2690D /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29912B2C3F4A00B2690D /* NewsView.swift */; };
+		742E29942B2C438200B2690D /* TrollAppsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29932B2C438200B2690D /* TrollAppsApp.swift */; };
+		742E29972B2C43DC00B2690D /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29962B2C43DC00B2690D /* NavView.swift */; };
+		742E29A12B2C476A00B2690D /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29A02B2C476A00B2690D /* UserManager.swift */; };
+		742E29AA2B2C494800B2690D /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29A92B2C494800B2690D /* Buttons.swift */; };
+		742E29AC2B2C499700B2690D /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29AB2B2C499700B2690D /* DynamicText.swift */; };
+		742E29B02B2C4A4000B2690D /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29AF2B2C4A4000B2690D /* Apps.swift */; };
+		742E29B22B2C4A5700B2690D /* Repos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29B12B2C4A5700B2690D /* Repos.swift */; };
+		742E29B42B2C4A8300B2690D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E29B32B2C4A8300B2690D /* SettingsView.swift */; };
 		7489B46D2B1C2633007F372B /* RepoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7489B46C2B1C2633007F372B /* RepoManager.swift */; };
 		74A5F72C2B23AF5900C2E816 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5F72B2B23AF5900C2E816 /* AppsView.swift */; };
 		74C348682B1953D60043AA8C /* AppDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C348672B1953D60043AA8C /* AppDetailsView.swift */; };
@@ -34,37 +34,29 @@
 		CC75914A293BD95B007DE225 /* SpringBoardFoundation.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CC759149293BD95A007DE225 /* SpringBoardFoundation.tbd */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		0299094429225B3B006D62D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6D8817BA291ECB97007139C6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D8817C1291ECB97007139C6;
-			remoteInfo = TrollApps;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		028DC81A2922695F000F484F /* AsyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
-		0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrollAppsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0299094029225B3B006D62D9 /* TrollAppsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsUITests.swift; sourceTree = "<group>"; };
-		0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6D29D3D72923C78300AF0602 /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
 		6D71F9C1292BF8220016D853 /* FeaturedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedView.swift; sourceTree = "<group>"; };
 		6D78B4882921088000EFB2FD /* TrollApps-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TrollApps-Bridging-Header.h"; sourceTree = "<group>"; };
 		6D8817C2291ECB97007139C6 /* TrollApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrollApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsApp.swift; sourceTree = "<group>"; };
-		6D8817C7291ECB97007139C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6D8817C9291ECB9B007139C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D8817CC291ECB9B007139C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6D8817D7291EDAC7007139C6 /* OtherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherView.swift; sourceTree = "<group>"; };
 		6D8817D9291EE5C9007139C6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		740916AD2B291BA70004A33A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		740916B42B293A570004A33A /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		740916BA2B29718F0004A33A /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		740916BC2B297D120004A33A /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		740916BD2B2A45D10004A33A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
-		741300952B22AC7500B5B6EE /* SourcesViewBeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewBeta.swift; sourceTree = "<group>"; };
+		7423BCCA2B2BE7AF000048BE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		742E29902B2BF09700B2690D /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		742E29912B2C3F4A00B2690D /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
+		742E29932B2C438200B2690D /* TrollAppsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrollAppsApp.swift; sourceTree = "<group>"; };
+		742E29962B2C43DC00B2690D /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
+		742E29A02B2C476A00B2690D /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		742E29A92B2C494800B2690D /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		742E29AB2B2C499700B2690D /* DynamicText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicText.swift; sourceTree = "<group>"; };
+		742E29AF2B2C4A4000B2690D /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
+		742E29B12B2C4A5700B2690D /* Repos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repos.swift; sourceTree = "<group>"; };
+		742E29B32B2C4A8300B2690D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7489B46B2B1A8129007F372B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7489B46C2B1C2633007F372B /* RepoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoManager.swift; sourceTree = "<group>"; };
 		74A5F72B2B23AF5900C2E816 /* AppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
@@ -79,18 +71,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0299093B29225B3B006D62D9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6D8817BF291ECB97007139C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				740916B32B2937630004A33A /* PopupView in Frameworks */,
 				6D78B4672920ED7500EFB2FD /* SDWebImageSwiftUI in Frameworks */,
 				CC75914A293BD95B007DE225 /* SpringBoardFoundation.tbd in Frameworks */,
 			);
@@ -99,20 +83,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0299093F29225B3B006D62D9 /* TrollAppsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0299094029225B3B006D62D9 /* TrollAppsUITests.swift */,
-				0299094229225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift */,
-			);
-			path = TrollAppsUITests;
-			sourceTree = "<group>";
-		};
 		6D8817B9291ECB97007139C6 = {
 			isa = PBXGroup;
 			children = (
 				6D8817C4291ECB97007139C6 /* TrollApps */,
-				0299093F29225B3B006D62D9 /* TrollAppsUITests */,
 				6D8817C3291ECB97007139C6 /* Products */,
 				CC759148293BD95A007DE225 /* Frameworks */,
 			);
@@ -122,7 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				6D8817C2291ECB97007139C6 /* TrollApps.app */,
-				0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,28 +103,17 @@
 		6D8817C4291ECB97007139C6 /* TrollApps */ = {
 			isa = PBXGroup;
 			children = (
-				74E2E2AF2B27C035009E1D73 /* Resources */,
+				742E29932B2C438200B2690D /* TrollAppsApp.swift */,
 				7489B46B2B1A8129007F372B /* Info.plist */,
-				CC759146293BD896007DE225 /* TSUtil.m */,
-				6D8817C5291ECB97007139C6 /* TrollAppsApp.swift */,
-				6D8817C7291ECB97007139C6 /* ContentView.swift */,
 				6D8817C9291ECB9B007139C6 /* Assets.xcassets */,
 				6D8817CB291ECB9B007139C6 /* Preview Content */,
-				028DC81A2922695F000F484F /* AsyncButton.swift */,
-				6D8817D9291EE5C9007139C6 /* Extensions.swift */,
-				6D8817D7291EDAC7007139C6 /* OtherView.swift */,
-				6D78B4882921088000EFB2FD /* TrollApps-Bridging-Header.h */,
-				6D29D3D72923C78300AF0602 /* SourcesView.swift */,
-				6D71F9C1292BF8220016D853 /* FeaturedView.swift */,
-				74C348672B1953D60043AA8C /* AppDetailsView.swift */,
-				74C348692B19AF270043AA8C /* SourceView.swift */,
-				74C3486E2B1A562F0043AA8C /* DynamicButton.swift */,
-				7489B46C2B1C2633007F372B /* RepoManager.swift */,
-				741300952B22AC7500B5B6EE /* SourcesViewBeta.swift */,
-				74A5F72B2B23AF5900C2E816 /* AppsView.swift */,
-				74E2E2AD2B25627B009E1D73 /* BrowseView.swift */,
-				740916B42B293A570004A33A /* AlertManager.swift */,
-				740916BA2B29718F0004A33A /* UserSettings.swift */,
+				742E299E2B2C451100B2690D /* Objective C */,
+				74E2E2AF2B27C035009E1D73 /* Resources */,
+				742E299A2B2C445D00B2690D /* Views */,
+				742E299F2B2C457500B2690D /* Managers */,
+				742E29A82B2C493800B2690D /* Styles */,
+				742E29A42B2C488200B2690D /* Functions */,
+				742E29A22B2C47D400B2690D /* Extensions */,
 			);
 			path = TrollApps;
 			sourceTree = "<group>";
@@ -162,6 +124,84 @@
 				6D8817CC291ECB9B007139C6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		742E299A2B2C445D00B2690D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				742E29A32B2C483E00B2690D /* Supplements */,
+				742E299C2B2C44D000B2690D /* Subviews */,
+				742E29962B2C43DC00B2690D /* NavView.swift */,
+				6D71F9C1292BF8220016D853 /* FeaturedView.swift */,
+				742E29912B2C3F4A00B2690D /* NewsView.swift */,
+				6D29D3D72923C78300AF0602 /* SourcesView.swift */,
+				74A5F72B2B23AF5900C2E816 /* AppsView.swift */,
+				74E2E2AD2B25627B009E1D73 /* BrowseView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		742E299C2B2C44D000B2690D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				74C348692B19AF270043AA8C /* SourceView.swift */,
+				74C348672B1953D60043AA8C /* AppDetailsView.swift */,
+				742E29B32B2C4A8300B2690D /* SettingsView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		742E299E2B2C451100B2690D /* Objective C */ = {
+			isa = PBXGroup;
+			children = (
+				CC759146293BD896007DE225 /* TSUtil.m */,
+				6D78B4882921088000EFB2FD /* TrollApps-Bridging-Header.h */,
+			);
+			path = "Objective C";
+			sourceTree = "<group>";
+		};
+		742E299F2B2C457500B2690D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7489B46C2B1C2633007F372B /* RepoManager.swift */,
+				740916B42B293A570004A33A /* AlertManager.swift */,
+				742E29A02B2C476A00B2690D /* UserManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		742E29A22B2C47D400B2690D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6D8817D9291EE5C9007139C6 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		742E29A32B2C483E00B2690D /* Supplements */ = {
+			isa = PBXGroup;
+			children = (
+				74C3486E2B1A562F0043AA8C /* DynamicButton.swift */,
+				742E29AB2B2C499700B2690D /* DynamicText.swift */,
+			);
+			path = Supplements;
+			sourceTree = "<group>";
+		};
+		742E29A42B2C488200B2690D /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				742E29AF2B2C4A4000B2690D /* Apps.swift */,
+				742E29B12B2C4A5700B2690D /* Repos.swift */,
+			);
+			path = Functions;
+			sourceTree = "<group>";
+		};
+		742E29A82B2C493800B2690D /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				742E29A92B2C494800B2690D /* Buttons.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		74E2E2AF2B27C035009E1D73 /* Resources */ = {
@@ -183,24 +223,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0299093D29225B3B006D62D9 /* TrollAppsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0299094629225B3B006D62D9 /* Build configuration list for PBXNativeTarget "TrollAppsUITests" */;
-			buildPhases = (
-				0299093A29225B3B006D62D9 /* Sources */,
-				0299093B29225B3B006D62D9 /* Frameworks */,
-				0299093C29225B3B006D62D9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0299094529225B3B006D62D9 /* PBXTargetDependency */,
-			);
-			name = TrollAppsUITests;
-			productName = TrollAppsUITests;
-			productReference = 0299093E29225B3B006D62D9 /* TrollAppsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		6D8817C1291ECB97007139C6 /* TrollApps */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D8817D0291ECB9B007139C6 /* Build configuration list for PBXNativeTarget "TrollApps" */;
@@ -216,7 +238,6 @@
 			name = TrollApps;
 			packageProductDependencies = (
 				6D78B4662920ED7500EFB2FD /* SDWebImageSwiftUI */,
-				740916B22B2937630004A33A /* PopupView */,
 			);
 			productName = TrollApps;
 			productReference = 6D8817C2291ECB97007139C6 /* TrollApps.app */;
@@ -232,10 +253,6 @@
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
-					0299093D29225B3B006D62D9 = {
-						CreatedOnToolsVersion = 14.1;
-						TestTargetID = 6D8817C1291ECB97007139C6;
-					};
 					6D8817C1291ECB97007139C6 = {
 						CreatedOnToolsVersion = 14.1;
 						LastSwiftMigration = 1410;
@@ -252,30 +269,23 @@
 				de,
 				id,
 				ar,
+				"zh-Hant",
+				nb,
 			);
 			mainGroup = 6D8817B9291ECB97007139C6;
 			packageReferences = (
 				6D78B4652920ED7500EFB2FD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				740916B12B2937630004A33A /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 6D8817C3291ECB97007139C6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				6D8817C1291ECB97007139C6 /* TrollApps */,
-				0299093D29225B3B006D62D9 /* TrollAppsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0299093C29225B3B006D62D9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6D8817C0291ECB97007139C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,48 +299,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0299093A29225B3B006D62D9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0299094329225B3B006D62D9 /* TrollAppsUITestsLaunchTests.swift in Sources */,
-				0299094129225B3B006D62D9 /* TrollAppsUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6D8817BE291ECB97007139C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				742E29B42B2C4A8300B2690D /* SettingsView.swift in Sources */,
 				740916B52B293A570004A33A /* AlertManager.swift in Sources */,
-				028DC81B2922695F000F484F /* AsyncButton.swift in Sources */,
+				742E29972B2C43DC00B2690D /* NavView.swift in Sources */,
 				74C348682B1953D60043AA8C /* AppDetailsView.swift in Sources */,
+				742E29B02B2C4A4000B2690D /* Apps.swift in Sources */,
 				74C3486A2B19AF270043AA8C /* SourceView.swift in Sources */,
 				6D8817DA291EE5C9007139C6 /* Extensions.swift in Sources */,
+				742E29B22B2C4A5700B2690D /* Repos.swift in Sources */,
+				742E29922B2C3F4A00B2690D /* NewsView.swift in Sources */,
 				CC759147293BD896007DE225 /* TSUtil.m in Sources */,
 				7489B46D2B1C2633007F372B /* RepoManager.swift in Sources */,
+				742E29AA2B2C494800B2690D /* Buttons.swift in Sources */,
 				6D29D3D82923C78300AF0602 /* SourcesView.swift in Sources */,
 				74E2E2AE2B25627B009E1D73 /* BrowseView.swift in Sources */,
-				6D8817C8291ECB97007139C6 /* ContentView.swift in Sources */,
-				741300962B22AC7500B5B6EE /* SourcesViewBeta.swift in Sources */,
-				6D8817C6291ECB97007139C6 /* TrollAppsApp.swift in Sources */,
 				74A5F72C2B23AF5900C2E816 /* AppsView.swift in Sources */,
 				6D71F9C2292BF8220016D853 /* FeaturedView.swift in Sources */,
-				6D8817D8291EDAC7007139C6 /* OtherView.swift in Sources */,
+				742E29AC2B2C499700B2690D /* DynamicText.swift in Sources */,
 				74C3486F2B1A562F0043AA8C /* DynamicButton.swift in Sources */,
-				740916BB2B29718F0004A33A /* UserSettings.swift in Sources */,
+				742E29942B2C438200B2690D /* TrollAppsApp.swift in Sources */,
+				742E29A12B2C476A00B2690D /* UserManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0299094529225B3B006D62D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6D8817C1291ECB97007139C6 /* TrollApps */;
-			targetProxy = 0299094429225B3B006D62D9 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		74E2E2B42B27C086009E1D73 /* Localizable.strings */ = {
@@ -341,6 +337,8 @@
 				740916AD2B291BA70004A33A /* de */,
 				740916BC2B297D120004A33A /* id */,
 				740916BD2B2A45D10004A33A /* ar */,
+				7423BCCA2B2BE7AF000048BE /* zh-Hant */,
+				742E29902B2BF09700B2690D /* nb */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -348,42 +346,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0299094729225B3B006D62D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AKUATGSFRT;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andreas16700.TrollAppsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TrollApps;
-			};
-			name = Debug;
-		};
-		0299094829225B3B006D62D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AKUATGSFRT;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.andreas16700.TrollAppsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TrollApps;
-			};
-			name = Release;
-		};
 		6D8817CE291ECB9B007139C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -543,7 +505,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "TrollApps/TrollApps-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TrollApps/Objective C/TrollApps-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -589,7 +551,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "TrollApps/TrollApps-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TrollApps/Objective C/TrollApps-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -598,15 +560,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0299094629225B3B006D62D9 /* Build configuration list for PBXNativeTarget "TrollAppsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0299094729225B3B006D62D9 /* Debug */,
-				0299094829225B3B006D62D9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		6D8817BD291ECB97007139C6 /* Build configuration list for PBXProject "TrollApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -636,14 +589,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		740916B12B2937630004A33A /* XCRemoteSwiftPackageReference "PopupView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/PopupView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.3;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -651,11 +596,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6D78B4652920ED7500EFB2FD /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		740916B22B2937630004A33A /* PopupView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 740916B12B2937630004A33A /* XCRemoteSwiftPackageReference "PopupView" */;
-			productName = PopupView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

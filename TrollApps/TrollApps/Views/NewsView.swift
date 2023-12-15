@@ -65,7 +65,7 @@ struct NewsView: View {
             
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(destination: OtherView()) {
+                    NavigationLink(destination: SettingsView()) {
                         Image(systemName: "slider.horizontal.3")
                     }
                 }

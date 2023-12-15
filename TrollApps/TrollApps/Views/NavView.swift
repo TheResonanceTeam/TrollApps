@@ -20,29 +20,29 @@ struct NavView: View {
                     Label("FEATURED", systemImage: "star.fill")
                 }
                 .tag(0)
-            NewsView()
-                .tabItem {
-                    Label("NEWS", systemImage: "newspaper.fill")
-                }
-                .tag(1)
+//            NewsView()
+//                .tabItem {
+//                    Label("NEWS", systemImage: "newspaper.fill")
+//                }
+//                .tag(1)
             SourcesView()
                 .tabItem {
                     Label("REPOS", systemImage: "shippingbox")
                 }
-                .tag(2)
+                .tag(1)
             AppsView()
                 .tabItem {
                     Label("APPS", systemImage: "app")
                 }
-                .tag(3)
+                .tag(2)
             BrowseView()
                 .tabItem {
                     Label("BROWSE", systemImage: "magnifyingglass")
                 }
-                .tag(4)
+                .tag(3)
         }
         .onOpenURL { url in
-            selectedTab = 2
+            selectedTab = 1
         }
         .blur(radius: alertManager.isAlertPresented ? userSettings.blurStrength : 0.1
         )

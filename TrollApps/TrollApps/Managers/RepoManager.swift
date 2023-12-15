@@ -41,8 +41,7 @@ enum StringOrDouble: Decodable, Encodable, Equatable {
     }
 }
 
-struct Repo: Decodable, Identifiable, Equatable, Hashable {
-    let id = UUID()
+struct Repo: Decodable, Equatable, Hashable {
     var name: String?
     var iconURL: String?
     var headerURL: String?
@@ -50,8 +49,11 @@ struct Repo: Decodable, Identifiable, Equatable, Hashable {
     var tintColor: String?
     var apps: [Application]
     var news: [News]?
-}
 
+    enum CodingKeys: String, CodingKey {
+        case name, iconURL, headerURL, featuredApps, tintColor, apps, news
+    }
+}
 struct RepoMemory: Identifiable {
     let id = UUID()
     var url: String
@@ -80,8 +82,7 @@ struct Version: Codable, Equatable {
     var maxOSVersion: String?
 }
 
-struct News: Codable, Identifiable, Hashable {
-    var id = UUID()
+struct News: Codable, Hashable {
     var title : String?
     var caption: String?
     var date: String?

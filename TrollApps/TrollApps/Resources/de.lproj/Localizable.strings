@@ -8,7 +8,7 @@
 
 // Bottom Bar
 "FEATURED" = "Featured";
-"SOURCES" = "Quellen";
+"REPOS" = "Quellen";
 "BROWSE" = "Durchsuchen";
 "APPS" = "Apps";
 "SETTINGS" = "Einstellungen";
@@ -16,17 +16,17 @@
 // Buttons
 "OPEN" = "ÖFFNEN";
 "GET" = "LADEN";
+"UPDATE" = "UPDATE";
 "OLDER" = "ÄLTER";
 
-// Sources Menu
-"SOURCES" = "Quellen";
-"BROKEN_SOURCES" = "Fehlerhafte Quellen";
+// Repos Menu
+"BROKEN_REPOS" = "Fehlerhafte Quellen";
 "EXPORT" = "Exportieren";
 "DELETE" = "Löschen";
 
 "UNNAMED_REPO" = "Unbenanntes Repo";
-"COPY_SOURCE_URL" = "Quell-URL kopieren";
-"COPY_REPO_URL" = "Quell-URL[] kopieren";
+"COPY_REPO_URL" = "Quell-URL kopieren";
+"COPY_REPO_BASE_URL" = "Quell-URL[] kopieren";
 "DELETE_REPO" = "Repo löschen";
 
 "UNABLE_TO_LOAD_REPO" = "Repo kann nicht geladen werden";
@@ -35,12 +35,13 @@
 "ADD_REPOS" = "Repos hinzufügen";
 "REPO_URL" = "Repo URL";
 "ADD_REPOS_TOOLTIP" = "Bitte stell sicher, dass Repo-URL gültig ist. Es wird empfohlen, sie zu kopieren und hier einzufügen, anstatt sie manuell einzugeben.";
+"ADD_REPO_FROM_CLIPBOARD" = "Add repo from clipboard"; // NEEDED
 
 // Apps Detailed View
 "WHATS_NEW" = "Neuigkeiten";
 "VERSION %@" = "Version %@";
 "UNKNOWN_VERSION" = "Unbekannte Version";
-"UNKNOWN DEVELOPER" = "Unbekannter Entwickler";
+"UNKNOWN_DEVELOPER" = "Unbekannter Entwickler";
 
 "SELECT_VERSION" = "Version auswählen";
 
@@ -49,6 +50,8 @@
 
 // Apps View
 "INSTALLED_APPS" = "Installierte Apps";
+"UNINSTALLED_APP %@" = "Uninstalled %@"; // NEEDED
+"UNINSTALL_APP" = "Unistall App"; // NEEDED
 
 // Settings View
 "OPTIONS" = "Optionen";
@@ -57,15 +60,23 @@
 "RELOAD_SPRINGBOARD" = "Springboard neu laden";
 "DELETE_CACHE_TOOLTIP" = "Die Schaltfläche \"Cache löschen\" sollte verwendet werden, wenn die App etwas zu viel Platz auf dem Gerät einnimmt.";
 
-
 "APP_SETTINGS" = "App Einstellungen";
 "REDUCED_MOTION" = "Bewegung reduzieren";
+"COMPACT_REPO_VIEW" = "Compact Repo View"; // NEEDED
+"ADD_REPO_KEYBOARD_TYPE" = "Add Repo Keyboard Type"; // NEEDED
+"CURRENT_BLUR_STRENGTH %@" = "Background Blur Strength: %@"; // NEEDED
+
 "APP_LANGUAGE" = "Spracheinstellungen";
+"LANG_SWITCHED" = "Language Switched"; // NEEDED
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Please close and reopen the app for this to properly take effect."; // NEEDED
 
 "DEVELOPERS" = "Entwickler";
 
 "THANKS_TO" = "Vielen Dank an...";
 "THANKS_TO_TOOLTIP" = "Ein großes Dankeschön an diese großartigen Apps, Artikel and Personen! Ohne sie wäre dieses Projekt so nicht möglich oder würde gar nicht existieren.";
+
+"TRANSLATORS" = "Translators"; // NEEDED
+"THANKS_TO_TRANSLATORS" = "Huge thanks to our translators for helping localize TrollApps!"; // NEEDED
 
 "OTHER_PROJECTS_AND_LICENSES" = "Weitere genutzt Projekte und ihre Lizenzen";
 
@@ -115,3 +126,25 @@
 
 "ERROR_DECODING_BASE64_STRING" = "Fehler beim Entschlüsseln des Base64-Strings.";
 "PLEASE_VERIFY_VALID_REPO_STRING" = "Bitte stell sicher, dass dies ein korrekter Repo[]-string ist.";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Failed to Install"; // NEEDED
+"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@"; // NEEDED
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Error removing IPA after installation"; // NEEDED
+"LIKELY_A_PERMS_ISSUE" = "This is likely a permissions issue."; // NEEDED
+
+"MISSING_DOWNLOADED_IPA" = "The downloaded IPA is no longer in the download location."; // NEEDED
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore not found"; // NEEDED
+"TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function."; // NEEDED
+
+"FAILED_TO_UNINSTALL" = "Failed to unistall"; // NEEDED
+"UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@"; // NEEDED
+
+"INVALID_DOWNLOAD_URL" = "Download URL is invalid"; // NEEDED
+"LIKELY_A_REPO_ISSUE" = "This is likely an issue with this repo."; // NEEDED
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Failed to remove IPA file from previous installation."; // NEEDED
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Failed to download / write IPA file"; // NEEDED

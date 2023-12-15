@@ -8,7 +8,7 @@
 
 // Bottom Bar
 "FEATURED" = "Featured";
-"SOURCES" = "Sources";
+"REPOS" = "Repos";
 "BROWSE" = "Browse";
 "APPS" = "Apps";
 "SETTINGS" = "Settings";
@@ -19,15 +19,14 @@
 "UPDATE" = "UPDATE";
 "OLDER" = "OLDER";
 
-// Sources Menu
-"SOURCES" = "Sources";
-"BROKEN_SOURCES" = "Broken Sources";
+// Repos Menu
+"BROKEN_REPOS" = "Broken Repos";
 "EXPORT" = "Export";
 "DELETE" = "Delete";
 
 "UNNAMED_REPO" = "Unnamed Repo";
-"COPY_SOURCE_URL" = "Copy Source URL";
-"COPY_REPO_URL" = "Copy Repo[] URL";
+"COPY_REPO_URL" = "Copy Repo URL";
+"COPY_REPO_BASE_URL" = "Copy Repo[] URL";
 "DELETE_REPO" = "Delete Repo";
 
 "UNABLE_TO_LOAD_REPO" = "Unable to load repo";
@@ -36,12 +35,13 @@
 "ADD_REPOS" = "Add Repos";
 "REPO_URL" = "Repo URL";
 "ADD_REPOS_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
+"ADD_REPO_FROM_CLIPBOARD" = "Add repo from clipboard";
 
 // Apps Detailed View
 "WHATS_NEW" = "What's New";
 "VERSION %@" = "Version %@";
 "UNKNOWN_VERSION" = "Unknown Version";
-"UNKNOWN DEVELOPER" = "Unknown Developer";
+"UNKNOWN_DEVELOPER" = "Unknown Developer";
 
 "SELECT_VERSION" = "Select Version";
 
@@ -50,6 +50,8 @@
 
 // Apps View
 "INSTALLED_APPS" = "Installed Apps";
+"UNINSTALLED_APP %@" = "Uninstalled %@";
+"UNINSTALL_APP" = "Unistall App";
 
 // Settings View
 "OPTIONS" = "Options";
@@ -60,12 +62,21 @@
 
 "APP_SETTINGS" = "App Settings";
 "REDUCED_MOTION" = "Reduced Motion";
+"COMPACT_REPO_VIEW" = "Compact Repo View";
+"ADD_REPO_KEYBOARD_TYPE" = "Add Repo Keyboard Type";
+"CURRENT_BLUR_STRENGTH %@" = "Background Blur Strength: %@";
+
 "APP_LANGUAGE" = "App Language";
+"LANG_SWITCHED" = "Language Switched";
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Please close and reopen the app for this to properly take effect.";
 
 "DEVELOPERS" = "Developers";
 
 "THANKS_TO" = "Thanks To...";
 "THANKS_TO_TOOLTIP" = "Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!";
+
+"TRANSLATORS" = "Translators";
+"THANKS_TO_TRANSLATORS" = "Huge thanks to our translators for helping localize TrollApps!";
 
 "OTHER_PROJECTS_AND_LICENSES" = "Other projects used and their licenses";
 
@@ -116,3 +127,24 @@
 "ERROR_DECODING_BASE64_STRING" = "Error decoding Base64 string.";
 "PLEASE_VERIFY_VALID_REPO_STRING" = "Please verify this is a proper repo[] string.";
 
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Failed to Install";
+"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@";
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Error removing IPA after installation";
+"LIKELY_A_PERMS_ISSUE" = "This is likely a permissions issue.";
+
+"MISSING_DOWNLOADED_IPA" = "The downloaded IPA is no longer in the download location.";
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore not found";
+"TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function.";
+
+"FAILED_TO_UNINSTALL" = "Failed to unistall";
+"UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@";
+
+"INVALID_DOWNLOAD_URL" = "Download URL is invalid";
+"LIKELY_A_REPO_ISSUE" = "This is likely an issue with this repo.";
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Failed to remove IPA file from previous installation.";
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Failed to download / write IPA file";

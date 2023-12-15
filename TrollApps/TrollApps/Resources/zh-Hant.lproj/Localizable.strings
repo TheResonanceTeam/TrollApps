@@ -7,114 +7,144 @@
 */
 
 // Bottom Bar
-"FEATURED" = "Featured";
-"SOURCES" = "Sources";
-"BROWSE" = "Browse";
-"APPS" = "Apps";
-"SETTINGS" = "Settings";
+"FEATURED" = "精選";
+"REPOS" = "軟體源";
+"BROWSE" = "瀏覽";
+"APPS" = "已安裝";
+"SETTINGS" = "設定";
 
 // Buttons
-"OPEN" = "OPEN";
-"GET" = "GET";
-"UPDATE" = "UPDATE";
-"OLDER" = "OLDER";
+"OPEN" = "打開";
+"GET" = "取得";
+"UPDATE" = "更新";
+"OLDER" = "版本太新";
 
-// Sources Menu
-"SOURCES" = "Sources";
-"BROKEN_SOURCES" = "Broken Sources";
-"EXPORT" = "Export";
-"DELETE" = "Delete";
+// Repos Menu
+"BROKEN_REPOS" = "已損壞的軟體源";
+"EXPORT" = "導出";
+"DELETE" = "移除";
 
-"UNNAMED_REPO" = "Unnamed Repo";
-"COPY_SOURCE_URL" = "Copy Source URL";
-"COPY_REPO_URL" = "Copy Repo[] URL";
-"DELETE_REPO" = "Delete Repo";
+"UNNAMED_REPO" = "未命名之軟體源";
+"COPY_REPO_URL" = "複製軟體源";
+"COPY_REPO_BASE_URL" = "複製軟體源（repo[base64]）";
+"DELETE_REPO" = "移除軟體源";
 
-"UNABLE_TO_LOAD_REPO" = "Unable to load repo";
+"UNABLE_TO_LOAD_REPO" = "無法載入軟體源";
 
 // Add Repo Menu
-"ADD_REPOS" = "Add Repos";
-"REPO_URL" = "Repo URL";
-"ADD_REPOS_TOOLTIP" = "Please ensure you input a valid repo URL. It's suggested you copy and paste it here, rather than manually entering it.";
+"ADD_REPOS" = "新增軟體源";
+"REPO_URL" = "軟體源網址";
+"ADD_REPOS_TOOLTIP" = "請再三確認網址是否正確。建議複製貼上軟體源以降低出錯機會";
+"ADD_REPO_FROM_CLIPBOARD" = "Add repo from clipboard"; //NEEDED
 
 // Apps Detailed View
-"WHATS_NEW" = "What's New";
-"VERSION %@" = "Version %@";
-"UNKNOWN_VERSION" = "Unknown Version";
-"UNKNOWN DEVELOPER" = "Unknown Developer";
+"WHATS_NEW" = "新功能";
+"VERSION %@" = "版本 %@";
+"UNKNOWN_VERSION" = "未知版本";
+"UNKNOWN_DEVELOPER" = "未知開發者";
 
-"SELECT_VERSION" = "Select Version";
+"SELECT_VERSION" = "選取版本";
 
 // Browse View
-"SEARCH" = "Search";
+"SEARCH" = "搜尋";
 
 // Apps View
-"INSTALLED_APPS" = "Installed Apps";
+"INSTALLED_APPS" = "已安裝應用程式";
+"UNINSTALLED_APP %@" = "Uninstalled %@"; //NEEDED
+"UNINSTALL_APP" = "Unistall App"; //NEEDED
 
 // Settings View
-"OPTIONS" = "Options";
-"DELETE_CACHE" = "Delete Cache";
-"RESET_REPOS" = "Reset Repos";
-"RELOAD_SPRINGBOARD" = "Reload Springboard";
-"DELETE_CACHE_TOOLTIP" = "The Delete Cache button should be used if the app weights a bit too much on your Device.";
+"OPTIONS" = "選項";
+"DELETE_CACHE" = "清除快取";
+"RESET_REPOS" = "回覆預設軟體源";
+"RELOAD_SPRINGBOARD" = "重新啟動主畫面";
+"DELETE_CACHE_TOOLTIP" = "「清除快取」來減少應用程式大小";
 
-"APP_SETTINGS" = "App Settings";
-"REDUCED_MOTION" = "Reduced Motion";
-"APP_LANGUAGE" = "App Language";
+"APP_SETTINGS" = "應用程式設定";
+"REDUCED_MOTION" = "減少動畫";
+"COMPACT_REPO_VIEW" = "Compact Repo View"; //NEEDED
+"ADD_REPO_KEYBOARD_TYPE" = "Add Repo Keyboard Type"; //NEEDED
+"CURRENT_BLUR_STRENGTH %@" = "Background Blur Strength: %@"; //NEEDED
 
-"DEVELOPERS" = "Developers";
+"APP_LANGUAGE" = "語言";
+"LANG_SWITCHED" = "Language Switched"; //NEEDED
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Please close and reopen the app for this to properly take effect."; //NEEDED
 
-"THANKS_TO" = "Thanks To...";
-"THANKS_TO_TOOLTIP" = "Biggest thanks to these wonderful apps, articles and people! Without them, this project won't be possible or would not even exist!";
+"DEVELOPERS" = "開發者";
 
-"OTHER_PROJECTS_AND_LICENSES" = "Other projects used and their licenses";
+"THANKS_TO" = "感謝";
+"THANKS_TO_TOOLTIP" = "獻最大的感謝給這些應用程式、文章、以及好心的開發者！此應用程式造就於這些人！";
 
-"HELP_THE_PROJECT" = "Help The Project";
-"JOIN_OUR_DISCORD" = "Join our Discord";
-"REPORT_A_BUG" = "Report a Bug!";
-"JSON_TEMPLATE" = "JSON template to create your own repo!";
+"TRANSLATORS" = "Translators"; //NEEDED
+"THANKS_TO_TRANSLATORS" = "Huge thanks to our translators for helping localize TrollApps!"; //NEEDED
+
+"OTHER_PROJECTS_AND_LICENSES" = "此應用程式所使用的資料庫以及其授權條款";
+
+"HELP_THE_PROJECT" = "為此應用程式貢獻";
+"JOIN_OUR_DISCORD" = "加入 Discord";
+"REPORT_A_BUG" = "回報錯誤";
+"JSON_TEMPLATE" = "軟體源 JSON 樣本";
 
 // Alerts
-"ALERT" = "Alert";
-"OK" = "Ok";
-"CANCEL" = "Cancel";
-"YES" = "Yes";
+"ALERT" = "⚠️警告⚠️";
+"OK" = "關閉";
+"CANCEL" = "取消";
+"YES" = "確認";
 
-"SUCCESS" = "Success!";
-"THE_APP_WILL_NOW_QUIT" = "The app will now quit...";
+"SUCCESS" = "成功！";
+"THE_APP_WILL_NOW_QUIT" = "即將關閉此應用程式";
 
-"CLEARING_CACHE" = "Clearing Cache";
-"RESETING_REPOS" = "Resetting Repos";
-"RELOADING_SPRINGBOARD" = "Reloading Springboard";
-"PLEASE_WAIT" = "Please Wait";
+"CLEARING_CACHE" = "正在清除快取";
+"RESETING_REPOS" = "正在回覆軟體源";
+"RELOADING_SPRINGBOARD" = "正在重新啟動主畫面";
+"PLEASE_WAIT" = "請稍候";
 
 "COPIED_REPOS_TO_CLIPBOARD" = "Copied Repo(s) to clipboard";
 
-"DUPLICATE_REPO" = "Duplicate Repo";
-"ALREADY_ON_REPO_LIST" = "You've already added this repo to your repo list.";
+"DUPLICATE_REPO" = "相同軟體源";
+"ALREADY_ON_REPO_LIST" = "已增加此軟體源";
 
-"ADDING_REPO" = "Adding Repo";
+"ADDING_REPO" = "正在增加軟體源";
 
-"UNKNOWN_ERROR_WHILE_INSTALLING" = "An unknown error occoured while installing this app.";
-"PLEASE_RETRY_LATER" = "Please retry this installation another time.";
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "安裝此應用程式時出錯";
+"PLEASE_RETRY_LATER" = "請等會再試一次";
 
-"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Failed to download and parse app.";
-"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "This could be due to missing permissions, a broken download link.";
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "下載與解壓縮應用程式時出錯";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "可能因無適當權限或連結破損而導致";
 
 "FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Failed to fetch app download url.";
-"LIKELY_REPO_ISSUE" = "Likely a repo issue.";
+"LIKELY_REPO_ISSUE" = "很可能為軟體源問題";
 
-"UNABLE_TO_UPDATE" = "Unable to update.";
-"NOT_TROLLSTORE_MANAGED" = "This application was not initially installed through TrollStore and, as a result, cannot install this update. Consider uninstalling the application, then reinstalling in TrollApps.";
+"UNABLE_TO_UPDATE" = "無法更新";
+"NOT_TROLLSTORE_MANAGED" = "此應用程式並非從 TrollStore 安裝導致無法安裝更新。請先在 TrollStore 內刪除此應用程式並且在 TrollApps 內重新安裝。";
 
-"UNABLE_TO_START_INSTALL" = "Unable to start app installation.";
-"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Please wait for the current installation to finish.";
+"UNABLE_TO_START_INSTALL" = "無法開始安裝應用程式";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "請等待目前正在安裝的應用程式完成";
 
-"TROLLAPPS_WILL_CLOSE" = "TrollApps will close and you will be transfered to TrollStore to complete the update process.";
-"DO_YOU_STILL_WISH_TO_UPDATE" = "Do you still wish to update TrollApps?";
+"TROLLAPPS_WILL_CLOSE" = "TrollApps 將關閉並且將開啟 TrollStore 以完成此更新";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "是否更新 TrollApps？";
 
-"ERROR_DECODING_BASE64_STRING" = "Error decoding Base64 string.";
-"PLEASE_VERIFY_VALID_REPO_STRING" = "Please verify this is a proper repo[] string.";
+"ERROR_DECODING_BASE64_STRING" = "解碼 Base64 軟體源時出錯";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "請確認是否為 repo[亂碼] 的格式";
 
-// Install / Download Errors
-"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@";
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Failed to Install"; //NEEDED
+"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@"; //NEEDED
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Error removing IPA after installation"; //NEEDED
+"LIKELY_A_PERMS_ISSUE" = "This is likely a permissions issue."; //NEEDED
+
+"MISSING_DOWNLOADED_IPA" = "The downloaded IPA is no longer in the download location."; //NEEDED
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore not found"; //NEEDED
+"TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function."; //NEEDED
+
+"FAILED_TO_UNINSTALL" = "Failed to unistall"; //NEEDED
+"UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@"; //NEEDED
+
+"INVALID_DOWNLOAD_URL" = "Download URL is invalid"; //NEEDED
+"LIKELY_A_REPO_ISSUE" = "This is likely an issue with this repo."; //NEEDED
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Failed to remove IPA file from previous installation."; //NEEDED
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Failed to download / write IPA file"; //NEEDED

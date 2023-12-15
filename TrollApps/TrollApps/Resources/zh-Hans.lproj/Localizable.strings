@@ -7,41 +7,54 @@
   
 */
 
-/* Bottom Bar */
+// Bottom Bar
 "FEATURED" = "推荐";
-"SOURCES" = "软件源";
+"REPOS" = "软件源";
 "BROWSE" = "搜索";
 "APPS" = "应用程序";
 "SETTINGS" = "设置";
-/* Buttons */
+
+// Buttons
 "OPEN" = "打开";
 "GET" = "安装";
 "UPDATE" = "更新";
 "OLDER" = "旧版本";
-"SOURCES" = "软件源";
-"BROKEN_SOURCES" = "错误的来源";
+
+// Repos Menu
+"BROKEN_REPOS" = "错误的来源";
 "EXPORT" = "导出";
 "DELETE" = "删除";
-"UNNAMED_REPO" = "未命名的人家源";
-"COPY_SOURCE_URL" = "复制软件源URL";
-"COPY_REPO_URL" = "复制软件源[] URL";
-"DELETE_REPO" = "删除_REPO";
+
+"UNNAMED_REPO" = "未命名的软件源";
+"COPY_REPO_URL" = "复制软件源URL";
+"COPY_REPO_BASE_URL" = "复制软件源[] URL";
+"DELETE_REPO" = "删除软件源";
+
 "UNABLE_TO_LOAD_REPO" = "无法加载软件源";
-/* Add Repo Menu */
+
+// Add Repo Menu
 "ADD_REPOS" = "添加软件源";
 "REPO_URL" = "软件源 URL";
 "ADD_REPOS_TOOLTIP" = "请确保您输入有效的软件源URL。建议您复制并粘贴在这里，而不是手动输入。";
-/* Apps Detailed View */
+"ADD_REPO_FROM_CLIPBOARD" = "从剪贴板添加软件源";
+
+// Apps Detailed View
 "WHATS_NEW" = "最新消息";
 "VERSION %@" = "版本 %@";
 "UNKNOWN_VERSION" = "未知版本";
-"UNKNOWN DEVELOPER" = "未知开发人员";
+"UNKNOWN_DEVELOPER" = "未知开发人员";
+
 "SELECT_VERSION" = "选择版本";
-/* Browse View */
+
+// Browse View
 "SEARCH" = "搜索";
-/* Apps View */
+
+// Apps View
 "INSTALLED_APPS" = "已安装的应用程序";
-/* Settings View */
+"UNINSTALLED_APP %@" = "卸载 %@";
+"UNINSTALL_APP" = "卸载应用";
+
+// Settings View
 "OPTIONS" = "选项";
 "DELETE_CACHE" = "删除缓存";
 "RESET_REPOS" = "重置软件源";
@@ -49,43 +62,90 @@
 "DELETE_CACHE_TOOLTIP" = "如果应用程序在您的设备上的存储过大，则应使用删除缓存按钮。";
 
 "APP_SETTINGS" = "应用设置";
-"REDUCED_MOTION" = "应用语言";
-"APP_LANGUAGE" = "减少动画";
+"REDUCED_MOTION" = "减少动画";
+"COMPACT_REPO_VIEW" = "紧凑型软件源视图";
+"ADD_REPO_KEYBOARD_TYPE" = "添加软件源类型";
+"CURRENT_BLUR_STRENGTH %@" = "背景模糊强度: %@";
+
+"APP_LANGUAGE" = "语言设置";
+"LANG_SWITCHED" = "语言切换";
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "请关闭并重新打开应用程序，以便正确生效。";
 
 "DEVELOPERS" = "开发人员";
+
 "THANKS_TO" = "多亏了...";
 "THANKS_TO_TOOLTIP" = "非常感谢这些精彩的应用程序、文章和人物！没有他们，这个项目将不可能甚至不存在！";
+
+"TRANSLATORS" = "翻译人员";
+"THANKS_TO_TRANSLATORS" = "非常感谢我们的翻译人员帮助本地化TrollApps！";
+
 "OTHER_PROJECTS_AND_LICENSES" = "使用的其他项目及其许可证";
+
 "HELP_THE_PROJECT" = "帮助项目";
 "JOIN_OUR_DISCORD" = "加入我们的Discord";
 "REPORT_A_BUG" = "报告一个错误！";
 "JSON_TEMPLATE" = "JSON模板来创建您自己的软件源！";
-/* Alerts */
+
+// Alerts
 "ALERT" = "警告";
 "OK" = "好的";
 "CANCEL" = "取消";
 "YES" = "是";
+
 "SUCCESS" = "成功!";
 "THE_APP_WILL_NOW_QUIT" = "该应用程序现在将退出...";
+
 "CLEARING_CACHE" = "清除缓存";
 "RESETING_REPOS" = "重置软件源";
 "RELOADING_SPRINGBOARD" = "重新加载跳板";
 "PLEASE_WAIT" = "请稍候";
+
 "COPIED_REPOS_TO_CLIPBOARD" = "将软件源复制到剪贴板";
+
 "DUPLICATE_REPO" = "重复软件源";
 "ALREADY_ON_REPO_LIST" = "您已经将此软件源添加到您的软件源中。";
+
 "ADDING_REPO" = "添加软件源";
+
 "UNKNOWN_ERROR_WHILE_INSTALLING" = "安装此应用程序时出现未知错误。";
 "PLEASE_RETRY_LATER" = "请重试此安装。";
+
 "FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "下载和解析应用程序失败。";
 "THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "这可能是由于缺少权限、下载链接损坏。";
+
 "FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "无法获取应用程序下载地址。";
 "LIKELY_REPO_ISSUE" = "可能是一个软件源问题。";
+
 "UNABLE_TO_UPDATE" = "无法更新。";
 "NOT_TROLLSTORE_MANAGED" = "此应用程序最初不是通过TrollStore安装的，因此无法安装此更新。考虑卸载该应用程序，然后在TrollApps中重新安装。";
+
 "UNABLE_TO_START_INSTALL" = "无法开始安装应用程序。";
 "PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "请等待当前安装完成。";
+
 "TROLLAPPS_WILL_CLOSE" = "TrollApps将关闭，您将被转移到TrollStore以完成更新过程。";
 "DO_YOU_STILL_WISH_TO_UPDATE" = "您还想更新TrollApps吗？";
+
 "ERROR_DECODING_BASE64_STRING" = "解码Base64字符串时出错。";
-"PLEASE_VERIFY_VALID_REPO_STRING" = "请确认这是一个正确的软件源[] string。";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "请确认这是一个正确的软件源[] 。";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "安装失败";
+"INSTALLATION_RETURNED_ERROR %@" = "安装返回错误: %@";
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "安装后删除IPA时出错";
+"LIKELY_A_PERMS_ISSUE" = "这可能是一个权限问题。";
+
+"MISSING_DOWNLOADED_IPA" = "已下载的IPA文件不再位于下载位置。";
+
+"TROLLSTORE_NOT_FOUND" = "未找到TrollStore";
+"TROLLSTORE_IS_REQUIRED" = "TrollApps需要TrollStore才能运行。";
+
+"FAILED_TO_UNINSTALL" = "卸载失败";
+"UNINSTALLATION_RETURNED_ERROR %@" = "卸载返回错误: %@";
+
+"INVALID_DOWNLOAD_URL" = "下载URL无效";
+"LIKELY_A_REPO_ISSUE" = "这可能是这个软件源的问题。";
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "未能从之前的安装中删除IPA文件.";
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "下载/写入IPA文件失败";
