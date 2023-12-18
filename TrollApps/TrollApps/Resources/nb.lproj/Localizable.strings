@@ -110,3 +110,25 @@
 
 "ERROR_DECODING_BASE64_STRING" = "Feil ved avkoding av Base64-streng.";
 "PLEASE_VERIFY_VALID_REPO_STRING" = "Vennligst bekreft at dette er en gyldig kildenstreng.";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Klarte ikke å installere";
+"INSTALLATION_RETURNED_ERROR %@" = "Installeringen returnerte feil: %@";
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Feil ved fjerning av IPA etter installasjon";
+"LIKELY_A_PERMS_ISSUE" = "Dette er sannsynligvis en tillatelsesproblem.";
+
+"MISSING_DOWNLOADED_IPA" = "Den nedlastede IPA-filen er ikke lenger på nedlastingsstedet.";
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore ikke funnet";
+"TROLLSTORE_IS_REQUIRED" = "TrollStore er nødvendig for at TrollApps skal fungere.";
+
+"FAILED_TO_UNINSTALL" = "Klarte ikke å avinstallere";
+"UNINSTALLATION_RETURNED_ERROR %@" = "Avinstalleringen returnerte feil: %@";
+
+"INVALID_DOWNLOAD_URL" = "Nedlastings-URL er ugyldig";
+"LIKELY_A_REPO_ISSUE" = "Dette er sannsynligvis et problem med denne kilden.";
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Klarte ikke å fjerne eksisterende IPA-fil fra forrige installasjon.";
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Klarte ikke å laste ned / skrive IPA-filen";
