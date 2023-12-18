@@ -128,23 +128,23 @@
 "PLEASE_VERIFY_VALID_REPO_STRING" = "請確認是否為 repo[亂碼] 的格式";
 
 // Install / Uninstall / Download Errors
-"FAILED_TO_INSTALL" = "Failed to Install"; //NEEDED
-"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@"; //NEEDED
+"FAILED_TO_INSTALL" = "安裝失敗";
+"INSTALLATION_RETURNED_ERROR %@" = "安裝時的錯誤訊息：%@";
 
-"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Error removing IPA after installation"; //NEEDED
-"LIKELY_A_PERMS_ISSUE" = "This is likely a permissions issue."; //NEEDED
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "安裝後刪除 IPA 檔時失敗";
+"LIKELY_A_PERMS_ISSUE" = "可能因無法取得權限權限而導致";
 
-"MISSING_DOWNLOADED_IPA" = "The downloaded IPA is no longer in the download location."; //NEEDED
+"MISSING_DOWNLOADED_IPA" = "找不到已下載的 IPA 檔";
 
-"TROLLSTORE_NOT_FOUND" = "TrollStore not found"; //NEEDED
-"TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function."; //NEEDED
+"TROLLSTORE_NOT_FOUND" = "找不到 TrollStore";
+"TROLLSTORE_IS_REQUIRED" = "TrollStore 是 TrollApps 的依賴";
 
-"FAILED_TO_UNINSTALL" = "Failed to unistall"; //NEEDED
-"UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@"; //NEEDED
+"FAILED_TO_UNINSTALL" = "解除安裝失敗"; //NEEDED
+"UNINSTALLATION_RETURNED_ERROR %@" = "解除安裝錯誤訊息：%@";
 
-"INVALID_DOWNLOAD_URL" = "Download URL is invalid"; //NEEDED
-"LIKELY_A_REPO_ISSUE" = "This is likely an issue with this repo."; //NEEDED
+"INVALID_DOWNLOAD_URL" = "無效的安裝 URL";
+"LIKELY_A_REPO_ISSUE" = "可能為因為無法取得軟體源資訊導致";
 
-"ERROR_REMOVING_EXISTING_IPA_FILE" = "Failed to remove IPA file from previous installation."; //NEEDED
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "移除 IPA 檔時失敗";
 
-"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Failed to download / write IPA file"; //NEEDED
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "無法下載或寫入 IPA 檔";
