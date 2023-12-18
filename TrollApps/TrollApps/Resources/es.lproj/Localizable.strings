@@ -1,0 +1,150 @@
+/* 
+  Localizable.strings
+  TrollApps
+
+  Created by DeciBelioS on 2023-12-15.
+  Spanish languaje
+*/
+
+// Bottom Bar
+"FEATURED" = "Destacados";
+"REPOS" = "Repos";
+"BROWSE" = "Navegar por";
+"APPS" = "Apps";
+"SETTINGS" = "Ajustes";
+
+// Buttons
+"OPEN" = "ABRIR";
+"GET" = "OBTENER";
+"UPDATE" = "ACTUALIZAR";
+"OLDER" = "ANTIGUO";
+
+// Repos Menu
+"BROKEN_REPOS" = "Repos rotos";
+"EXPORT" = "Exportar";
+"DELETE" = "Eliminar";
+
+"UNNAMED_REPO" = "Repo sin nombre";
+"COPY_REPO_URL" = "Copiar URL del Repo";
+"COPY_REPO_BASE_URL" = "Copiar URL del Repo[]";
+"DELETE_REPO" = "Eliminar Repo";
+
+"UNABLE_TO_LOAD_REPO" = "No se puede cargar el repositorio";
+
+// Add Repo Menu
+"ADD_REPOS" = "Agregar Repositorios";
+"REPO_URL" = "URL del Repositorio";
+"ADD_REPOS_TOOLTIP" = "Asegúrate de ingresar una URL de repositorio válida. Se sugiere que la copies y pegues aquí en lugar de ingresarla manualmente.";
+"ADD_REPO_FROM_CLIPBOARD" = "Agregar repositorio desde el portapapeles";
+
+// Apps Detailed View
+"WHATS_NEW" = "Novedades";
+"VERSION %@" = "Versión %@";
+"UNKNOWN_VERSION" = "Versión desconocida";
+"UNKNOWN_DEVELOPER" = "Desarrollador desconocido";
+
+"SELECT_VERSION" = "Seleccionar versión";
+
+// Browse View
+"SEARCH" = "Buscar";
+
+// Apps View
+"INSTALLED_APPS" = "Apps instaladas";
+"UNINSTALLED_APP %@" = "%@ desinstalado";
+"UNINSTALL_APP" = "Desinstalar app";
+
+// Settings View
+"OPTIONS" = "Opciones";
+"DELETE_CACHE" = "Eliminar Caché";
+"RESET_REPOS" = "Restablecer Repositorios";
+"RELOAD_SPRINGBOARD" = "Recargar Springboard";
+"DELETE_CACHE_TOOLTIP" = "Debes usar el botón de Eliminar Caché si la aplicación ocupa demasiado espacio en tu dispositivo.";
+
+"APP_SETTINGS" = "Configuración de la Aplicación";
+"REDUCED_MOTION" = "Reducción de Movimiento";
+"COMPACT_REPO_VIEW" = "Vista Compacta de Repositorios";
+"ADD_REPO_KEYBOARD_TYPE" = "Tipo de Teclado para Agregar Repositorio";
+"CURRENT_BLUR_STRENGTH %@" = "Intensidad Actual del Desenfoque de Fondo: %@";
+
+"APP_LANGUAGE" = "Idioma de la Aplicación";
+"LANG_SWITCHED" = "Idioma Cambiado";
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Por favor, cierra y vuelve a abrir la aplicación para que estos cambios surtan efecto correctamente.";
+
+"DEVELOPERS" = "Desarrolladores";
+
+"THANKS_TO" = "Agradecimientos a...";
+"THANKS_TO_TOOLTIP" = "Un agradecimiento enorme a estas maravillosas aplicaciones, artículos y personas. ¡Sin ellos, este proyecto no sería posible o ni siquiera existiría!";
+
+"TRANSLATORS" = "Traductores";
+"THANKS_TO_TRANSLATORS" = "Agradecemos enormemente a nuestros traductores por ayudar a localizar TrollApps.";
+
+"OTHER_PROJECTS_AND_LICENSES" = "Otros proyectos utilizados y sus licencias";
+
+"HELP_THE_PROJECT" = "Ayuda al Proyecto";
+"JOIN_OUR_DISCORD" = "Únete a nuestro Discord";
+"REPORT_A_BUG" = "Reporta un Error";
+"JSON_TEMPLATE" = "Plantilla JSON para crear tu propio repositorio";
+
+// Alerts
+"ALERT" = "Alerta";
+"OK" = "Aceptar";
+"CANCEL" = "Cancelar";
+"YES" = "Sí";
+
+"SUCCESS" = "Éxito";
+"THE_APP_WILL_NOW_QUIT" = "La aplicación se cerrará ahora...";
+
+"CLEARING_CACHE" = "Limpiando caché";
+"RESETING_REPOS" = "Restableciendo repositorios";
+"RELOADING_SPRINGBOARD" = "Recargando springboard";
+"PLEASE_WAIT" = "Por favor, espera";
+
+"COPIED_REPOS_TO_CLIPBOARD" = "Repositorio(s) copiado(s) al portapapeles";
+
+"DUPLICATE_REPO" = "Repositorio duplicado";
+"ALREADY_ON_REPO_LIST" = "Ya has añadido este repositorio a tu lista de repositorios.";
+
+"ADDING_REPO" = "Añadiendo Repo";
+
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "Ocurrió un error desconocido al instalar esta aplicación.";
+"PLEASE_RETRY_LATER" = "Por favor, intenta esta instalación en otro momento.";
+
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "No se pudo descargar y analizar la aplicación.";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "Esto podría deberse a permisos faltantes o un enlace de descarga roto.";
+
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "No se pudo obtener la URL de descarga de la aplicación.";
+"LIKELY_REPO_ISSUE" = "Probablemente un problema con el repositorio.";
+
+"UNABLE_TO_UPDATE" = "No se puede actualizar.";
+"NOT_TROLLSTORE_MANAGED" = "Esta aplicación no fue instalada inicialmente a través de TrollStore y, como resultado, no puede instalar esta actualización. Considera desinstalar la aplicación y luego reinstalarla en TrollApps.";
+
+"UNABLE_TO_START_INSTALL" = "No se puede iniciar la instalación de la aplicación.";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Por favor, espera a que termine la instalación actual.";
+
+"TROLLAPPS_WILL_CLOSE" = "TrollApps se cerrará y serás transferido a TrollStore para completar el proceso de actualización.";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "¿Aún deseas actualizar TrollApps?";
+
+"ERROR_DECODING_BASE64_STRING" = "Error al decodificar la cadena Base64.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Verifica que esta sea una cadena de repositorio válida[].";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Error al Instalar";
+"INSTALLATION_RETURNED_ERROR %@" = "La instalación devolvió un error: %@";
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Error al eliminar el archivo IPA después de la instalación";
+"LIKELY_A_PERMS_ISSUE" = "Esto probablemente sea un problema de permisos.";
+
+"MISSING_DOWNLOADED_IPA" = "El archivo IPA descargado ya no se encuentra en la ubicación de descargas.";
+
+"TROLLSTORE_NOT_FOUND" = "TrollStore no encontrado";
+"TROLLSTORE_IS_REQUIRED" = "TrollStore es necesario para que TrollApps funcione.";
+
+"FAILED_TO_UNINSTALL" = "Error al Desinstalar";
+"UNINSTALLATION_RETURNED_ERROR %@" = "La desinstalación devolvió un error: %@";
+
+"INVALID_DOWNLOAD_URL" = "La URL de descarga no es válida";
+"LIKELY_A_REPO_ISSUE" = "Esto probablemente sea un problema con este repositorio.";
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Error al eliminar el archivo IPA de una instalación anterior.";
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Error al descargar/escribir el archivo IPA";
