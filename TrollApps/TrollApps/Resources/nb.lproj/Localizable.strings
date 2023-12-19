@@ -8,7 +8,7 @@
 
 // Bottom Bar
 "FEATURED" = "Utvalgte";
-"SOURCES" = "Kilder";
+"REPOS" = "Kilder";
 "BROWSE" = "Søk";
 "APPS" = "Apper";
 "SETTINGS" = "Innstillinger";
@@ -16,10 +16,10 @@
 // Buttons
 "OPEN" = "START";
 "GET" = "SKAFFE";
+"UPDATE" = "OPPDATER";
 "OLDER" = "FORELDET";
 
 // Repos Menu
-"SOURCES" = "Kilder";
 "BROKEN_SOURCES" = "Ødelagte Kilder";
 "EXPORT" = "Eksport";
 "DELETE" = "Slett";
@@ -35,6 +35,7 @@
 "ADD_REPOS" = "Legg til Kilder";
 "REPO_URL" = "Kilde-URL";
 "ADD_REPO_TOOLTIP" = "Sørg for at du har oppgitt en gyldig kilde-URL. Det anbefales å kopiere og lime den inn her i stedet for å skrive den inn manuelt.";
+"ADD_REPO_FROM_CLIPBOARD" = "Legg til kilde fra utklippstavle";
 
 // Apps Detailed View
 "WHATS_NEW" = "Hva er nytt";
@@ -49,6 +50,8 @@
 
 // Apps View
 "INSTALLED_APPS" = "Installerte apper";
+"UNINSTALLED_APP %@" = "Avinstallert %@";
+"UNINSTALL_APP" = "Avinstaller App";
 
 // Settings View
 "OPTIONS" = "Innstillinger";
@@ -57,10 +60,23 @@
 "RELOAD_SPRINGBOARD" = "Last inn Springboard på nytt";
 "DELETE_CACHE_TOOLTIP" = "Slett hurtigbuffer bør bare brukes hvis appen bruker for mye lagringsplass.";
 
+"APP_SETTINGS" = "Appinnstillinger";
+"REDUCED_MOTION" = "Redusert bevegelse";
+"COMPACT_REPO_VIEW" = "Kompakt Kildevisning";
+"ADD_REPO_KEYBOARD_TYPE" = "Legg til Kilde Tastaturtype";
+"CURRENT_BLUR_STRENGTH %@" = "Bakgrunnsuskarphet: %@";
+
+"APP_LANGUAGE" = "Appspråk";
+"LANG_SWITCHED" = "Språk byttet";
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Vennligst lukk og åpne appen på nytt for at dette skal tre i kraft.";
+
 "DEVELOPERS" = "Utviklere";
 
 "THANKS_TO" = "Tusen takk...";
 "THANKS_TO_TOOLTIP" = "Takk til disse personene som gjorde dette prosjektet mulig.";
+
+"TRANSLATORS" = "Oversettere";
+"THANKS_TO_TRANSLATORS" = "Stor takk til våre oversettere som hjalp med å lokalisere TrollApps!";
 
 "OTHER_PROJECTS_AND_LICENSES" = "Andre prosjekter og lisenser";
 
@@ -115,20 +131,4 @@
 "FAILED_TO_INSTALL" = "Klarte ikke å installere";
 "INSTALLATION_RETURNED_ERROR %@" = "Installeringen returnerte feil: %@";
 
-"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Feil ved fjerning av IPA etter installasjon";
-"LIKELY_A_PERMS_ISSUE" = "Dette er sannsynligvis en tillatelsesproblem.";
-
-"MISSING_DOWNLOADED_IPA" = "Den nedlastede IPA-filen er ikke lenger på nedlastingsstedet.";
-
-"TROLLSTORE_NOT_FOUND" = "TrollStore ikke funnet";
-"TROLLSTORE_IS_REQUIRED" = "TrollStore er nødvendig for at TrollApps skal fungere.";
-
-"FAILED_TO_UNINSTALL" = "Klarte ikke å avinstallere";
-"UNINSTALLATION_RETURNED_ERROR %@" = "Avinstalleringen returnerte feil: %@";
-
-"INVALID_DOWNLOAD_URL" = "Nedlastings-URL er ugyldig";
-"LIKELY_A_REPO_ISSUE" = "Dette er sannsynligvis et problem med denne kilden.";
-
-"ERROR_REMOVING_EXISTING_IPA_FILE" = "Klarte ikke å fjerne eksisterende IPA-fil fra forrige installasjon.";
-
-"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Klarte ikke å laste ned / skrive IPA-filen";
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Feil ved fjerning av IPA etter installasjon
