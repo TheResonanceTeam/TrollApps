@@ -51,7 +51,7 @@
 // Apps View
 "INSTALLED_APPS" = "已安裝應用程式";
 "UNINSTALLED_APP %@" = "Uninstalled %@"; //NEEDED
-"UNINSTALL_APP" = "Unistall App"; //NEEDED
+"UNINSTALL_APP" = "Uninstall App"; //NEEDED
 
 // Settings View
 "OPTIONS" = "選項";

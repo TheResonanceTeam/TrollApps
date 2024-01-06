@@ -131,4 +131,4 @@
 "FAILED_TO_INSTALL" = "Klarte ikke å installere";
 "INSTALLATION_RETURNED_ERROR %@" = "Installeringen returnerte feil: %@";
 
-"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Feil ved fjerning av IPA etter installasjon
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Feil ved fjerning av IPA etter installasjon";

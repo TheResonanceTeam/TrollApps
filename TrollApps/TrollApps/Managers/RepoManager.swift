@@ -43,6 +43,7 @@ enum StringOrDouble: Decodable, Encodable, Equatable {
 
 struct Repo: Decodable, Equatable, Hashable {
     var name: String?
+    var website: String?
     var iconURL: String?
     var headerURL: String?
     var featuredApps: [String]?

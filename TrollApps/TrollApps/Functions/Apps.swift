@@ -7,75 +7,6 @@
 
 import Combine
 
-func InstallIPA(_ IPAPath: String) -> FunctionStatus {
-    if let trollStoreApp = SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore") {
-        let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
-        let returnCode = spawnRoot(trollstoreHelperPath, ["install", IPAPath])
-        
-        if(returnCode != 0) {
-            return FunctionStatus(error: true, message: ErrorMessage(title: "FAILED_TO_INSTALL", body: "INSTALLATION_RETURNED_ERROR \(returnCode)"))
-        } else {
-            NotificationCenter.default.post(name: Notification.Name("ApplicationsChanged"), object: nil)
-            PassthroughSubject<Void, Never>().send()
-            
-            if FileManager.default.fileExists(atPath: IPAPath) {
-                do {
-                    try FileManager.default.removeItem(atPath: IPAPath)
-                    return FunctionStatus(error: false)
-                } catch {
-                    return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_REMOVING_IPA_FILE_AFTER_INSTALL", body: "LIKELY_A_PERMS_ISSUE"))
-                }
-            } else {
-                return FunctionStatus(error: true, message: ErrorMessage(title: "MISSING_DOWNLOADED_IPA", body: ""))
-            }
-        }
-    } else {
-        return FunctionStatus(error: true, message: ErrorMessage(title: "TROLLSTORE_NOT_FOUND", body: "TROLLSTORE_IS_REQUIRED"))
-    }
-}
-
-func UnistallIPA(_ appID: String) -> FunctionStatus {
-    if let trollStoreApp = SBFApplication(applicationBundleIdentifier: "com.opa334.TrollStore") {
-        let trollstoreHelperPath = trollStoreApp.bundleURL.path + "/trollstorehelper"
-        let returnCode = spawnRoot(trollstoreHelperPath, ["uninstall", appID])
-        
-        if(returnCode != 0) {
-            return FunctionStatus(error: true, message: ErrorMessage(title: "FAILED_TO_UNINSTALL", body: "UNINSTALLATION_RETURNED_ERROR \(returnCode)"))
-        } else {
-            
-            NotificationCenter.default.post(name: Notification.Name("ApplicationsChanged"), object: nil)
-            PassthroughSubject<Void, Never>().send()
-            
-            return FunctionStatus(error: false)
-        }
-    } else {
-        return FunctionStatus(error: true, message: ErrorMessage(title: "TROLLSTORE_NOT_FOUND", body: "TROLLSTORE_IS_REQUIRED"))
-    }
-}
-
-func DownloadIPA(_ IPA: String) -> FunctionStatus {
-    guard let url = URL(string: IPA) else {
-        return FunctionStatus(error: true, message: ErrorMessage(title: "INVALID_DOWNLOAD_URL", body: "LIKELY_A_REPO_ISSUE"))
-    }
-
-    let IPAPath = "/var/mobile/TrollApps-Tmp-IPA.ipa"
-    if FileManager.default.fileExists(atPath: IPAPath) {
-        do {
-            try FileManager.default.removeItem(atPath: IPAPath)
-        } catch {
-            return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_REMOVING_EXISTING_IPA_FILE", body: "LIKELY_A_PERMS_ISSUE"))
-        }
-    }
-
-    do {
-        try Data(contentsOf: url).write(to: URL(fileURLWithPath: IPAPath))
-        return FunctionStatus(error: false)
-    } catch {
-        return FunctionStatus(error: true, message: ErrorMessage(title: "ERROR_DOWNLOADING_AND_WRITING_IPA_FILE", body: "LIKELY_A_PERMS_ISSUE"))
-    }
-}
-
-
 struct BundledApp: Identifiable, Hashable {
     let id: String
     var name: String
@@ -132,4 +63,20 @@ func OpenApp(_ BundleID: String) {
     guard let obj = objc_getClass("LSApplicationWorkspace") as? NSObject else { return }
     let workspace = obj.perform(Selector(("defaultWorkspace")))?.takeUnretainedValue() as? NSObject
     workspace?.perform(Selector(("openApplicationWithBundleID:")), with: BundleID)
+}
+
+func clearTmpFolder() {
+    let TempFolderURL = URL(fileURLWithPath: "/var/mobile/.TrollApps/tmp/")
+    let TempPathURL = TempFolderURL
+    
+    do {
+        if FileManager.default.fileExists(atPath: TempPathURL.path) {
+            try FileManager.default.removeItem(at: TempPathURL)
+            print("Successfully deleted /tmp/ folder.")
+        } else {
+            print("/tmp/ folder does not exist.")
+        }
+    } catch {
+        print("Error deleting /tmp/ folder: \(error.localizedDescription)")
+    }
 }

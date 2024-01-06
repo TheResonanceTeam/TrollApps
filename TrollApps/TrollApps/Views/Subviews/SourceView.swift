@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct SourceView: View {
     @State private var searchText = ""
@@ -19,49 +18,23 @@ struct SourceView: View {
     func commonView() -> some View {
         List {
             ForEach(filteredApps.sorted { $0.name < $1.name }, id: \.self) { app in
-                let version = (app.versions?[0].version != nil && app.versions?[0].version != "" ? (app.versions?[0].version ?? "") : "")
-                let devName = (app.developerName != nil && app.developerName != "" ? (app.developerName ?? "") : "")
-                
-                HStack {
-
-                    if(app.iconURL != "") {
-                        WebImage(url: URL(string: app.iconURL))
-                            .resizable()
-                            .frame(width: 48, height: 48)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding(.trailing, 7)
-                        
-                    } else {
-                        Image("MissingRepo")
-                            .resizable()
-                            .frame(width: 48, height: 48)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding(.trailing, 7)
-                    }
-
-                    VStack(alignment: .leading) {
-                        Text(app.name)
-                        CollapsibleText(text: devName , isExpanded: $showFullVersion, maxLines: 1)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        CollapsibleText(text: version , isExpanded: $showFullVersion, maxLines: 1)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
-                    Spacer()
-                    DynamicInstallButton(appDetails: app, selectedVersionIndex: 0, buttonStyle: "Main")
-                }
-                
-                .background(
-                    NavigationLink("", destination: AppDetailsView(appDetails: app))
-                        .opacity(0)
-                )
+                AppCell(app: app, showFullMode: false)
+                    .listRowInsets(EdgeInsets())
             }
         }
-        .environment(\.defaultMinListRowHeight, 50)
         .listStyle(PlainListStyle())
-        .navigationTitle(repo.name ?? "UNNAMED_REPO")
-        .navigationBarTitle("", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack {
+                    Text("")
+//                    Button(action: {
+////                        openURL(URL(string: repo.website ?? "")!)
+//                    }) {
+//                        Image(systemName: "globe")
+//                    }
+                }
+            }
+        }
     }
 
     var body: some View {
@@ -126,3 +99,17 @@ struct SearchBar: View {
         .padding(.horizontal)
     }
 }
+
+//
+//.toolbar {
+//    ToolbarItem(placement: .topBarTrailing) {
+//        if repo.website != nil && repo.website != "" {
+//            Button(action: {
+//                openURL(URL(string: repo.website ?? "")!)
+//            }) {
+//                Image(systemName: "globe")
+//                    .foregroundColor(.white)
+//            }
+//        }
+//    }
+//}

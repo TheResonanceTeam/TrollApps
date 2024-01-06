@@ -51,7 +51,7 @@
 // Apps View
 "INSTALLED_APPS" = "Installierte Apps";
 "UNINSTALLED_APP %@" = "Uninstalled %@"; // NEEDED
-"UNINSTALL_APP" = "Unistall App"; // NEEDED
+"UNINSTALL_APP" = "Uninstall App"; // NEEDED
 
 // Settings View
 "OPTIONS" = "Optionen";
@@ -139,7 +139,7 @@
 "TROLLSTORE_NOT_FOUND" = "TrollStore not found"; // NEEDED
 "TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function."; // NEEDED
 
-"FAILED_TO_UNINSTALL" = "Failed to unistall"; // NEEDED
+"FAILED_TO_UNINSTALL" = "Failed to uninstall"; // NEEDED
 "UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@"; // NEEDED
 
 "INVALID_DOWNLOAD_URL" = "Download URL is invalid"; // NEEDED
