@@ -128,8 +128,8 @@
 "PLEASE_VERIFY_VALID_REPO_STRING" = "Vui lòng xác minh đây có phải là chuỗi nguồn[] thích hợp hay không.";
 
 // Install / Uninstall / Download Errors
-"FAILED_TO_INSTALL" = "Failed to Install";
-"INSTALLATION_RETURNED_ERROR %@" = "Installation returned error: %@";
+"FAILED_TO_INSTALL" = "Cai đặt thât bại";
+"INSTALLATION_RETURNED_ERROR %@" = "Cài đặt trả về lỗi: %@";
 
 "ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Lỗi gỡ bỏ IPA sau khi cài đặt";
 "LIKELY_A_PERMS_ISSUE" = "Đây có thể là một vấn đề về quyền.";
