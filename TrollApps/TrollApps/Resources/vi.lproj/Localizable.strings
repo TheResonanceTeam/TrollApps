@@ -1,0 +1,150 @@
+/* 
+  Localizable.strings
+  TrollApps
+
+  Created by Cleopatra on 2023-12-11.
+  
+*/
+
+// Bottom Bar
+"FEATURED" = "Khuyến nghị";
+"REPOS" = "Nguồn";
+"BROWSE" = "Tìm kiếm";
+"APPS" = "Ứng dụng";
+"SETTINGS" = "Cài đặt";
+
+// Buttons
+"OPEN" = "MỞ";
+"GET" = "NHẬN";
+"UPDATE" = "CẬP NHẬT";
+"OLDER" = "CŨ";
+
+// Repos Menu
+"BROKEN_REPOS" = "Nguồn lỗi";
+"EXPORT" = "Xuất";
+"DELETE" = "Xóa";
+
+"UNNAMED_REPO" = "Nguồn không tên";
+"COPY_REPO_URL" = "Sao chép URL nguồn";
+"COPY_REPO_BASE_URL" = "Sao chép URL nguồn[]";
+"DELETE_REPO" = "Xóa nguồn";
+
+"UNABLE_TO_LOAD_REPO" = "Không thể tải nguồn";
+
+// Add Repo Menu
+"ADD_REPOS" = "Thêm nguồn";
+"REPO_URL" = "URL nguồn";
+"ADD_REPOS_TOOLTIP" = "Hãy đảm bảo bạn nhập URL nguồn hợp lệ. Bạn nên sao chép và dán nó vào đây thay vì nhập thủ công.";
+"ADD_REPO_FROM_CLIPBOARD" = "Thêm nguồn từ clipboard";
+
+// Apps Detailed View
+"WHATS_NEW" = "Có gì mới";
+"VERSION %@" = "Phiên bản %@";
+"UNKNOWN_VERSION" = "phiên bản không xác định";
+"UNKNOWN_DEVELOPER" = "Nhà phát triển không xác định";
+
+"SELECT_VERSION" = "Chọn phiên bản";
+
+// Browse View
+"SEARCH" = "Tìm kiếm ứng dụng, trò chơi...";
+
+// Apps View
+"INSTALLED_APPS" = "Đã cài đặt";
+"UNINSTALLED_APP %@" = "Đã gỡ cài đặt %@";
+"UNINSTALL_APP" = "Gỡ cài đặt";
+
+// Settings View
+"OPTIONS" = "Tùy chọn";
+"CLEAR_IMAGE_CACHE" = "Xóa bộ nhớ đệm";
+"RESET_REPOS" = "Đặt lại nguồn";
+"RELOAD_SPRINGBOARD" = "Khởi động lại Springboard";
+"Clear_IMAGE_CACHE_TOOLTIP" = "Nên sử dụng nút \"Xóa bộ nhớ đệm\" nếu ứng dụng chiếm quá nhiều dung lượng trên thiết bị của bạn.";
+
+"APP_SETTINGS" = "Cài đặt ứng dụng";
+"REDUCED_MOTION" = "Giảm chuyển động";
+"COMPACT_REPO_VIEW" = "Chế độ xem nguồn nhỏ gọn";
+"ADD_REPO_KEYBOARD_TYPE" = "Thêm kiểu bàn phím nguồn";
+"CURRENT_BLUR_STRENGTH %@" = "Độ mờ nền: %@";
+
+"APP_LANGUAGE" = "Ngôn ngữ ứng dụng";
+"LANG_SWITCHED" = "Đã chuyển đổi ngôn ngữ";
+"PLEASE_RESTART_THIS_APP_FOR_THIS_TO_TAKE_EFFECT" = "Vui lòng đóng và mở lại ứng dụng để việc này có hiệu lực.";
+
+"DEVELOPERS" = "Nhà phát triển";
+
+"THANKS_TO" = "Cảm ơn tới...";
+"THANKS_TO_TOOLTIP" = "Xin chân thành cảm ơn những ứng dụng, bài viết và con người tuyệt vời này! Nếu không có họ, dự án này sẽ không thể thực hiện được hoặc thậm chí sẽ không tồn tại!";
+
+"TRANSLATORS" = "Người dịch";
+"THANKS_TO_TRANSLATORS" = "Xin chân thành cảm ơn các dịch giả của chúng tôi đã giúp dịch TrollApps!";
+
+"OTHER_PROJECTS_AND_LICENSES" = "Các dự án khác được sử dụng và giấy phép của họ";
+
+"HELP_THE_PROJECT" = "Trợ giúp dự án";
+"JOIN_OUR_DISCORD" = "Tham gia Discord của chúng tôi";
+"REPORT_A_BUG" = "Báo cáo lỗi!";
+"JSON_TEMPLATE" = "Mẫu JSON để tạo nguồn của riêng bạn!";
+
+// Alerts
+"ALERT" = "Alert";
+"OK" = "Đồng ý";
+"CANCEL" = "Hủy bỏ";
+"YES" = "Vâng";
+
+"SUCCESS" = "Thành công!";
+"THE_APP_WILL_NOW_QUIT" = "Ứng dụng bây giờ sẽ thoát...";
+
+"CLEARING_IMAGE_CACHE" = "Đang xóa bộ nhớ đệm";
+"RESETING_REPOS" = "Đang đặt lại nguồn";
+"RELOADING_SPRINGBOARD" = "Đang khởi động lại Springboard";
+"PLEASE_WAIT" = "Vui lòng chờ";
+
+"COPIED_REPOS_TO_CLIPBOARD" = "Đã sao chép nguồn vào clipboard";
+
+"DUPLICATE_REPO" = "Nguồn trùng lặp";
+"ALREADY_ON_REPO_LIST" = "Bạn đã thêm nguồn này vào danh sách nguồn của bạn.";
+
+"ADDING_REPO" = "Đang thêm nguồn";
+
+"UNKNOWN_ERROR_WHILE_INSTALLING" = "Đã xảy ra lỗi không xác định khi cài đặt ứng dụng này.";
+"PLEASE_RETRY_LATER" = "Vui lòng thử cài đặt lại lần khác.";
+
+"FAILED_TO_DOWNLOAD_OR_PARSE_APP" = "Không thể tải xuống và phân tích ứng dụng.";
+"THIS_COULD_BE_MISSING_PERMS_OR_BROKEN_LINK" = "Điều này có thể do thiếu quyền, liên kết tải xuống bị lỗi.";
+
+"FAILED_TO_FETCH_APP_DOWNLOAD_URL" = "Không thể tìm nạp url tải xuống ứng dụng.";
+"LIKELY_REPO_ISSUE" = "Có thể có vấn đề về nguồn.";
+
+"UNABLE_TO_UPDATE" = "Không thể cập nhật.";
+"NOT_TROLLSTORE_MANAGED" = "Ứng dụng này ban đầu không được cài đặt thông qua TrollStore và do đó, không thể cài đặt bản cập nhật này. Hãy cân nhắc việc gỡ cài đặt ứng dụng, sau đó cài đặt lại trong TrollApps.";
+
+"UNABLE_TO_START_INSTALL" = "Không thể bắt đầu cài đặt ứng dụng.";
+"PLEASE_WAIT_FOR_CURRENT_INSTALL_TO_FINISH" = "Vui lòng đợi quá trình cài đặt hiện tại hoàn tất.";
+
+"TROLLAPPS_WILL_CLOSE" = "TrollApps sẽ đóng và bạn sẽ được chuyển tới TrollStore để hoàn tất quá trình cập nhật.";
+"DO_YOU_STILL_WISH_TO_UPDATE" = "Bạn vẫn muốn cập nhật TrollApps?";
+
+"ERROR_DECODING_BASE64_STRING" = "Lỗi giải mã chuỗi Base64.";
+"PLEASE_VERIFY_VALID_REPO_STRING" = "Vui lòng xác minh đây có phải là chuỗi nguồn[] thích hợp hay không.";
+
+// Install / Uninstall / Download Errors
+"FAILED_TO_INSTALL" = "Cai đặt thât bại";
+"INSTALLATION_RETURNED_ERROR %@" = "Cài đặt trả về lỗi: %@";
+
+"ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "Lỗi gỡ bỏ IPA sau khi cài đặt";
+"LIKELY_A_PERMS_ISSUE" = "Đây có thể là một vấn đề về quyền.";
+
+"MISSING_DOWNLOADED_IPA" = "IPA đã tải xuống không còn ở vị trí tải xuống.";
+
+"TROLLSTORE_NOT_FOUND" = "Không tìm thấy TrollStore";
+"TROLLSTORE_IS_REQUIRED" = "Cần có TrollStore để TrollApps hoạt động.";
+
+"FAILED_TO_UNINSTALL" = "Không thể gỡ cài đặt";
+"UNINSTALLATION_RETURNED_ERROR %@" = "Gỡ cài đặt trả về lỗi: %@";
+
+"INVALID_DOWNLOAD_URL" = "URL tải xuống không hợp lệ";
+"LIKELY_A_REPO_ISSUE" = "Đây có thể là một vấn đề với nguồn này.";
+
+"ERROR_REMOVING_EXISTING_IPA_FILE" = "Không thể xóa tệp IPA khỏi cài đặt trước đó.";
+
+"ERROR_DOWNLOADING_AND_WRITING_IPA_FILE" = "Không thể tải xuống/ghi tệp IPA";
