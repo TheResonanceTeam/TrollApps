@@ -6,40 +6,38 @@
 //
 
 import SwiftUI
+import SwiftUIIntrospect
 
 struct NavView: View {
     
     @State private var selectedTab = 0
     @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var userSettings: UserSettings
+    @EnvironmentObject var queueManager: QueueManager
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            FeaturedView()
-                .tabItem {
-                    Label("FEATURED", systemImage: "star.fill")
+        ZStack {
+            
+            TabView(selection: $selectedTab) {
+                QueueManagerView(content: FeaturedView()).tag(0).tabItem { Label("FEATURED", systemImage: "star.fill") }
+                QueueManagerView(content: SourcesView()).tag(1).tabItem { Label("REPOS", systemImage: "shippingbox") }
+                QueueManagerView(content: AppsView()).tag(2).tabItem { Label("APPS", systemImage: "app") }
+                QueueManagerView(content: BrowseView()).tag(3).tabItem { Label("BROWSE", systemImage: "magnifyingglass") }
+                //            QueueManagerView(content: NewsView()).tag(1).tabItem { Label("NEWS", systemImage: "newspaper.fill") }
+            }
+            .introspect(.tabView, on: .iOS(.v14, .v15, .v16, .v17)) { tabView in
+                tabView.tabBar.isHidden = !queueManager.canClose
+                tabView.tabBar.isTranslucent = true
+                
+                let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
+                tabBarAppearance.configureWithDefaultBackground()
+                
+                tabView.tabBar.standardAppearance = tabBarAppearance
+                
+                if #available(iOS 15.0, *) {
+                    tabView.tabBar.scrollEdgeAppearance = tabBarAppearance
                 }
-                .tag(0)
-//            NewsView()
-//                .tabItem {
-//                    Label("NEWS", systemImage: "newspaper.fill")
-//                }
-//                .tag(1)
-            SourcesView()
-                .tabItem {
-                    Label("REPOS", systemImage: "shippingbox")
-                }
-                .tag(1)
-            AppsView()
-                .tabItem {
-                    Label("APPS", systemImage: "app")
-                }
-                .tag(2)
-            BrowseView()
-                .tabItem {
-                    Label("BROWSE", systemImage: "magnifyingglass")
-                }
-                .tag(3)
+            }
         }
         .onOpenURL { url in
             selectedTab = 1

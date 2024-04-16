@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct AppDetailsView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -29,7 +29,7 @@ struct AppDetailsView: View {
                 
                 HStack {
                     if(appDetails.iconURL != "") {
-                        WebImage(url: URL(string: appDetails.iconURL))
+                        KFImage(URL(string: appDetails.iconURL))
                             .resizable()
                             .frame(width: 115, height: 115)
                             .clipShape(RoundedRectangle(cornerRadius: 25))
@@ -110,7 +110,8 @@ struct AppDetailsView: View {
                                 text: versionDesc,
                                 isExpanded: $expandVersionDescription,
                                 maxLines: maxLines
-                            ).onTapGesture {
+                            )
+                            .onTapGesture {
                                 withAnimation {
                                     expandVersionDescription.toggle()
                                 }
@@ -130,7 +131,7 @@ struct AppDetailsView: View {
                     HStack(spacing: 10) {
                         ForEach(appDetails.screenshotURLs?.indices ?? 0..<0, id: \.self) { index in
                             if let screenshotURL = appDetails.screenshotURLs?[index] {
-                                WebImage(url: URL(string: screenshotURL))
+                                KFImage(URL(string: screenshotURL))
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 250)
@@ -144,27 +145,30 @@ struct AppDetailsView: View {
                 
                 let description = appDetails.localizedDescription ?? ""
                 
-                if(!description.isEmpty) {
-                    Section {
-                        VStack(alignment: .leading, spacing: 5) {
-                            CollapsibleText(
-                                text: description,
-                                isExpanded: $expandDescription,
-                                maxLines: maxLines
-                            ).onTapGesture {
-                                withAnimation {
-                                    expandDescription.toggle()
+                if !description.isEmpty {
+                    if description != versionDesc && description != subtitle {
+                        Section {
+                            VStack(alignment: .leading, spacing: 5) {
+                                CollapsibleText(
+                                    text: description,
+                                    isExpanded: $expandDescription,
+                                    maxLines: maxLines
+                                )
+                                .onTapGesture {
+                                    withAnimation {
+                                        expandDescription.toggle()
+                                    }
                                 }
                             }
+                            .padding(15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(backgroundFillColor)
+                            )
                         }
-                        .padding(15)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(backgroundFillColor)
-                        )
+                        .padding(.horizontal, 15)
                     }
-                    .padding(.horizontal, 15)
                 }
             }
             .padding(.bottom, 20)

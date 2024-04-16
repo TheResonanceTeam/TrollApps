@@ -134,7 +134,7 @@
 "ERROR_REMOVING_IPA_FILE_AFTER_INSTALL" = "حدث خطأ في إزالة ملف IPA بعد التثبيت";
 "LIKELY_A_PERMS_ISSUE" = "من المحتمل أن تكون مشكلة في الصلاحيات.";
 
-"MISSING_DOWNLOADED_IPA" = "ملف الIPA الذي تم تحميله لم يعد موجود في موقع التحميل..";
+"MISSING_DOWNLOADED_IPA" = "ملف الIPA الذي تم تحميله لم يعد موجود في موقع التحميل.";
 
 "TROLLSTORE_NOT_FOUND" = "لم يتم العثور على TrollStore";
 "TROLLSTORE_IS_REQUIRED" = "TrollStore مطلوب من أجل عمل TrollApps.";

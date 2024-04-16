@@ -13,4 +13,6 @@ class UserSettings: ObservableObject {
     @AppStorage("compact_repo_view") var compactRepoView: Bool = false
     @AppStorage("lang") var lang : String = ""
     @AppStorage("add_repo_keyboard_type") var addRepoKeyboardType : UIKeyboardType = .URL
+    @AppStorage("has_seen_discord") var hasSeenDiscord : Bool = false
+    @AppStorage("skip_install_prompt") var skipInstallPrompt : Bool = true
 }

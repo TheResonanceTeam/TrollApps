@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct FeaturedView: View {
     
@@ -18,57 +17,21 @@ struct FeaturedView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(repos) { repo in
+                ForEach(repos.sorted(by: { $0.data.name ?? "UNNAMED_REPO" < $1.data.name ?? "UNNAMED_REPO" })) { repo in
                     if (repo.data.featuredApps ?? []).count > 0 {
                         Section(header: Text(repo.data.name ?? "UNNAMED_REPO")) {
                             ForEach(repo.data.featuredApps ?? [], id: \.self) { featuredAppId in
                                 ForEach(repoManager.fetchAppsInRepo(repoInput: repo.data, bundleIdInput: featuredAppId), id: \.self) { app in
-
-                                    let version = (app.versions?[0].version != nil && app.versions?[0].version != "" ? (app.versions?[0].version ?? "") : "")
-                                    let devName = (app.developerName != nil && app.developerName != "" ? (app.developerName ?? "") : "")
-                                    
-                                    HStack {
-                                        if(app.iconURL != "") {
-                                            WebImage(url: URL(string: app.iconURL))
-                                                .resizable()
-                                                .frame(width: 48, height: 48)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                                .padding(.trailing, 7)
-                                            
-                                        } else {
-                                            Image("MissingApp")
-                                                .resizable()
-                                                .frame(width: 48, height: 48)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                                .padding(.trailing, 7)
-                                        }
-                                        VStack(alignment: .leading) {
-                                            Text(app.name)
-                                            CollapsibleText(text: devName , isExpanded: $showFullVersion, maxLines: 1)
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            CollapsibleText(text: version , isExpanded: $showFullVersion, maxLines: 1)
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                        }
-                                        Spacer()
-                                        DynamicInstallButton(appDetails: app, selectedVersionIndex: 0, buttonStyle: "Main")
-                                    }
-                                    
-                                    .background(
-                                        NavigationLink("", destination: AppDetailsView(appDetails: app))
-                                            .opacity(0)
-                                    )
+                                    AppCell(app: app, showFullMode: false)
+                                        .listRowInsets(EdgeInsets())
                                 }
                             }
                         }
                     }
                 }
             }
-            .environment(\.defaultMinListRowHeight, 50)
             .listStyle(PlainListStyle())
             .navigationTitle("FEATURED")
-            
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink(destination: SettingsView()) {
@@ -77,7 +40,6 @@ struct FeaturedView: View {
                 }
             }
         }
-        
         .navigationViewStyle(.stack)
         .onAppear {
             repos = repoManager.ReposData

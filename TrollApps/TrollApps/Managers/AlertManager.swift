@@ -23,20 +23,39 @@ class AlertManager: ObservableObject {
     @Published var alertTitle = Text("")
     @Published var alertBody = Text("")
     @Published var showButtons = true
+    @Published var showBody = true
     @Published var canAnimate = true
+    @Published var showIPADetails = true
+    @Published var IPAUUID = UUID()
 
     private var cancellables: Set<AnyCancellable> = []
 
-    func showAlert(title: Text, body: Text, showButtons : Bool = true, canAnimate: Bool = true) {
+    func showAlert(title: Text, body: Text, showButtons : Bool = true, showBody : Bool = true, canAnimate: Bool = true) {
         Just(())
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
-
                 self.isAlertPresented = true
                 self.alertTitle = title
                 self.alertBody = body
                 self.showButtons = showButtons
+                self.showBody = showBody
+                self.canAnimate = canAnimate
+                self.showIPADetails = false
+
+            }
+            .store(in: &cancellables)
+    }
+    
+    func showIPADetails(id: UUID, canAnimate: Bool = true) {
+        Just(())
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+                self.isAlertPresented = true
+                self.showIPADetails = true
+                self.IPAUUID = id
+                self.showButtons = true
                 self.canAnimate = canAnimate
             }
             .store(in: &cancellables)
@@ -54,13 +73,24 @@ struct AlertManagerView: View {
                     .ignoresSafeArea()
                     .opacity(0.1)
                 VStack(alignment: .center) {
-                    alertManager.alertTitle
-                        .bold()
-                    Divider()
-                        .opacity(0.1)
-                    alertManager.alertBody
+                    if alertManager.showIPADetails {
+                        Text("Details Here")
+                            .bold()
+                    } else {
+                        alertManager.alertTitle
+                            .bold()
 
-                    if(alertManager.showButtons) {
+                        if alertManager.showBody || alertManager.showButtons {
+                            Divider()
+                                .opacity(0.1)
+                        }
+                        
+                        if alertManager.showBody {
+                            alertManager.alertBody
+                        }
+                    }
+
+                    if alertManager.showButtons {
                         VStack {
                             Divider()
 

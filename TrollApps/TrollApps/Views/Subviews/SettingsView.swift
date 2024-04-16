@@ -6,29 +6,38 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct SettingsView: View {
     @Environment(\.openURL) var openURL
+    
     @State private var safemode = true
     
     @EnvironmentObject var userSettings: UserSettings
     @EnvironmentObject var alertManager: AlertManager
+    
+    @StateObject private var cacheSize = ImageCacheViewModel()
 
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("OPTIONS"), footer: Text("DELETE_CACHE_TOOLTIP")) {
-                    Button("DELETE_CACHE") {
-                        
+                Section {
+                    Button("JOIN_OUR_DISCORD") {
+                        openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
+                    }
+                    .buttonStyle(LongButtonStyle(type: "pink", dissabled: false))
+                }
+                .listRowBackground(Color(UIColor.systemGroupedBackground))
+                
+                Section(header: Text("OPTIONS"), footer: Text("CLEAR_CACHE_TOOLTIP")) {
+                    
+                    Button(action: {
                         alertManager.showAlert(
-                            title: Text(LocalizedStringKey("CLEARING_CACHE")),
+                            title: Text(LocalizedStringKey("CLEARING_IMAGE_CACHE")),
                             body: Text(LocalizedStringKey("PLEASE_WAIT")),
                             showButtons: false
                         )
-                        
-                        SDImageCache.shared.clearMemory()
-                        SDImageCache.shared.clearDisk()
+                        ImageCache.default.clearCache()
                         URLCache.shared.removeAllCachedResponses()
                         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
                             
@@ -45,7 +54,16 @@ struct SettingsView: View {
                                 }
                             })
                         }
-                    }
+                     }) {
+                         HStack {
+                             Text("CLEAR_IMAGE_CACHE")
+                             Spacer()
+                             Text(cacheSize.diskCacheSize)
+                                 .onAppear {
+                                     cacheSize.calculateDiskCacheSize()
+                                 }
+                         }
+                     }
                     Button("RESET_REPOS") {
                         
                         alertManager.showAlert(
@@ -73,7 +91,7 @@ struct SettingsView: View {
                             })
                         }
                     }
-                    .foregroundColor(Color.red)
+                    .foregroundColor(Color.pink)
                     Button("RELOAD_SPRINGBOARD") {
                         
                         alertManager.showAlert(
@@ -88,10 +106,27 @@ struct SettingsView: View {
                             }
                         })
                     }
+                    Button("Show \"Whats New\" Popup") {
+                        UserDefaults.standard.set("", forKey: "appVersion")
+                        
+                        alertManager.showAlert(
+                            title: Text("The app will close."),
+                            body: Text("Please re-open the app to view the \"Whats New\" popup"),
+                            showButtons: false
+                        )
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                                exit(0)
+                            }
+                        })
+                    }
                 }
                 
                 Section(header: Text("APP_SETTINGS")) {
                     Toggle("COMPACT_REPO_VIEW", isOn: $userSettings.compactRepoView)
+                    Toggle("Skip Install Prompt", isOn: $userSettings.skipInstallPrompt)
 
                     let keyboardNames = [
                         "URL",
@@ -152,18 +187,6 @@ struct SettingsView: View {
                 Section(header: Text("DEVELOPERS")) {
                     Label {
                         HStack {
-                            Button("Haxi0") {
-                                openURL(URL(string: "https://www.github.com/Haxi0")!)
-                            }
-                        }
-                    } icon: {
-                        Image("Haxi0Icon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                    Label {
-                        HStack {
                             Button("Cleover") {
                                 openURL(URL(string: "https://www.github.com/Cleover")!)
                             }
@@ -189,6 +212,18 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("THANKS_TO"), footer: Text("THANKS_TO_TOOLTIP")) {
+                    Label {
+                        HStack {
+                            Button("Haxi0") {
+                                openURL(URL(string: "https://www.github.com/Haxi0")!)
+                            }
+                        }
+                    } icon: {
+                        Image("Haxi0Icon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
                     Label {
                         HStack {
                             Button("@AppInstalleriOS") {
@@ -221,28 +256,6 @@ struct SettingsView: View {
                         }
                     } icon: {
                         Image("TalhahIcon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                    Label {
-                        Button("Interactful App") {
-                            openURL(URL(string: "https://apps.apple.com/us/app/interact-a-field-guide/id1528095640")!)
-                        }
-                    } icon: {
-                        Image("InteractfulIcon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
-                    }
-                    Label {
-                        HStack {
-                            Button("iOScreator") {
-                                openURL(URL(string: "https://www.ioscreator.com/tutorials/swiftui-json-list-tutorial")!)
-                            }
-                        }
-                    } icon: {
-                        Image("iOScreatorIcon")
                             .resizable()
                             .frame(width: 30, height: 30)
                             .clipShape(RoundedRectangle(cornerRadius: 7))
@@ -301,21 +314,24 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("OTHER_PROJECTS_AND_LICENSES")) {
-                    Button("SDWebImageSwiftUI Project") {
-                        openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI")!)
+                    Button("Kingfisher") {
+                        openURL(URL(string: "https://github.com/onevcat/Kingfisher")!)
                     }
-                    Button("SDWebImageSwiftUI MIT License") {
-                        openURL(URL(string: "https://github.com/SDWebImage/SDWebImageSwiftUI/blob/master/LICENSE")!)
+                    Button("BottomSheet") {
+                        openURL(URL(string: "https://github.com/lucaszischka/BottomSheet")!)
                     }
+                    Button("SwipeActions") {
+                        openURL(URL(string: "https://github.com/aheze/SwipeActions")!)
+                    }
+                    Button("SwiftUI Introspect") {
+                        openURL(URL(string: "https://github.com/siteline/swiftui-introspect")!)
+                    } 
                 }
                 
                 Section(header: Text("HELP_THE_PROJECT")) {
-                    Button("JOIN_OUR_DISCORD") {
-                        openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
-                    }
                     Button("REPORT_A_BUG") {
                         openURL(URL(string: "https://discord.gg/PrF6XqpGgX")!)
-                    }.foregroundColor(Color.red)
+                    }.foregroundColor(Color.pink)
                     Button("JSON_TEMPLATE") {
                         openURL(URL(string: "https://raw.githubusercontent.com/TheResonanceTeam/.default-sources/main/haxi0_2.0.json")!)
                     }
@@ -325,5 +341,24 @@ struct SettingsView: View {
         .navigationViewStyle(.stack)
         .navigationTitle("SETTINGS")
         .navigationBarTitle("", displayMode: .inline)
+    }
+}
+
+class ImageCacheViewModel: ObservableObject {
+    @Published var diskCacheSize: String = "Loading..."
+
+    func calculateDiskCacheSize() {
+        ImageCache.default.calculateDiskStorageSize { result in
+            switch result {
+            case .success(let size):
+                DispatchQueue.main.async {
+                    self.diskCacheSize = String(format: "%.2f MB", Double(size) / 1024 / 1024)
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.diskCacheSize = "Unknown"
+                }
+            }
+        }
     }
 }

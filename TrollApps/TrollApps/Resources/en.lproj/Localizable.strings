@@ -51,14 +51,14 @@
 // Apps View
 "INSTALLED_APPS" = "Installed Apps";
 "UNINSTALLED_APP %@" = "Uninstalled %@";
-"UNINSTALL_APP" = "Unistall App";
+"UNINSTALL_APP" = "Uninstall App";
 
 // Settings View
 "OPTIONS" = "Options";
-"DELETE_CACHE" = "Delete Cache";
+"CLEAR_IMAGE_CACHE" = "Clear Image Cache";
 "RESET_REPOS" = "Reset Repos";
 "RELOAD_SPRINGBOARD" = "Reload Springboard";
-"DELETE_CACHE_TOOLTIP" = "The Delete Cache button should be used if the app weights a bit too much on your Device.";
+"Clear_IMAGE_CACHE_TOOLTIP" = "The \"Clear Image Cache\" button should be used if the app weights a bit too much on your Device.";
 
 "APP_SETTINGS" = "App Settings";
 "REDUCED_MOTION" = "Reduced Motion";
@@ -94,7 +94,7 @@
 "SUCCESS" = "Success!";
 "THE_APP_WILL_NOW_QUIT" = "The app will now quit...";
 
-"CLEARING_CACHE" = "Clearing Cache";
+"CLEARING_IMAGE_CACHE" = "Clearing Image Cache";
 "RESETING_REPOS" = "Resetting Repos";
 "RELOADING_SPRINGBOARD" = "Reloading Springboard";
 "PLEASE_WAIT" = "Please Wait";
@@ -139,7 +139,7 @@
 "TROLLSTORE_NOT_FOUND" = "TrollStore not found";
 "TROLLSTORE_IS_REQUIRED" = "TrollStore is required for TrollApps to function.";
 
-"FAILED_TO_UNINSTALL" = "Failed to unistall";
+"FAILED_TO_UNINSTALL" = "Failed to uninstall";
 "UNINSTALLATION_RETURNED_ERROR %@" = "Uninstallation returned error: %@";
 
 "INVALID_DOWNLOAD_URL" = "Download URL is invalid";

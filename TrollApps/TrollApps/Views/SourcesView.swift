@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct SourcesView: View {
     @State private var repos: [RepoMemory] = []
@@ -14,85 +13,23 @@ struct SourcesView: View {
 
     @EnvironmentObject var repoManager: RepositoryManager
     @EnvironmentObject var alertManager: AlertManager
-    @EnvironmentObject var userSettings: UserSettings
-
-    @State private var isAddingURL: Bool = false
-    @State private var isRequestingURL: Bool = false
-    @State private var urlToAdd = ""
 
     @State private var repoMultiSelection = Set<UUID>()
     @State private var failedMultiSelection = Set<UUID>()
     
     @State private var showFailed: Bool = false
-    @State private var showCopied: Bool = false
 
     @State private var editMode: EditMode = .inactive
-    
-    @State private var showFullUrls: Bool = false
-    
+        
     var body: some View {
         NavigationView {
             if !showFailed {
                 List(selection: $repoMultiSelection) {
                     ForEach(repos.sorted(by: { $0.data.name ?? "UNNAMED_REPO" < $1.data.name ?? "UNNAMED_REPO" })) { repo in
-                        HStack {
-                            let iconSize : CGFloat = userSettings.compactRepoView ? 35 : 48
-
-                            if(repo.data.iconURL == nil || repo.data.iconURL == "") {
-                                Image("MissingRepo")
-                                    .resizable()
-                                    .frame(width: iconSize, height: iconSize)
-                                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                                    .padding(.trailing, 7)
-                            } else {
-                                WebImage(url: URL(string: repo.data.iconURL ?? ""))
-                                    .resizable()
-                                    .frame(width: iconSize, height: iconSize)
-                                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                                    .padding(.trailing, 7)
-                            }
-                            
-                            VStack(alignment: .leading) {
-                                Text(repo.data.name ?? "UNNAMED_REPO")
-                                if (!userSettings.compactRepoView) {
-                                    CollapsibleText(text: repo.url, isExpanded: $showFullUrls, maxLines: 2)
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                        .background(
-                            NavigationLink("", destination: SourceView(repo: repo.data))
-                                .opacity(0)
-                        )
-                        .contextMenu
-                        {
-                            Button(action: {
-                                UIPasteboard.general.string = repo.url
-                            }, label:
-                                    {
-                                Text("COPY_REPO_URL")
-                            })
-                            Button(action: {
-                                UIPasteboard.general.string = reposEncode(reposUrl: [repo.url])
-                            }, label:
-                                    {
-                                Text("COPY_REPO_BASE_URL")
-                            })
-                            Button(action: {
-                                repoManager.removeRepos(repoIds: [repo.id])
-                                
-                                repos = repoManager.ReposData
-                                badRepos = repoManager.BadRepos
-                            }, label:
-                                    {
-                                Text("DELETE_REPO")
-                            })
-                        }
+                        RepoCell(repo: repo, removeRepos: removeRepos)
+                            .listRowInsets(EdgeInsets())
                     }
                 }
-                .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 20))
-                .environment(\.defaultMinListRowHeight, 50)
                 .listStyle(PlainListStyle())
                 .navigationTitle("REPOS")
                 .onDisappear {
@@ -100,7 +37,15 @@ struct SourcesView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        EditButton()
+                        if(editMode == .inactive) {
+                            Button("Edit") {
+                                editMode = .active
+                            }
+                        } else {
+                            Button("Done") {
+                                editMode = .inactive
+                            }
+                        }
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         if repoMultiSelection.count == 0 {
@@ -109,7 +54,7 @@ struct SourcesView: View {
                                     showFailed.toggle()
                                 }) {
                                     Image(systemName: "exclamationmark.triangle")
-                                        .foregroundColor(.red)
+                                        .foregroundColor(.pink)
                                 }
                             }
                         }
@@ -135,21 +80,19 @@ struct SourcesView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         if repoMultiSelection.count > 0 {
                             Button(action: {
-                                repoManager.removeRepos(repoIds: repoMultiSelection)
-                                
-                                repos = repoManager.ReposData
-                                badRepos = repoManager.BadRepos
+                                withAnimation {
+                                    removeRepos(repoIds: repoMultiSelection)
+                                }
                             }) {
                                 Text("DELETE")
-                                    .foregroundColor(Color.red)
+                                    .foregroundColor(Color.pink)
                             }
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         if repoMultiSelection.count == 0 {
                             NavigationLink(destination: AddSourceView(onDismiss: {
-                                repos = repoManager.ReposData
-                                badRepos = repoManager.BadRepos
+                                updateUI()
                             })) {
                                 Image(systemName: "plus")
                             }
@@ -158,60 +101,24 @@ struct SourcesView: View {
                 }.environment(\.editMode, $editMode)
             } else if badRepos.count > 0 {
                 List(badRepos, selection: $failedMultiSelection) { badRepo in
-                    HStack {
-                        let iconSize : CGFloat = userSettings.compactRepoView ? 35 : 48
-
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundColor(.red)
-                            .frame(width: iconSize, height: iconSize)
-                            .padding(.trailing, 8)
-                        VStack(alignment: .leading) {
-                            Text("UNABLE_TO_LOAD_REPO")
-                            if (!userSettings.compactRepoView) {
-                                CollapsibleText(
-                                    text: badRepo.url,
-                                    isExpanded: $showFullUrls,
-                                    maxLines: 2
-                                )
-                            }
-                        }
-                    }
-                    .contextMenu
-                    {
-                        Button(action: {
-                            UIPasteboard.general.string = badRepo.url
-                        }, label:
-                                {
-                            Text("COPY_REPO_URL")
-                        })
-                        Button(action: {
-                            UIPasteboard.general.string = reposEncode(reposUrl: [badRepo.url])
-                        }, label:
-                                {
-                            Text("COPY_REPO_BASE_URL")
-                        })
-                        Button(action: {
-                            repoManager.removeBadRepos(repoIds: [badRepo.id])
-                            
-                            repos = repoManager.ReposData
-                            badRepos = repoManager.BadRepos
-                            
-                            if badRepos.count == 0 {
-                                showFailed = false
-                            }
-                        }, label:
-                                {
-                            Text("DELETE_REPO")
-                        })
+                    withAnimation {
+                        BadRepoCell(badRepo: badRepo, removeBadRepos: removeBadRepos)
+                            .listRowInsets(EdgeInsets())
                     }
                 }
-                .listRowInsets(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 20))
-                .environment(\.defaultMinListRowHeight, 50)
                 .listStyle(PlainListStyle())
                 .navigationTitle("BROKEN_REPOS")
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        EditButton()
+                        if(editMode == .inactive) {
+                            Button("Edit") {
+                                editMode = .active
+                            }
+                        } else {
+                            Button("Done") {
+                                editMode = .inactive
+                            }
+                        }
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         if failedMultiSelection.count == 0 {
@@ -243,19 +150,10 @@ struct SourcesView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         if failedMultiSelection.count > 0 {
                             Button(action: {
-                                repoManager.removeBadRepos(repoIds: failedMultiSelection)
-                                
-                                repos = repoManager.ReposData
-                                badRepos = repoManager.BadRepos
-                                
-                                failedMultiSelection.removeAll()
-
-                                if badRepos.count == 0 {
-                                    showFailed = false
-                                }
+                                removeBadRepos(badRepoIds: failedMultiSelection)
                             }) {
                                 Text("DELETE")
-                                    .foregroundColor(Color.red)
+                                    .foregroundColor(Color.pink)
                             }
                         }
                     }
@@ -264,12 +162,13 @@ struct SourcesView: View {
         }
         .navigationViewStyle(.stack)
         .onAppear {
-            if !repoManager.hasFetchedRepos {
-                repoManager.fetchRepos()
+            withAnimation {
+                if !repoManager.hasFetchedRepos {
+                    repoManager.fetchRepos()
+                }
+                
+                updateUI()
             }
-            
-            repos = repoManager.ReposData
-            badRepos = repoManager.BadRepos
         }
         .onOpenURL { url in
             if url.absoluteString.hasPrefix("trollapps://add?url=") {
@@ -284,78 +183,42 @@ struct SourcesView: View {
                             )
 
                         } else {
-                            isAddingURL = true
+                            alertManager.showAlert(
+                                title: Text(LocalizedStringKey("ADDING_REPO")),
+                                body: Text(LocalizedStringKey("PLEASE_WAIT")),
+                                showButtons: false
+                            )
+                                                            
                             repoManager.addRepo(repoURL, alertManager: alertManager) {
-                                repos = repoManager.ReposData
-                                badRepos = repoManager.BadRepos
-                                isAddingURL = false
+                                alertManager.isAlertPresented = false
+                                updateUI()
                             }
                         }
                     }
                 }
             }
-        }
-        .alert(isPresented: $isAddingURL) {
-            Alert(title: Text("ADDING_REPO"), message: Text("PLEASE_WAIT"))
         }
         .onChange(of: repoManager.hasFinishedFetchingRepos) { _ in
-            repos = repoManager.ReposData
-            badRepos = repoManager.BadRepos
+            updateUI()
         }
     }
-}
-
-struct AddSourceView: View {
-    @EnvironmentObject var repoManager: RepositoryManager
-    @State var RepoURL = ""
-    @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var alertManager: AlertManager
-    @EnvironmentObject var userSettings: UserSettings
-
-    var onDismiss: () -> Void
-
-    var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("ADD_REPOS"), footer: Text("ADD_REPOS_TOOLTIP")) {
-                    TextField("REPO_URL", text: $RepoURL)
-                        .keyboardType(userSettings.addRepoKeyboardType)
-                    Button("ADD_REPOS") {
-                        if (repoManager.RepoList.contains(RepoURL)) {
-                            alertManager.showAlert(
-                                title: Text(LocalizedStringKey("DUPLICATE_REPO")),
-                                body: Text(LocalizedStringKey("ALREADY_ON_REPO_LIST"))
-                            )
-                        } else {
-                            repoManager.addRepo(RepoURL, alertManager: alertManager) {
-                                RepoURL = ""
-                                presentationMode.wrappedValue.dismiss()
-                                onDismiss()
-                            }
-                        }
-
-                    }.disabled(self.RepoURL.isEmpty)
-                    Button("ADD_REPO_FROM_CLIPBOARD") {
-                        let pasteboard = UIPasteboard.general
-                        if let RepoURL = pasteboard.string{
-                            if (repoManager.RepoList.contains(RepoURL)) {
-                                alertManager.showAlert(
-                                    title: Text(LocalizedStringKey("DUPLICATE_REPO")),
-                                    body: Text(LocalizedStringKey("ALREADY_ON_REPO_LIST"))
-                                )
-                            } else {
-                                repoManager.addRepo(RepoURL, alertManager: alertManager) {
-                                    presentationMode.wrappedValue.dismiss()
-                                    onDismiss()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            Spacer()
+    
+    func removeRepos(repoIds: Set<UUID>) {
+        repoManager.removeRepos(repoIds: repoIds)
+        updateUI()
+    }
+    
+    func removeBadRepos(badRepoIds: Set<UUID>) {
+        repoManager.removeBadRepos(repoIds: badRepoIds)
+        updateUI()
+        
+        if badRepos.count == 0 {
+            showFailed = false
         }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationTitle("ADD_REPO")
+    }
+    
+    func updateUI() {
+        repos = repoManager.ReposData
+        badRepos = repoManager.BadRepos
     }
 }
