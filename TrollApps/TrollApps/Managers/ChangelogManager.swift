@@ -22,34 +22,22 @@ struct ChangelogManagerView<Content: View>: View {
 
     var whatsNewItems: [ListItem] = [
         ListItem(
-            icon: "apps.iphone",
-            text: "Installed Apps List",
-            subtext: "Manage TrollStore/TrollApps installations in the new \"Apps\" tab.",
-            color: Color.pink
-        ),
-        ListItem(
-            icon: "trash",
-            text: "Uninstall Apps",
-            subtext: "Remove unwanted apps with a simple hold-press in the \"Apps\" tab.",
+            icon: "note.text",
+            text: "Minor Improvements",
+            subtext: "Finally fixed the \"Unistall\" typo when removing apps on the Apps tab.",
             color: Color.blue
         ),
         ListItem(
-            icon: "square.and.arrow.down.on.square",
-            text: "Streamlined Installations",
-            subtext: "Redesigned installation process for simultaneous downloads and progress bars.",
+            icon: "checkmark.seal.fill",
+            text: "Out of Beta",
+            subtext: "Version 2.3 is finally officially released, with some bugfixes and performance improvements.",
             color: Color.red
         ),
         ListItem(
-            icon: "app",
-            text: "View All Apps",
-            subtext: "Explore the full app list across repos in the new \"Browse\" tab.",
-            color: Color.green
-        ),
-        ListItem(
-            icon: "list.bullet",
-            text: "App Details",
-            subtext: "Enhanced \"Whats New\" section on the details view for apps.",
-            color: Color.orange
+            icon: "exclamationmark.bubble.fill",
+            text: "Feedback needed!",
+            subtext: "If you haven't already, please join our Discord server to give us valuable feedback for future update!.",
+            color: Color.purple
         ),
     ]
 

@@ -58,7 +58,8 @@
 "CLEAR_IMAGE_CACHE" = "Clear Image Cache";
 "RESET_REPOS" = "Reset Repos";
 "RELOAD_SPRINGBOARD" = "Reload Springboard";
-"Clear_IMAGE_CACHE_TOOLTIP" = "The \"Clear Image Cache\" button should be used if the app weights a bit too much on your Device.";
+"CLEAR_CACHE_TOOLTIP" = "Clearing app cache can help improve performance and decrease the amount of storage used up by TrollApps.";
+"Clear_IMAGE_CACHE_TOOLTIP" = "The \"Clear Image Cache\" button should be used if the app is using up too much storage on your Device.";
 
 "APP_SETTINGS" = "App Settings";
 "REDUCED_MOTION" = "Reduced Motion";

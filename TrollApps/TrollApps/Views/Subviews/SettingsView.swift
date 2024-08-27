@@ -250,7 +250,7 @@ struct SettingsView: View {
                     }
                     Label {
                         HStack {
-                            Button("@talhah58") {
+                            Button("kixrd") {
                                 openURL(URL(string: "https://twitter.com/talhah58")!)
                             }
                         }
